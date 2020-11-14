@@ -32,15 +32,15 @@ module.exports = {
 		}
 
 		let lupi = "";
-		for(let entrie of moderatore.playerList.keys()){
-			if((moderatore.playerList.get(entrie).id === roleID) ||
-				(roleID === 2 && moderatore.playerList.get(entrie).id === 5) ||
-				(roleID === 2 && moderatore.playerList.get(entrie).id === 8) ||
-				(roleID === 2 && moderatore.playerList.get(entrie).id === 17 && moderatore.nightNum === 1)){
+		for(let entrie of moderatore.playerList.entries()){
+			if((entrie[1].id === roleID) ||
+				(roleID === 2 && entrie[1].id === 5) ||
+				(roleID === 2 && entrie[1].id === 8) ||
+				(roleID === 2 && entrie[1].id === 17 && moderatore.nightNum === 1)){
 				switch(roleID){
 					case 7://guaritore
-						if(moderatore.playerList.get(entrie).tratto.includes('usato')){
-							return;
+						if(entrie[1].tratto.includes('usato')){
+							break;
 						}
 
 						let morenti = "";
@@ -59,38 +59,38 @@ module.exports = {
 					case 16://strega
 					case 18://veggente
 						role = message.guild.roles.cache.find(r => r.name === "Uomini");
-						entrie.roles.add(role).catch(console.error);
+						entrie[0].roles.add(role).catch(console.error);
 						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, message.channel);
 						return;
 
 
 					case 2://lupi
 						if(moderatore.nightNum === 1){
-							if(moderatore.playerList.get(entrie).id === 2){
-								lupi += `${entrie.toString()} è il Capo Branco\n`;
-							} else if(moderatore.playerList.get(entrie).id === 8){
-								lupi += `${entrie.toString()} è un Lupo del Branco\n`;
-							}else if (moderatore.playerList.get(entrie).id === 5){
-								lupi += `${entrie.toString()} è il Giovane Lupo\n`;
+							if(entrie[1].id === 2){
+								lupi += `${entrie[0].toString()} è il Capo Branco\n`;
+							} else if(entrie[1].id === 8){
+								lupi += `${entrie[0].toString()} è un Lupo del Branco\n`;
+							}else if (entrie[1].id === 5){
+								lupi += `${entrie[0].toString()} è il Giovane Lupo\n`;
 							} else{
-								lupi += `${entrie.toString()} è il Traditore\n`;
+								lupi += `${entrie[0].toString()} è il Traditore\n`;
 								break;
 							}
 						}
 
 						role = message.guild.roles.cache.find(r => r.name === "Lupi");
-						entrie.roles.add(role).catch(console.error);
+						entrie[0].roles.add(role).catch(console.error);
 						break;
 
 
 					case 11://monaco
 						let presentRole = moderatore.roleListID.slice();
-						for(let entrie2 of moderatore.playerList.keys()){//sottraggo i ruoli presenti
+						for(let value of moderatore.playerList.values()){//sottraggo i ruoli presenti
 							
-							let indexOf = presentRole.indexOf(moderatore.playerList.get(entrie2).id);
+							let indexOf = presentRole.indexOf(value.id);
 							while(indexOf != -1){//tolgo tutti i ruoli di quel tipo
 								presentRole.splice(indexOf, 1);
-								indexOf = presentRole.indexOf(moderatore.playerList.get(entrie2).id);
+								indexOf = presentRole.indexOf(value.id);
 							}
 						}
 
@@ -101,7 +101,7 @@ module.exports = {
 
 						let ruoliNonPresenti = "";
 						let extracted = -1;
-						for(let j = 0; j < 2 && j < presentRole.length; j+= 1){//estraggo 2 o meno ruoli casuali
+						for(let j = 0; j < 2 && j < presentRole.length; j += 1){//estraggo 2 o meno ruoli casuali
 							let ran = Math.floor(Math.random() * presentRole.length);
 							
 							while(ran === extracted){
@@ -121,13 +121,13 @@ module.exports = {
 					
 					
 					case 15://prete
-						for(let entrie2 of moderatore.playerList.keys()){
-							if(moderatore.playerList.get(entrie2).id === 14){
-								embed.sendEmbed([149,193,255], `${entrie2.toString()} è il Peccatore`, entrie);
+						for(let entrie2 of moderatore.playerList.entries()){
+							if(entrie2[1].id === 14){
+								embed.sendEmbed([149,193,255], `${entrie2[0].toString()} è il Peccatore`, entrie[0]);
 								break;
 							}
 						}
-						embed.sendEmbed([149,193,255], "Il Peccatore non è in gioco", entrie);
+						embed.sendEmbed([149,193,255], "Il Peccatore non è in gioco", entrie[0]);
 						break;
 				}
 			}

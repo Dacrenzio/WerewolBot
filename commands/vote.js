@@ -106,14 +106,14 @@ module.exports = {
 				let burning = -1;
 				let even = -1;
 
-				for(let player of moderatore.playerList.keys()){
-					if(moderatore.playerList.get(player).votes.length > burning){
+				for(let player of moderatore.playerList.entries()){
+					if(player[1].votes.length > burning){
 						even = burning;
-						burning = moderatore.playerList.get(player).votes.length;
-						playerBurn = player.key;
+						burning = player[1].votes.length;
+						playerBurn = player[0];
 
-					} else if(moderatore.playerList.get(player).votes.length > even){
-						even = player.votes.length;
+					} else if(player[1].votes.length > even){
+						even = player[1].votes.length;
 					}
 				}
 
@@ -155,10 +155,10 @@ module.exports = {
 				}
 
 				let nominati = "";
-				for(let entrie of moderatore.playerList.keys()){
-					if(moderatore.playerList.get(entrie).votes.length === burning || moderatore.playerList.get(entrie).votes.length === even){
-						moderatore.ballottaggio.push(entrie);
-						nominati += `${entrie}\n`;
+				for(let entrie of moderatore.playerList.entries()){
+					if(entrie[1].votes.length === burning || entrie[1].votes.length === even){
+						moderatore.ballottaggio.push(entrie[0]);
+						nominati += `${entrie[0].toString()}\n`;
 					}
 				}
 				embed.sendEmbed([149, 193, 255], nominati+ "Sono chiamati al ballottaggio.", channel);

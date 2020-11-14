@@ -21,9 +21,9 @@ module.exports = {
 		let deadPeople = "";
 		moderatore.playerDying.forEach(member =>{
 			if(moderatore.playerList.get(member).id === 13){//attivazione del pazzo
-				for(let entrie of moderatore.playerList.keys()){
-					if(moderatore.playerList.get(entrie).id === 2 || moderatore.playerList.get(entrie).id === 5){
-						moderatore.playerList.get(entrie).tratto.push('pazzo');
+				for(let entrie of moderatore.playerList.entries()){
+					if(entrie[1].id === 2 || entrie[1].id === 5){
+						moderatore.playerList.get(entrie[0]).tratto.push('pazzo');
 					}
 				}
 			}
@@ -74,17 +74,17 @@ module.exports = {
 			let isVeggenteAlive = false;
 
 
-			for(let entries of moderatore.playerList.keys()){
-				if(moderatore.playerList.get(entries).id === 1 && moderatore.playerList.get(entries).alive){
+			for(let entrie of moderatore.playerList.entries()){
+				if(entrie[1].id === 1 && entrie[1].alive){
 					foundAliveBard = true;
 				}
 
-				if(moderatore.playerList.get(entries).id === 12 && moderatore.playerList.get(entries).alive){
+				if(entrie[1].id === 12 && entrie[1].alive){
 					foundAliveOste = true;
 				}
 
-				if(moderatore.playerList.get(entries).id === 18 &&
-				(moderatore.playerList.get(entries).alive || moderatore.playerDying.includes(entries.key))){
+				if(entrie[1].id === 18 &&
+				(entrie[1].alive || moderatore.playerDying.includes(entries.key))){
 					isVeggenteAlive = true;
 				}
 			}

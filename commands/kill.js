@@ -12,8 +12,8 @@ module.exports = {
 		}
 		
 
-		for(let entrie of moderatore.playerList.keys()){//check if the burned is the young wolf
-			if(entrie === moderatore.burnedPlayer && moderatore.playerList.get(entrie).id === 5){
+		for(let player of moderatore.playerList.keys()){//check if the burned is the young wolf
+			if(player[0] === moderatore.burnedPlayer && player[1].id === 5){
 				youngWolfBurned = true;
 				break;
 			}
@@ -50,9 +50,9 @@ module.exports = {
 					embed.sendEmbed([149,193,255], `${mentioned.toString()} sarà avvisato della vostra presenza`, message.channel);
 					
 					let lupi = "";
-					for(let entrie of moderatore.playerList.keys()){
-						if(moderatore.playerList.get(entrie).id === 2 || moderatore.playerList.get(entrie).id === 5 || moderatore.playerList.get(entrie).id === 8)
-							lupi += `${entrie.toString()} è un lupo.\n`;
+					for(let player of moderatore.playerList.values()){
+						if(player[1].id === 2 || player[1].id === 5 || player[1].id === 8)
+							lupi += `${player[0].toString()} è un lupo.\n`;
 					}
 					embed.sendEmbed([149,193,255], lupi, mentioned);
 					return;
@@ -64,10 +64,10 @@ module.exports = {
 								
 				if(called.tratto.includes('protetto') || caller.tratto.includes('pazzo')){
 					if(caller.tratto.includes('pazzo')){
-						for(let entrie of moderatore.playerList.keys()){
-							if(moderatore.playerList.get(entrie).id === 2 || moderatore.playerList.get(entrie).id === 5){
-								let index = moderatore.playerList.get(entrie).tratto.indexOf('pazzo');
-								moderatore.playerList.get(entrie).tratto.splice(index, 1);
+						for(let player of moderatore.playerList.entries()){
+							if(player[1].id === 2 || player[1].id === 5){
+								let index = player[1].tratto.indexOf('pazzo');
+								moderatore.playerList.get(player[0]).tratto.splice(index, 1);
 							}
 						}
 					} else if(called.id !== 4){//if protetto dalla strega
