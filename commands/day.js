@@ -130,5 +130,7 @@ module.exports = {
 				break;
 			}
 		}
+
+		embed.sendEmbed([149, 193, 255], "Iniziare le votazioni con `-startVotation`.", message.channel);
 	}
 }
