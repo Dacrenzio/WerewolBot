@@ -12,7 +12,7 @@ module.exports = {
 		if(channel != null){
 			channel.members.difference(mod).each(member => member.voice.setMute(true));
 		} else {
-			embed.sendEmbed([255,0,0], "Entrare in una chat vocale per iniziare la notte.", message.channel);
+			embed.sendEmbed([255,0,0], "Entrare in una chat vocale per iniziare la votazione.", message.channel);
 			return;
 		}
 

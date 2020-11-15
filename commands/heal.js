@@ -3,6 +3,7 @@ module.exports={
 	description: "let the Healer to heal a Dying player",
 	execute(message, args, moderatore){
 		const embed = require("../functions/sendEmbed.js");
+		const f = require("../figures.js");
 
 		if(message.mentions.members.array().length !== 1){
 			embed.sendEmbed([255,0,0], "Citare una persona da guarire", message.channel);
@@ -28,15 +29,15 @@ module.exports={
 
 		let caller = moderatore.playerList.get(message.member);
 
-		if(caller.id === 7 && caller.alive){
+		if(caller.id === f.guaritore && caller.alive){
 
-			/*if(caller.tratto.includes('usato')){
+			if(caller.tratto.includes('usato')){
 				embed.sendEmbed([255,0,0], "Hai già guarito una persona durante la partita", message.channel);
-				return;*/
+				return;
 			
-			//}else{
+			}else{
 
-				for(let i= 0; i < moderatore.playerDying.length; i+=1){//searching for the healed
+				for(let i = 0; i < moderatore.playerDying.length; i += 1){//searching for the healed
 					if(mentioned === moderatore.playerDying[i]){
 						embed.sendEmbed([149,193,255], `Hai guarito ${moderatore.playerDying[j].toString()}`, message.channel);
 						moderatore.playerDying.splice(j,1);
@@ -47,7 +48,7 @@ module.exports={
 
 				embed.sendEmbed([255,0,0], "La persona indicata non sta morendo.", message.channel);
 				return;
-			//}
+			}
 
 		}else{
 			message.delete();

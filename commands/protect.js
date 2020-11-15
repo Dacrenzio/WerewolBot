@@ -3,6 +3,7 @@ module.exports ={
 	description: "this command allows the witch to protect 1 player",
 	execute(message, args, moderatore){
 		const embed = require("../functions/sendEmbed.js");
+		const f = require("../figures.js");
 
 		if(message.mentions.members.array().length !== 1){
 			embed.sendEmbed([255,0,0], "Citare una persona da guardare", message.channel);
@@ -30,7 +31,7 @@ module.exports ={
 		let caller = moderatore.playerList.get(message.member);
 		let called = moderatore.playerList.get(mentioned);
 
-		if(caller.id === 16 && caller.alive){ //check if he's roleID: 18
+		if(caller.id === f.strega && caller.alive){ //check if he's roleID: 18
 				
 			if(!called.alive){
 				embed.sendEmbed([255,0,0], "Hai protetto un giocatore morto!", message.channel);
@@ -42,7 +43,7 @@ module.exports ={
 
 		}else{
 			message.delete();
-			embed.sendEmbed([255,0,0], "Non hai il ruolo adatto per guardare le anime altrui.", message.author);
+			embed.sendEmbed([255,0,0], "Non hai il ruolo adatto per proteggere il prossimo.", message.author);
 		}
 	}
 }

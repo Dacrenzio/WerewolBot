@@ -4,6 +4,7 @@ module.exports = {
 	execute(message, args, moderatore){
 		const embed = require("../functions/sendEmbed.js");
 		const fin = require("../functions/victory.js");
+		const f = require("../figures.js");
 
 		if(moderatore.nightOrder.length != 0){
 			embed.sendEmbed([255,0,0], "Impossibile far salire il giorno con ruoli ancora da eseguire", message.channel);
@@ -21,9 +22,9 @@ module.exports = {
 		let deadPeople = "";
 		moderatore.playerDying.forEach(member =>{
 			if(moderatore.playerList.get(member).id === 13){//attivazione del pazzo
-				for(let entrie of moderatore.playerList.entries()){
-					if(entrie[1].id === 2 || entrie[1].id === 5){
-						moderatore.playerList.get(entrie[0]).tratto.push('pazzo');
+				for(let player of moderatore.playerList.entries()){
+					if(player[1].id === f.capoBranco || player[1].id === f.lupoDelBranco){
+						moderatore.playerList.get(player[0]).tratto.push('pazzo');
 					}
 				}
 			}
@@ -66,25 +67,25 @@ module.exports = {
 
 
 		//controlling bard and Oste
-		let isBardIn = moderatore.roleListID.includes(1);
-		let isOsteIn = moderatore.roleListID.includes(10);
+		let isBardIn = moderatore.roleListID.includes(f.bard);
+		let isOsteIn = moderatore.roleListID.includes(f.oste);
 		if(isBardIn || isOsteIn){
 			let foundAliveBard = false;
 			let foundAliveOste = false;
 			let isVeggenteAlive = false;
 
 
-			for(let entrie of moderatore.playerList.entries()){
-				if(entrie[1].id === 1 && entrie[1].alive){
+			for(let player of moderatore.playerList.entries()){
+				if(player[1].id === f.bard && player[1].alive){
 					foundAliveBard = true;
 				}
 
-				if(entrie[1].id === 12 && entrie[1].alive){
+				if(player[1].id === f.oste && player[1].alive){
 					foundAliveOste = true;
 				}
 
-				if(entrie[1].id === 18 &&
-				(entrie[1].alive || moderatore.playerDying.includes(entries.key))){
+				if(player[1].id === f.veggente &&
+				(player[1].alive || moderatore.playerDying.includes(player[0]))){
 					isVeggenteAlive = true;
 				}
 			}
@@ -120,5 +121,14 @@ module.exports = {
 
 		//cleaning the dead body
 		moderatore.playerDying = [];
+
+		//togliendo la protezione della strega
+		for(let player of moderatore.playerList.entries()){
+			if(player[1].tratto.includes('protetto') && player[1].id !== f.eremita){
+				let index = player[1].tratto.indexOf('protetto');
+				moderatore.playerList.get(player[0]).tratto.splice(index, 1);
+				break;
+			}
+		}
 	}
 }

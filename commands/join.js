@@ -4,6 +4,7 @@ module.exports = {
 	execute(message, args, moderatore){
 		const embed = require("../functions/sendEmbed.js");
 		const PlayerRole = require('../functions/PlayerRole.js');
+		
 		//someone wants to join
 		if(moderatore.playerList.size +1 <= moderatore.playerNum){ //if there's space in the lobby
 			

@@ -2,7 +2,8 @@ module.exports = {
 	name: 'next',
 	description: "this metod call the next figure that has to play and gives the respective role to the player",
 	execute(message, args, moderatore){
-		let embed = require("../functions/sendEmbed.js");
+		const embed = require("../functions/sendEmbed.js");
+		const f = require("../figures.js");
 
 
 		let role = message.guild.roles.cache.find(r => r.name === "Uomini");//rimuovo il ruolo Uomini a tutti coloro che lo hanno
@@ -32,19 +33,19 @@ module.exports = {
 		}
 
 		let lupi = "";
-		for(let entrie of moderatore.playerList.entries()){
-			if((entrie[1].id === roleID) ||
-				(roleID === 2 && entrie[1].id === 5) ||
-				(roleID === 2 && entrie[1].id === 8) ||
-				(roleID === 2 && entrie[1].id === 17 && moderatore.nightNum === 1)){
+		for(let player of moderatore.playerList.entries()){
+			if((player[1].id === roleID) ||
+				(roleID === f.capoBranco && player[1].id === f.giovaneLupo) ||
+				(roleID === f.capoBranco && player[1].id === f.lupoDelBranco) ||
+				(roleID === f.capoBranco && player[1].id === f.traditore && moderatore.nightNum === 1)){
 				switch(roleID){
-					case 7://guaritore
-						if(entrie[1].tratto.includes('usato')){
+					case f.guaritore://guaritore
+						if(player[1].tratto.includes('usato')){
 							break;
 						}
 
 						let morenti = "";
-						moderatore.playerDying.forEach(player=> morenti += `${player.toString()} sta morendo\n`);
+						moderatore.playerDying.forEach(dying=> morenti += `${dying.toString()} sta morendo\n`);
 						if(morenti.valueOf() === ""){
 							morenti = "Nessuno sta morendo.";
 						}
@@ -54,36 +55,37 @@ module.exports = {
 							embed.sendEmbed([149,193,255], morenti, channel);
 						}, 2000);
 						
-					case 9://mago
-					case 10://medium
-					case 16://strega
-					case 18://veggente
+					case f.mago://mago
+					case f.medium://medium
+					case f.strega://strega
+					case f.veggente://veggente
 						role = message.guild.roles.cache.find(r => r.name === "Uomini");
-						entrie[0].roles.add(role).catch(console.error);
+						player[0].roles.add(role).catch(console.error);
 						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, message.channel);
 						return;
 
 
 					case 2://lupi
 						if(moderatore.nightNum === 1){
-							if(entrie[1].id === 2){
-								lupi += `${entrie[0].toString()} è il Capo Branco\n`;
-							} else if(entrie[1].id === 8){
-								lupi += `${entrie[0].toString()} è un Lupo del Branco\n`;
-							}else if (entrie[1].id === 5){
-								lupi += `${entrie[0].toString()} è il Giovane Lupo\n`;
+							if(player[1].id === f.capoBranco){
+								lupi += `${player[0].toString()} è il Capo Branco\n`;
+							} else if(player[1].id === f.lupoDelBranco){
+								lupi += `${player[0].toString()} è un Lupo del Branco\n`;
+							}else if (player[1].id === f.giovaneLupo){
+								lupi += `${player[0].toString()} è il Giovane Lupo\n`;
 							} else{
-								lupi += `${entrie[0].toString()} è il Traditore\n`;
+								lupi += `${player[0].toString()} è il Traditore\n`;
 								break;
 							}
 						}
-
+						let index = player[1].tratto.indexOf('usato');
+						moderatore.playerList.get(player[0]).tratto.splice(index, 1)
 						role = message.guild.roles.cache.find(r => r.name === "Lupi");
-						entrie[0].roles.add(role).catch(console.error);
+						player[0].roles.add(role).catch(console.error);
 						break;
 
 
-					case 11://monaco
+					case f.monaco://monaco
 						let presentRole = moderatore.roleListID.slice();
 						for(let value of moderatore.playerList.values()){//sottraggo i ruoli presenti
 							
@@ -95,7 +97,7 @@ module.exports = {
 						}
 
 						if(presentRole.length === 0){//controllo se siano rimasti ruoli
-							embed.sendEmbed([149,193,255], "Tutti i ruoli sono in partita", entrie);
+							embed.sendEmbed([149,193,255], "Tutti i ruoli sono in partita", player);
 							break;
 						}
 
@@ -115,19 +117,19 @@ module.exports = {
 							}
 						}
 
-						embed.sendEmbed([149,193,255], ruoliNonPresenti, entrie);
+						embed.sendEmbed([149,193,255], ruoliNonPresenti, player);
 					
 						break;
 					
 					
-					case 15://prete
-						for(let entrie2 of moderatore.playerList.entries()){
-							if(entrie2[1].id === 14){
-								embed.sendEmbed([149,193,255], `${entrie2[0].toString()} è il Peccatore`, entrie[0]);
+					case f.prete://prete
+						for(let player2 of moderatore.playerList.entries()){
+							if(player2[1].id === f.peccatore){
+								embed.sendEmbed([149,193,255], `${player2[0].toString()} è il Peccatore`, player[0]);
 								break;
 							}
 						}
-						embed.sendEmbed([149,193,255], "Il Peccatore non è in gioco", entrie[0]);
+						embed.sendEmbed([149,193,255], "Il Peccatore non è in gioco", player[0]);
 						break;
 				}
 			}
