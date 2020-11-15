@@ -97,7 +97,7 @@ module.exports = {
 						}
 
 						if(presentRole.length === 0){//controllo se siano rimasti ruoli
-							embed.sendEmbed([149,193,255], "Tutti i ruoli sono in partita", player);
+							embed.sendEmbed([149,193,255], "Tutti i ruoli sono in partita", player[0]);
 							break;
 						}
 
@@ -117,7 +117,7 @@ module.exports = {
 							}
 						}
 
-						embed.sendEmbed([149,193,255], ruoliNonPresenti, player);
+						embed.sendEmbed([149,193,255], ruoliNonPresenti, player[0]);
 					
 						break;
 					
