@@ -13,9 +13,11 @@ module.exports = {
 
 		//unmuting people
 		let channel = message.member.voice.channel;
-		let bot = message.guild.roles.cache.find(r => r.name === "WereBot").members;
-		channel.members.difference(bot).each(member => member.voice.setMute(false).catch(console.log));
-		channel.leave();
+		if(channel !== null){
+			let bot = message.guild.roles.cache.find(r => r.name === "WereBot").members;
+			channel.members.difference(bot).each(member => member.voice.setMute(false).catch(console.log));
+			channel.leave();
+		}
 		
 
 		//killing people died during night

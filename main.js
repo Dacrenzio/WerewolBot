@@ -15,7 +15,7 @@ for(const file of commandFiles){
 
 var moderatore ={
 	nightNum: 0,
-	playerNum: 0,
+	playerNum: -1,
 	auraType: false,
 	playerList: new Map(),
 	playerDying: [],
