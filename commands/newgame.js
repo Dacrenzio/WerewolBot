@@ -8,6 +8,11 @@ module.exports = {
 			return;
 		}
 
+		if(isNaN(parseInt(args[0]))){
+			embed.sendEmbed([255,0,0], "Scrivere un numero!", message.channel);
+			return;
+		}
+
 		if(parseInt(args[0]) < 6){
 			embed.sendEmbed([255,0,0], "Siete in pochi per giocare!", message.channel);
 			return;
