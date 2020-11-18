@@ -6,6 +6,11 @@ module.exports = {
 		const figures = require('../figures.js');
 		const ytdl = require('ytdl-core');
 
+		if(moderatore.playerList.size < 6 || moderatore.playerList.size < moderatore.playerNum){
+			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
+			return;
+		}
+
 		if(moderatore.nightOrder.length != 0){
 			embed.sendEmbed([255,0,0], "Impossibile far calare la notte con ruoli ancora da eseguire", message.channel);
 			return;

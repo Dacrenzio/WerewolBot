@@ -5,6 +5,11 @@ module.exports = {
 		const embed = require("../functions/sendEmbed.js");
 		const random = require("../functions/randomPick.js");
 		const assign = require("../functions/assignParameters.js");
+
+		if(moderatore.playerList.size < 6 || moderatore.playerList.size < moderatore.playerNum){
+			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
+			return;
+		}
 		
 		if(args.length < moderatore.playerNum -2){
 			embed.sendEmbed([255,0,0], "Inseriti troppi pochi ruoli!", message.channel);

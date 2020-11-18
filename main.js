@@ -37,7 +37,7 @@ client.on("guildDelete", guild =>{
 
 client.on('message', message =>{
 	if(!message.content.startsWith(prefix) || message.author.bot || message.channel.type === "dm") return;
-	console.log(message.guild.id);
+	
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
 

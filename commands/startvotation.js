@@ -4,8 +4,12 @@ module.exports = {
 	execute(message, args, moderatore, client){
 		const embed = require("../functions/sendEmbed.js");
 		moderatore.numberOfVotes = 0;
-		let prova = [];
-		prova.includes(123);
+		
+
+		if(moderatore.playerList.size < 6 || moderatore.playerList.size < moderatore.playerNum){
+			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
+			return;
+		}
 
 		let channel = message.member.voice.channel;
 		let mod = message.guild.roles.cache.find(r => r.name === "Moderatore").members;

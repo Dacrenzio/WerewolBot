@@ -5,6 +5,16 @@ module.exports ={
 		const embed = require("../functions/sendEmbed.js");
 		const f = require("../figures.js");
 
+		if(moderatore.playerList.size < 6 || moderatore.playerList.size < moderatore.playerNum){
+			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
+			return;
+		}
+		if(!moderatore.playerList.has(message.member)){
+			embed.sendEmbed([255,0,0], "Devi essere in gioco per poter eseguire i comandi.", message.channel);
+			return;
+		}
+		
+
 		if(message.mentions.members.array().length !== 1){
 			embed.sendEmbed([255,0,0], "Citare una persona da guardare", message.channel);
 			return;
@@ -14,11 +24,6 @@ module.exports ={
 			return;
 		}
 
-
-		if(!moderatore.playerList.has(message.member)){
-			embed.sendEmbed([255,0,0], "Devi essere in gioco per poter eseguire i comandi.", message.channel);
-			return;
-		}
 		
 		let mentioned = message.mentions.members.first();
 

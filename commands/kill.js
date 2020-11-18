@@ -7,12 +7,15 @@ module.exports = {
 
 		let mentionedArray= message.mentions.members.array();
 
+		if(moderatore.playerList.size < 6 || moderatore.playerList.size < moderatore.playerNum){
+			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
+			return;
+		}
+
 		if(!moderatore.playerList.has(message.member)){
 			embed.sendEmbed([255,0,0], "Devi essere in gioco per poter eseguire i comandi.", message.channel);
 			return;
 		}
-
-		
 
 		let youngWolfBurned = false;
 		//check if the burned is the young wolf
