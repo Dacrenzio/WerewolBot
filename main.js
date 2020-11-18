@@ -3,6 +3,8 @@ const client = new Discord.Client();
 const figures = require('./figures.js');
 const prefix = '-';
 const fs = require('fs');
+const Moderatore = require('./functions/Moderatore.js');
+
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 
@@ -12,36 +14,38 @@ for(const file of commandFiles){
 	client.commands.set(command.name, command);
 }
 
-
-var moderatore ={
-	nightNum: 0,
-	playerNum: -1,
-	auraType: false,
-	playerList: new Map(),
-	playerDying: [],
-	roleListID: [],
-	nightOrder: [],
-	burnedPlayer: null,
-	numberOfVotes: 0,
-	ballottaggio: [],
-	numberOfDeadPlayer: 0
-};
-
+var mod = new Map();
 
 client.once('ready', () =>{
 	console.log('bot is online\n');
+	
+	client.guilds.cache.each(guild =>{
+		mod.set(guild.id, new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0));
+	});
 });
+
+
+client.on("guildCreate", guild =>{
+	mod.set(guild.id, new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0));
+});
+
+client.on("guildDelete", guild =>{
+	mod.delete(guild.id);
+});
+
 
 
 client.on('message', message =>{
 	if(!message.content.startsWith(prefix) || message.author.bot || message.channel.type === "dm") return;
-
+	console.log(message.guild.id);
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
 
 	if(client.commands.has(command))
-		client.commands.get(command).execute(message, args, moderatore, client);
+		client.commands.get(command).execute(message, args, mod.get(message.guild.id), client);
 });
+
+
 
 
 
