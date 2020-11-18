@@ -5,7 +5,7 @@ module.exports = {
 		const embed = require("../functions/sendEmbed.js");
 		const f = require("../figures.js");
 
-		if(moderatore.playerList.size < 6 || moderatore.playerList.size < moderatore.playerNum){
+		if(moderatore.playerNum < 6 || moderatore.playerList.size < moderatore.playerNum){
 			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
 			return;
 		}

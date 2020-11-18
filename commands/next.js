@@ -15,7 +15,7 @@ module.exports = {
 		role = message.guild.roles.cache.find(r => r.name === "Criminali");// stessa cosa criminali
 		role.members.each(member => member.roles.remove(role));
 
-		if(moderatore.playerList.size < 6 || moderatore.playerList.size < moderatore.playerNum){
+		if(moderatore.playerNum < 6 || moderatore.playerList.size < moderatore.playerNum){
 			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
 			return;
 		}
