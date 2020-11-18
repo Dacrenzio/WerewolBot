@@ -145,6 +145,8 @@ module.exports = {
 						mess += "!!\n\n Fine della partita, digitare `-newGame n` per iniziare una nuova partita!";
 						embed.sendEmbed([149,193,255], mess, message.channel);
 
+						moderatore.playerNum = -1;
+						moderatore.playerList.clear();
 
 						let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
 						let modRole = message.guild.roles.cache.find(r => r.name === "Moderatore");
