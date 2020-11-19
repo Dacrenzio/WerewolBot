@@ -20,13 +20,13 @@ client.once('ready', () =>{
 	console.log('bot is online\n');
 	
 	client.guilds.cache.each(guild =>{
-		mod.set(guild.id, new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0));
+		mod.set(guild.id, new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0, true));
 	});
 });
 
 
 client.on("guildCreate", guild =>{
-	mod.set(guild.id, new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0));
+	mod.set(guild.id, new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0, true));
 });
 
 client.on("guildDelete", guild =>{

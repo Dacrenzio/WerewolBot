@@ -20,7 +20,21 @@ module.exports = {
 			return;
 		}
 
-		moderatore.roleListID = [];
+		//resetting players
+		moderatore.nightNum = 0;
+		moderatore.auraType = false;
+		moderatore.playerDying = [];
+		moderatore.roleListID = [2, 18];
+		moderatore.nightOrder = [];
+		moderatore.burnedPlayer = null;
+		moderatore.numberOfVotes = 0;
+		moderatore.ballottaggio = [];
+		moderatore.numberOfDeadPlayer = 0;
+		moderatore.finished = false;
+
+		let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
+		message.guild.members.cache.each(member => member.roles.remove([ghostRole, modRole]));
+
 		//inserisco i ruoli possibili nella lista
 		args.forEach(element=> moderatore.roleListID.push(parseInt(element)));
 

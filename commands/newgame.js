@@ -37,5 +37,6 @@ module.exports = {
 		moderatore.numberOfVotes = 0;
 		moderatore.ballottaggio = [];
 		moderatore.numberOfDeadPlayer = 0;
+		moderatore.finished = false;
 	}
 }

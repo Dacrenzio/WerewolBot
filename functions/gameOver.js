@@ -13,12 +13,11 @@ module.exports = {
 			}else if(result[3]){
 				mess += " ed il Giullare";
 			}
-			mess += "!!\n\n Fine della partita, digitare `-newGame n` per iniziare una nuova partita!";
+			mess += "!!\n\n Fine della partita, digitare `-newGame n` per iniziare una nuova partita oppure \n`-reRoll` per mantenere gli stessi ruoli e giocatori oppure \n`-chooseRole` per cambiare solo i ruoli!";
 			embed.sendEmbed([149,193,255], mess, channel);
 
+			moderatore.finished = true;
 
-			moderatore.playerNum = -1;
-			moderatore.playerList.clear();
 
 			let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
 			let modRole = message.guild.roles.cache.find(r => r.name === "Moderatore");

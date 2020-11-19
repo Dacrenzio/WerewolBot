@@ -1,5 +1,5 @@
 module.exports = function Moderatore(nightNum, playerNum, auraType, playerList, playerDying, roleListID,
-	nightOrder, burnedPlayer, numberOfVotes, ballottaggio, numberOfDeadPlayer){
+	nightOrder, burnedPlayer, numberOfVotes, ballottaggio, numberOfDeadPlayer, finished){
 	
 	this.nightNum = nightNum;
 	this.playerNum = playerNum;
@@ -12,4 +12,5 @@ module.exports = function Moderatore(nightNum, playerNum, auraType, playerList, 
 	this.numberOfVotes = numberOfVotes;
 	this.ballottaggio = ballottaggio;
 	this.numberOfDeadPlayer = numberOfDeadPlayer;
+	this.finished = finished;
 }
