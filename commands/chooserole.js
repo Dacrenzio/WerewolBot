@@ -7,7 +7,7 @@ module.exports = {
 		const assign = require("../functions/assignParameters.js");
 		let err = require("../functions/errors");
 
-		if(err.errors([0,8], moderatore, message))return;
+		if(err.errors([0,6], moderatore, message))return;
 
 		
 		if(args.length < moderatore.playerNum -2){

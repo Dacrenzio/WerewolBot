@@ -11,7 +11,7 @@ module.exports = {
 		}
 
 		
-		if(err.errors([8], moderatore, message))return;
+		if(err.errors([6], moderatore, message))return;
 
 		
 		if(parseInt(args[0]) < 6){

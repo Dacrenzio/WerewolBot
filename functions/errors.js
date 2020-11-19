@@ -52,7 +52,7 @@ module.exports ={
 
 				
 				case 6:
-					const args = message.content.slice(prefix.length).split(/ +/);
+					const args = message.content.split(/ +/);
 					args.shift();
 					for (var i = 0; i < args.length; i++) {
 						if(isNaN(parseInt(args[i]))){//code 9

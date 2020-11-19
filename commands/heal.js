@@ -28,7 +28,7 @@ module.exports={
 					if(mentioned === moderatore.playerDying[i]){
 						embed.sendEmbed([149,193,255], `Hai guarito ${mentioned.toString()}`, message.channel);
 						moderatore.playerDying.splice(i,1);
-						caller.tratto.push('usato');
+						moderatore.playerList.get(message.member).tratto.push('usato');
 						return;
 					}
 				}
