@@ -13,7 +13,7 @@ module.exports = {
 			}else if(result[3]){
 				mess += " ed il Giullare";
 			}
-			mess += "!!\n\n Fine della partita, digitare `-newGame n` per iniziare una nuova partita oppure \n`-reRoll` per mantenere gli stessi ruoli e giocatori oppure \n`-chooseRole` per cambiare solo i ruoli!";
+			mess += "!!\n\n Fine della partita!!\n Digitare `-newGame n` per iniziare una nuova partita oppure \n`-reRoll` per mantenere gli stessi ruoli e giocatori oppure \n`-chooseRole` per cambiare solo i ruoli.";
 			embed.sendEmbed([149,193,255], mess, channel);
 
 			moderatore.finished = true;
