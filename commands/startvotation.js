@@ -3,24 +3,18 @@ module.exports = {
 	description: "this command reset the votes of the previus night, check if the ID: ",
 	execute(message, args, moderatore, client){
 		const embed = require("../functions/sendEmbed.js");
+		let err = require("../functions/errors");
+
+		if(err.errors([0,4,5], moderatore, message))return;
 		
 
 		moderatore.numberOfVotes = 0;
-		
-
-		if(moderatore.playerNum < 6 || moderatore.playerList.size < moderatore.playerNum){
-			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
-			return;
-		}
 
 		let channel = message.member.voice.channel;
 		let mod = message.guild.roles.cache.find(r => r.name === "Moderatore").members;
-		if(channel != null){
-			channel.members.difference(mod).each(member => member.voice.setMute(true));
-		} else {
-			embed.sendEmbed([255,0,0], "Entrare in una chat vocale per iniziare la votazione.", message.channel);
-			return;
-		}
+		
+		channel.members.difference(mod).each(member => member.voice.setMute(true));
+		
 
 		embed.sendEmbed([149, 193, 255], "Verrà creato un canale per ciasciuno votante, scrivete al suo interno `-vote @objective`", message.channel);
 

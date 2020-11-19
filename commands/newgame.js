@@ -3,16 +3,17 @@ module.exports = {
 	description: "this command starts a new game of n people and assign the role ''moderator'' to the caller",
 	execute(message, args, moderatore){
 		const embed = require("../functions/sendEmbed.js");
-		if(args.length === 0){
+		let err = require("../functions/errors");
+
+		if(args.length !== 1){
 			embed.sendEmbed([255,0,0], "Scrivere anche il numero di giocatori.", message.channel);
 			return;
 		}
 
-		if(isNaN(parseInt(args[0]))){
-			embed.sendEmbed([255,0,0], "Scrivere un numero!", message.channel);
-			return;
-		}
+		
+		if(err.errors([8], moderatore, message))return;
 
+		
 		if(parseInt(args[0]) < 6){
 			embed.sendEmbed([255,0,0], "Siete in pochi per giocare!", message.channel);
 			return;

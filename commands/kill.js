@@ -4,18 +4,9 @@ module.exports = {
 	execute(message, args, moderatore){
 		const embed = require("../functions/sendEmbed.js");
 		const f = require("../figures.js");
+		let err = require("../functions/errors");
 
 		let mentionedArray= message.mentions.members.array();
-
-		if(moderatore.playerNum < 6 || moderatore.playerList.size < moderatore.playerNum){
-			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
-			return;
-		}
-
-		if(!moderatore.playerList.has(message.member)){
-			embed.sendEmbed([255,0,0], "Devi essere in gioco per poter eseguire i comandi.", message.channel);
-			return;
-		}
 
 		let youngWolfBurned = false;
 		//check if the burned is the young wolf
@@ -34,14 +25,7 @@ module.exports = {
 			return;
 		}
 
-
-		if(!moderatore.playerList.has(mentionedArray[0]) ||
-		(youngWolfBurned && !moderatore.playerList.has(mentionedArray[1]))){
-
-			embed.sendEmbed([255,0,0], "Citare una persona in gioco.", message.channel);
-			return;
-		}
-
+		if(err.errors([0,1,3,7], moderatore, message))return;
 
 		let caller = moderatore.playerList.get(message.member);
 

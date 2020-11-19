@@ -5,39 +5,24 @@ module.exports = {
 		let embed = require("../functions/sendEmbed.js");
 		const figures = require('../figures.js');
 		const ytdl = require('ytdl-core');
+		let err = require("../functions/errors");
 
-		if(moderatore.playerNum < 6 || moderatore.playerList.size < moderatore.playerNum){
-			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
-			return;
-		}
-
-		if(moderatore.nightOrder.length != 0){
-			embed.sendEmbed([255,0,0], "Impossibile far calare la notte con ruoli ancora da eseguire", message.channel);
-			return;
-		}
+		if(err.errors([0,5,4], moderatore, message))return;
 
 		let channel = message.member.voice.channel;
-		if(channel != null){
-			let mod = message.guild.roles.cache.find(r => r.name === "Moderatore").members;
-			let bot = message.guild.roles.cache.find(r => r.name === "WereBot").members;
-			let mods = mod.concat(bot);
+		
+		let mod = message.guild.roles.cache.find(r => r.name === "Moderatore").members;
+		let bot = message.guild.roles.cache.find(r => r.name === "WereBot").members;
+		let mods = mod.concat(bot);
 			
-			channel.join().then(connection => connection.play(ytdl('https://youtu.be/a0Av2XNPd_g', {quality: 'highestaudio'})));
+		channel.join().then(connection => connection.play(ytdl('https://youtu.be/a0Av2XNPd_g', {quality: 'highestaudio'})));
 			
 			
-			if(channel.members.has(bot.firstKey()))
-				channel.members.difference(mods).each(member => member.voice.setMute(true));
-			else{
-				channel.members.difference(mod).each(member => member.voice.setMute(true));
-			}			
-			
-
-		} else {
-			embed.sendEmbed([255,0,0], "Entrare in una chat vocale per iniziare la notte.", message.channel);
-			return;
+		if(channel.members.has(bot.firstKey()))
+			channel.members.difference(mods).each(member => member.voice.setMute(true));
+		else{
+			channel.members.difference(mod).each(member => member.voice.setMute(true));
 		}
-
-
 
 		moderatore.nightNum += 1;
 		moderatore.ballottaggio = [];

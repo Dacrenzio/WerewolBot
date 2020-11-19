@@ -23,6 +23,6 @@ module.exports = {
 			let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
 			let modRole = message.guild.roles.cache.find(r => r.name === "Moderatore");
 			message.guild.members.cache.each(member => member.roles.remove([ghostRole, modRole]));
-		}
+		} return result[0];
 	}
 }

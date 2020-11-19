@@ -4,6 +4,7 @@ module.exports = {
 	execute(message, args, moderatore){
 		const embed = require("../functions/sendEmbed.js");
 		const f = require("../figures.js");
+		let err = require("../functions/errors");
 
 
 		let role = message.guild.roles.cache.find(r => r.name === "Uomini");//rimuovo il ruolo Uomini a tutti coloro che lo hanno
@@ -14,11 +15,8 @@ module.exports = {
 
 		role = message.guild.roles.cache.find(r => r.name === "Criminali");// stessa cosa criminali
 		role.members.each(member => member.roles.remove(role));
-
-		if(moderatore.playerNum < 6 || moderatore.playerList.size < moderatore.playerNum){
-			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
-			return;
-		}
+		
+		if(err.errors([0], moderatore, message))return;
 
 		
 		if(moderatore.nightOrder.length === 0){
@@ -58,7 +56,7 @@ module.exports = {
 						setTimeout(()=>{
 							let channel = message.guild.channels.cache.find(r => r.name === "uomini");
 							embed.sendEmbed([149,193,255], morenti, channel);
-						}, 2000);
+						}, 4000);
 						
 					case f.mago://mago
 					case f.medium://medium
@@ -84,7 +82,7 @@ module.exports = {
 							}
 						}
 						let index = player[1].tratto.indexOf('usato');
-						moderatore.playerList.get(player[0]).tratto.splice(index, 1)
+						moderatore.playerList.get(player[0]).tratto.splice(index, 1);
 						role = message.guild.roles.cache.find(r => r.name === "Lupi");
 						player[0].roles.add(role).catch(console.error);
 						break;
@@ -145,7 +143,7 @@ module.exports = {
 			setTimeout(()=>{
 				let channel = message.guild.channels.cache.find(r => r.name === "lupi");
 				embed.sendEmbed([149,193,255], lupi, channel);
-			}, 3000);
+			}, 4000);
 		}
 
 		embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, message.channel);

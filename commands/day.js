@@ -8,22 +8,11 @@ module.exports = {
 		const slay = require('../functions/slay.js');
 		const gameOver = require('../functions/gameOver.js');
 		const f = require("../figures.js");
+		let err = require("../functions/errors");
 
-		if(moderatore.playerNum < 6 || moderatore.playerList.size < moderatore.playerNum){
-			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
-			return;
-		}
-
-		if(moderatore.nightOrder.length != 0){
-			embed.sendEmbed([255,0,0], "Impossibile far salire il giorno con ruoli ancora da eseguire", message.channel);
-			return;
-		}
+		if(err.errors([0,5,4], moderatore, message))return;
 
 		//unmuting people
-		if(message.member.voice.channel == null){
-			embed.sendEmbed([255,0,0], "Devi essere in una chat vocale per far salire il giorno!", message.channel);
-			return;
-		}
 		unMute.execute(message);
 		
 
@@ -48,10 +37,7 @@ module.exports = {
 		embed.sendEmbed([149, 193, 255], deadPeople, message.channel);
 
 		//checking if the game is over
-		gameOver.execute(message, message.channel, moderatore);
-		if(fin.victory(moderatore)[0]){
-			return;
-		}
+		if(gameOver.execute(message, message.channel, moderatore))return;
 
 
 		//controlling bard and Oste
