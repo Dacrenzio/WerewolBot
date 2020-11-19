@@ -21,6 +21,7 @@ module.exports = {
 			return;
 		}
 
+		moderatore.roleListID = [];
 		//inserisco i ruoli possibili nella lista
 		args.forEach(element=> moderatore.roleListID.push(parseInt(element)));
 

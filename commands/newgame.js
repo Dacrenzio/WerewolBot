@@ -13,10 +13,10 @@ module.exports = {
 			return;
 		}
 
-		/*if(parseInt(args[0]) < 6){
+		if(parseInt(args[0]) < 6){
 			embed.sendEmbed([255,0,0], "Siete in pochi per giocare!", message.channel);
 			return;
-		}*/
+		}
 
 		let role = message.guild.roles.cache.find(r => r.name === "Moderatore");
 		role.members.each(member => member.roles.remove(role));

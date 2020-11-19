@@ -8,10 +8,10 @@ module.exports = {
 		moderatore.numberOfVotes = 0;
 		
 
-		/*if(moderatore.playerNum < 6 || moderatore.playerList.size < moderatore.playerNum){
+		if(moderatore.playerNum < 6 || moderatore.playerList.size < moderatore.playerNum){
 			embed.sendEmbed([255,0,0], "Mancano dei giocatori o non è stato iniziato un nuovo gioco.", message.channel);
 			return;
-		}*/
+		}
 
 		let channel = message.member.voice.channel;
 		let mod = message.guild.roles.cache.find(r => r.name === "Moderatore").members;
