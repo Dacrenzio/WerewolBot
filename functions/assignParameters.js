@@ -7,7 +7,6 @@ module.exports ={
 			moderatore.playerList.get(member).fazione = 'villaggio';
 			moderatore.playerList.get(member).aura = false;
 			moderatore.playerList.get(member).misticismo = false;
-			moderatore.playerList.get(member).tratto = ['nessuno'];
 			moderatore.playerList.get(member).alive = true;
 
 			switch(moderatore.playerList.get(member).id){

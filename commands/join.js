@@ -16,7 +16,7 @@ module.exports = {
 			
 
 			//add the player to the list with a standard role
-			moderatore.playerList.set(message.member, new PlayerRole( 0, 'neutra', false, false, "nessuno", false, []));
+			moderatore.playerList.set(message.member, new PlayerRole( 0, 'neutra', false, false, ['nessuno'], true, []));
 			embed.sendEmbed([0,255,0], "OK!", message.channel);
 			
 			if(moderatore.playerList.size === moderatore.playerNum){//when reached the number of player wanted this option will pop-up

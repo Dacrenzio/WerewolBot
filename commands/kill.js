@@ -19,8 +19,10 @@ module.exports = {
 
 		let youngWolfBurned = false;
 		//check if the burned is the young wolf
-		if(moderatore.playerList.get(moderatore.playerBurned).id === f.giovaneLupo){
-			youngWolfBurned = true;
+		if(moderatore.playerBurned !== null){
+			if(moderatore.playerList.get(moderatore.playerBurned).id === f.giovaneLupo){
+				youngWolfBurned = true;
+			}
 		}
 		
 

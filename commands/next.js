@@ -131,7 +131,8 @@ module.exports = {
 						for(let player2 of moderatore.playerList.entries()){
 							if(player2[1].id === f.peccatore){
 								embed.sendEmbed([149,193,255], `${player2[0].toString()} è il Peccatore`, player[0]);
-								break;
+								embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno`, message.channel);
+								return;
 							}
 						}
 						embed.sendEmbed([149,193,255], "Il Peccatore non è in gioco", player[0]);

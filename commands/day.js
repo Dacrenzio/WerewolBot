@@ -1,9 +1,12 @@
 module.exports = {
 	name: 'day',
-	description: "unmute",
+	description: "unmute all the people, check if the ",
 	execute(message, args, moderatore){
 		const embed = require("../functions/sendEmbed.js");
 		const fin = require("../functions/victory.js");
+		const unMute = require('./unmuteall.js');
+		const slay = require('../functions/slay.js');
+		const gameOver = require('../functions/gameOver.js');
 		const f = require("../figures.js");
 
 		if(moderatore.playerNum < 6 || moderatore.playerList.size < moderatore.playerNum){
@@ -17,12 +20,11 @@ module.exports = {
 		}
 
 		//unmuting people
-		let channel = message.member.voice.channel;
-		if(channel !== null){
-			let bot = message.guild.roles.cache.find(r => r.name === "WereBot").members;
-			channel.members.difference(bot).each(member => member.voice.setMute(false).catch(console.log));
-			channel.leave();
+		if(message.member.voice.channel == null){
+			embed.sendEmbed([255,0,0], "Devi essere in una chat vocale per far salire il giorno!", message.channel);
+			return;
 		}
+		unMute.execute(message);
 		
 
 		//killing people died during night
@@ -35,13 +37,8 @@ module.exports = {
 					}
 				}
 			}
-			moderatore.playerList.get(member).alive = false;
-			moderatore.playerList.get(member).tratto.push('mangiato');
-			moderatore.numberOfDeadPlayer += 1;
-
-			let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
-			member.roles.add(ghostRole).catch(console.error);
-
+			
+			slay.execute(message, moderatore, member, 'mangiato');
 			deadPeople += member.toString() + " è morto durante la notte.\n";
 		});
 
@@ -51,26 +48,8 @@ module.exports = {
 		embed.sendEmbed([149, 193, 255], deadPeople, message.channel);
 
 		//checking if the game is over
-		let result = fin.victory(moderatore);
-		if(result[0]){
-			let mess = result[1];
-			if(result[2]){
-				if(result[3]){
-					mess += ", il Pazzo ed il Giullare";
-				}
-				mess += " ed il Pazzo";
-			}else if(result[3]){
-				mess += " ed il Giullare";
-			}
-			mess += "!!\n\n Fine della partita, digitare `-newGame n` per iniziare una nuova partita!";
-			embed.sendEmbed([149,193,255], mess, message.channel);
-			
-			moderatore.playerNum = -1;
-			moderatore.playerList.clear();
-
-			let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
-			let modRole = message.guild.roles.cache.find(r => r.name === "Moderatore");
-			message.guild.members.cache.each(member => member.roles.remove([ghostRole, modRole]));
+		gameOver.execute(message, message.channel, moderatore);
+		if(fin.victory(moderatore)[0]){
 			return;
 		}
 
