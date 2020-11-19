@@ -10,11 +10,12 @@ module.exports = {
 
 		let youngWolfBurned = false;
 		//check if the burned is the young wolf
-		if(moderatore.playerBurned !== null){
-			if(moderatore.playerList.get(moderatore.playerBurned).id === f.giovaneLupo){
-				youngWolfBurned = true;
-			}
+		if(moderatore.burnedPlayer !== null && 
+		moderatore.playerList.get(moderatore.burnedPlayer).id === f.giovaneLupo){
+			
+			youngWolfBurned = true;
 		}
+		
 		
 
 		if(mentionedArray.length !== 1 && !youngWolfBurned){//if they call more or less then 1 people when the young wolf is not burned

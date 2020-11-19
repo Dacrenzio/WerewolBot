@@ -8,20 +8,22 @@ module.exports = {
 
 		if(moderatore.ballottaggio.length > 0){
 			if(moderatore.ballottaggio.length === moderatore.playerList.size - moderatore.numberOfDeadPlayer){
+				
 				embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
-					moderatore.burnedPlayer = null;
-					moderatore.ballottaggio = [];
-					return;
+				moderatore.burnedPlayer = null;
+				moderatore.ballottaggio = [];
+				return;
 			}
 
-			if(moderatore.burnedPlayer !== null){
-				if(moderatore.playerList.get(moderatore.burnedPlayer).id === 6){//check giullare
-					embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
-					moderatore.burnedPlayer = null;
-					moderatore.ballottaggio = [];
-					return;
-				}
+			if(moderatore.burnedPlayer !== null && 
+			moderatore.playerList.get(moderatore.burnedPlayer).id === 6){//check giullare
+				
+				embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
+				moderatore.burnedPlayer = null;
+				moderatore.ballottaggio = [];
+				return;
 			}
+	
 
 			let index = -1;
 			let burning = -1;
@@ -72,13 +74,14 @@ module.exports = {
 			}
 
 			if(burning >= moderatore.playerList.size - moderatore.numberOfDeadPlayer - 1){//se e stata votata una sola persona
-				if(moderatore.burnedPlayer != null){
-					if(moderatore.playerList.get(moderatore.burnedPlayer).id === 6){
-						embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
-						moderatore.burnedPlayer = null;
-						return;
-					}
+				if(moderatore.burnedPlayer != null && 
+				moderatore.playerList.get(moderatore.burnedPlayer).id === 6){
+					
+					embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
+					moderatore.burnedPlayer = null;
+					return;
 				}
+
 				embed.sendEmbed([149, 193, 255], `Il rogo di stasera brucia ${playerBurn.toString()}`, channel);
 				moderatore.burnedPlayer = playerBurn;
 				slay.execute(message, moderatore, moderatore.burnedPlayer, 'bruciato');
