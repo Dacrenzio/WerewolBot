@@ -6,7 +6,7 @@ module.exports={
 		const f = require("../figures.js");
 		let err = require("../functions/errors");
 
-		if(err.errors([0,1,2,3], moderatore, message))return;
+		if(err.errors([0,1,2,3,8], moderatore, message))return;
 
 		if(message.mentions.members.first() === message.member){
 			embed.sendEmbed([255,0,0], "Non puoi guarire te stessa!", message.channel);

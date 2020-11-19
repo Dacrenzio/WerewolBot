@@ -7,7 +7,7 @@ module.exports = {
 		const ytdl = require('ytdl-core');
 		let err = require("../functions/errors");
 
-		if(err.errors([0,5,4], moderatore, message))return;
+		if(err.errors([0,5,4,8], moderatore, message))return;
 
 		let channel = message.member.voice.channel;
 		

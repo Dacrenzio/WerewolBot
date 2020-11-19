@@ -6,7 +6,7 @@ module.exports = {
 		const f = require("../figures.js");
 		let err = require("../functions/errors");
 
-		if(err.errors([0,1,2,3,7], moderatore, message))return;
+		if(err.errors([0,1,2,3,7,8], moderatore, message))return;
 		
 
 		let mentioned = message.mentions.members.first();

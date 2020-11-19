@@ -16,7 +16,7 @@ module.exports = {
 		role = message.guild.roles.cache.find(r => r.name === "Criminali");// stessa cosa criminali
 		role.members.each(member => member.roles.remove(role));
 		
-		if(err.errors([0], moderatore, message))return;
+		if(err.errors([0, 8], moderatore, message))return;
 
 		
 		if(moderatore.nightOrder.length === 0){

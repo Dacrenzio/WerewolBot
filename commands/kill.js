@@ -6,6 +6,8 @@ module.exports = {
 		const f = require("../figures.js");
 		let err = require("../functions/errors");
 
+		if(err.errors([0,1,7,8], moderatore, message))return;
+
 		let mentionedArray= message.mentions.members.array();
 
 		let youngWolfBurned = false;
@@ -16,8 +18,6 @@ module.exports = {
 			youngWolfBurned = true;
 		}
 		
-		
-
 		if(mentionedArray.length !== 1 && !youngWolfBurned){//if they call more or less then 1 people when the young wolf is not burned
 			embed.sendEmbed([255,0,0], "Citare una persona da uccidere", message.channel);
 			return;
@@ -25,11 +25,11 @@ module.exports = {
 			embed.sendEmbed([255,0,0], "Citare due persone da uccidere", message.channel);
 			return;
 		}
+		if(err.errors([3], moderatore, message))return;
 
-		if(err.errors([0,1,3,7], moderatore, message))return;
-
+		
+		
 		let caller = moderatore.playerList.get(message.member);
-
 
 		if((caller.id === f.capoBranco || caller.id === f.lupoDelBranco) && caller.alive){ //check if he's roleID: 2 or 8
 

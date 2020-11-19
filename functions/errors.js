@@ -68,6 +68,12 @@ module.exports ={
 						return true;
 					}
 					break;
+
+				case 8:
+					if(moderatore.finished){
+						embed.sendEmbed([255,0,0], "La partita è conclusa!\nIniziare una nuova partita con `-newGame n` oppure\n`-chooseRole` per cambiare i ruoli con i giocatori attuali o\n`-reroll` per mantere ruoli e giocatori.", message.channel);
+						return true;
+					}
 			}
 		}
 		return false;

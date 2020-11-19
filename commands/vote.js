@@ -6,7 +6,7 @@ module.exports = {
 		const check = require("../functions/checkVotes.js");
 		let err = require("../functions/errors");
 
-		if(err.errors([0, 1, 2, 3, 4, 5], moderatore, message))return;
+		if(err.errors([0, 1, 2, 3, 4, 5, 8], moderatore, message))return;
 
 
 		if(message.channel.name.valueOf() !== message.member.user.id.valueOf()){

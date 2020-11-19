@@ -10,7 +10,7 @@ module.exports = {
 		const f = require("../figures.js");
 		let err = require("../functions/errors");
 
-		if(err.errors([0,5,4], moderatore, message))return;
+		if(err.errors([0,5,4,8], moderatore, message))return;
 
 		//unmuting people
 		unMute.execute(message);

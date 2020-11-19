@@ -5,7 +5,7 @@ module.exports = {
 		const embed = require("../functions/sendEmbed.js");
 		let err = require("../functions/errors");
 
-		if(err.errors([0,4,5], moderatore, message))return;
+		if(err.errors([0,4,5,8], moderatore, message))return;
 		
 
 		moderatore.numberOfVotes = 0;
