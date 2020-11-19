@@ -3,7 +3,6 @@ module.exports = {
 	description: "unmute all the people, check if the ",
 	execute(message, args, moderatore){
 		const embed = require("../functions/sendEmbed.js");
-		const fin = require("../functions/victory.js");
 		const unMute = require('./unmuteall.js');
 		const slay = require('../functions/slay.js');
 		const gameOver = require('../functions/gameOver.js');
