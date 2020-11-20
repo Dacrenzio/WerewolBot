@@ -6,7 +6,8 @@ module.exports = {
 
 		embed.sendEmbed([149,193,255],"Questa è la lista completa dei comandi:\n"+
 			"`-newGame n` inizia un nuovo game con n giocatori\n"+
-			"`-join` let a player join a started game\n"+
+			"`-join` fa entrare un giocatore in partita\n"+
+			"`-playerList` restituisce una lista dei giocatori in partita\n"+
 			"`-chooseRole` seguito dai codici identificativi dei ruoli che si vuole mettere nel mazzo\n"+
 			"`-night` inizia la notte per il gruppo mutando i giocatori\n"+
 			"`-next` chiama il prossimo ruolo giocante (anche se non in partita o morto)\n"+
