@@ -8,6 +8,11 @@ module.exports = {
 
 		if(err.errors([0,1,7,8], moderatore, message))return;
 
+		if(moderatore.playerList.get(message.member).tratto.includes('usato')){
+			embed.sendEmbed([255,0,0], "Avete già ucciso qualcuno stanotte.", message.channel);
+			return;
+		}
+
 		let mentionedArray= message.mentions.members.array();
 
 		let youngWolfBurned = false;
