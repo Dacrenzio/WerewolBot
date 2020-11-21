@@ -18,9 +18,11 @@ module.exports = {
 		
 		if(err.errors([0, 8], moderatore, message))return;
 
+		let channel = message.guild.channels.cache.find(c => c.name === 'generale');
+
 		
 		if(moderatore.nightOrder.length === 0){
-			embed.sendEmbed([149,193,255], "Ruoli terminati, iniziare il giorno con `-day`", message.channel);
+			embed.sendEmbed([149,193,255], "Ruoli terminati, iniziare il giorno con `-day`", channel);
 			return;
 		}
 
@@ -28,7 +30,7 @@ module.exports = {
 		let roleID = moderatore.nightOrder.shift();//faccio venire il prossimo ruolo che deve giocare
 		while(!moderatore.roleListID.includes(roleID)){
 			if(moderatore.nightOrder.length === 0){
-				embed.sendEmbed([0,255,0], "Ruoli terminati, iniziare il giorno con `-day`", message.channel);
+				embed.sendEmbed([0,255,0], "Ruoli terminati, iniziare il giorno con `-day`", channel);
 				return;
 			}
 			
@@ -64,7 +66,7 @@ module.exports = {
 					case f.veggente://veggente
 						role = message.guild.roles.cache.find(r => r.name === "Uomini");
 						player[0].roles.add(role).catch(console.error);
-						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, message.channel);
+						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, channel);
 						return;
 
 
@@ -146,7 +148,7 @@ module.exports = {
 			}, 4000);
 		}
 
-		embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, message.channel);
+		embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, channel);
 	}
 }
 

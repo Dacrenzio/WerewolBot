@@ -26,6 +26,7 @@ module.exports ={
 			}
 
 			moderatore.playerList.get(mentioned).tratto.push('protetto');
+			embed.sendEmbed([149,193,255], `${mentioned.toString()} sarà protetto stanotte.`, message.channel);
 			return;
 
 		}else{
