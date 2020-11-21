@@ -15,7 +15,7 @@ module.exports = {
 			}
 			mess += "!!\n\n Fine della partita!!\n Digitare `-newGame n` per iniziare una nuova partita oppure \n`-reRoll` per mantenere gli stessi ruoli e giocatori oppure \n`-chooseRole` per cambiare solo i ruoli.";
 			embed.sendEmbed([149,193,255], mess, channel);
-
+			console.log(mess);
 			moderatore.finished = true;
 
 

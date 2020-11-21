@@ -20,11 +20,11 @@ module.exports = {
 			}
 		}
 
-		if((cittadini.length + neutri.length <= lupi.length) || cittadini.length === 0){
+		if((cittadini + neutri <= lupi) || cittadini === 0){
 			return [true, "Hanno vinto i Lupi", pazzo, giullare];
 		}
 
-		if(lupi.length === 0){
+		if(lupi === 0){
 			return [true, "Hanno vinto i Contadini", pazzo, giullare];
 		}
 

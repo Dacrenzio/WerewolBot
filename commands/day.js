@@ -39,7 +39,7 @@ module.exports = {
 		//checking if the game is over
 		if(gameOver.execute(message, message.channel, moderatore))return;
 
-
+		
 		//controlling bard and Oste
 		let isBardIn = moderatore.roleListID.includes(f.bard);
 		let isOsteIn = moderatore.roleListID.includes(f.oste);
@@ -68,7 +68,7 @@ module.exports = {
 				embed.sendEmbed([149, 193, 255], "Non giungono notizie dall'Osteria.", message.channel);
 			}
 
-			if(isBardIn && isVeggenteAlive){//if there's bardo
+			if(isBardIn){//if there's bardo
 				if(isOsteIn){ //and oste
 					if(foundAliveBard && !moderatore.auraType){ //check if bardo is alive and that the aura is clear
 						embed.sendEmbed([149, 193, 255], "Fu trovata un'anima Pura.", message.channel);
@@ -84,7 +84,7 @@ module.exports = {
 						embed.sendEmbed([149, 193, 255], "Non giungono notizie dall'Osteria.", message.channel);
 					}
 				}
-			} else if(isOsteIn && isVeggenteAlive){//if there's only the Oste
+			} else{//if there's only the Oste
 				if(foundAliveOste && moderatore.auraType){ //check Oste condition
 					embed.sendEmbed([149, 193, 255], "Fu trovata un'anima Impura.", message.channel);
 				} else{

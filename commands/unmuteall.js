@@ -5,6 +5,8 @@ module.exports = {
 		let err = require("../functions/errors");
 
 		if(err.errors([4], moderatore, message))return;
-		message.member.voice.channel.members.each(member => member.voice.setMute(false));
+
+		let bot = message.guild.roles.cache.find(r => r.name === "WereBot").members;
+		message.member.difference(bot).voice.channel.members.each(member => member.voice.setMute(false)).catch();
 	}
 }
