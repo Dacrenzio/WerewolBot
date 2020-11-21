@@ -26,9 +26,14 @@ module.exports={
 
 				for(let i = 0; i < moderatore.playerDying.length; i += 1){//searching for the healed
 					if(mentioned === moderatore.playerDying[i]){
-						embed.sendEmbed([149,193,255], `Hai guarito ${mentioned.toString()}`, message.channel);
+						let index = moderatore.playerList.get(playerDying[i]).tratto.indexOf('mangiato');
+						if(index !== -1)
+							moderatore.playerList.get(playerDying[i]).tratto.splice('mangiato');
+						
 						moderatore.playerDying.splice(i,1);
+
 						moderatore.playerList.get(message.member).tratto.push('usato');
+						embed.sendEmbed([149,193,255], `Hai guarito ${mentioned.toString()}`, message.channel);
 						return;
 					}
 				}

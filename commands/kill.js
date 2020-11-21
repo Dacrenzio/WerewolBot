@@ -66,20 +66,13 @@ module.exports = {
 				if(called.tratto.includes('protetto') || caller.tratto.includes('pazzo')){
 					if(caller.tratto.includes('pazzo')){
 						embed.sendEmbed([149,193,255], `${mentioned.toString()} sarà ucciso di mattina`, message.channel);
-						for(let player of moderatore.playerList.entries()){
-							if(player[1].id === f.capoBranco || player[1].id === lupoDelBranco){
-								let index = player[1].tratto.indexOf('pazzo');
-								moderatore.playerList.get(player[0]).tratto.splice(index, 1);
-							}
-						}
-					} else if(called.id !== f.eremita){//if protetto dalla strega
-						embed.sendEmbed([149,193,255], `${mentioned.toString()} sarà ucciso di mattina`, message.channel);
-						let index = moderatore.playerList.get(entrie).tratto.indexOf('protetto');
-						moderatore.playerList.get(mentioned).tratto.splice(index, 1);
-					} else{
+					}else{
 						embed.sendEmbed([149,193,255], `${mentioned.toString()} non può essere ucciso.`, message.channel);
 					}
+
 				}else{
+					embed.sendEmbed([149,193,255], `${mentioned.toString()} sarà ucciso di mattina`, message.channel);
+					moderatore.playerList.get(mentioned).tratto.push('mangiato');
 					moderatore.playerDying.push(mentioned);
 				}
 			});

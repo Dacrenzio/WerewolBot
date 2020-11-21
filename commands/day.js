@@ -15,12 +15,20 @@ module.exports = {
 		//unmuting people
 		unMute.execute(message,moderatore);
 		message.member.voice.channel.leave();
+
+		//splicing the pazzo effect
+		for(let player of moderatore.playerList.entries()){
+			if(player[1].id === f.capoBranco || player[1].id === f.lupoDelBranco){
+				let index = player[1].tratto.indexOf('pazzo');
+				moderatore.playerList.get(player[0]).tratto.splice(index, 1);
+			}
+		}
 		
 
 		//killing people died during night
 		let deadPeople = "";
 		moderatore.playerDying.forEach(member =>{
-			if(moderatore.playerList.get(member).id === 13){//attivazione del pazzo
+			if(moderatore.playerList.get(member).id === f.pazzo){//attivazione del pazzo
 				for(let player of moderatore.playerList.entries()){
 					if(player[1].id === f.capoBranco || player[1].id === f.lupoDelBranco){
 						moderatore.playerList.get(player[0]).tratto.push('pazzo');
@@ -28,7 +36,7 @@ module.exports = {
 				}
 			}
 			
-			slay.execute(message, moderatore, member, 'mangiato');
+			slay.execute(message, moderatore, member);
 			deadPeople += member.toString() + " è morto durante la notte.\n";
 		});
 
