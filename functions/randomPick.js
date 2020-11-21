@@ -1,5 +1,5 @@
 module.exports ={
-	execute(moderatore, message){
+	execute(moderatore, message, auto){
 		const embed = require("../functions/sendEmbed.js");
 		let extractedRole = [0, 1];
 		let extractedPlayer = [];
@@ -37,7 +37,8 @@ module.exports ={
 			}
 		}
 		
-		embed.sendEmbed([149,193,255], listRole, message.member);
+		if(!auto)
+			embed.sendEmbed([149,193,255], listRole, message.member);
 	}
 }
 

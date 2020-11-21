@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'next',
 	description: "this metod call the next figure that has to play and gives the respective role to the player",
-	execute(message, args, moderatore, client, auto){
+	execute(message, args, moderatore, auto){
 		const embed = require("../functions/sendEmbed.js");
 		const f = require("../figures.js");
 		const err = require("../functions/errors");

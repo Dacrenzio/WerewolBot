@@ -1,7 +1,7 @@
 module.exports = {
 	name:'startvotation',
 	description: "this command reset the votes of the previus night, check if the ID: ",
-	execute(message, args, moderatore, client){
+	execute(message, args, moderatore, auto, client){
 		const embed = require("../functions/sendEmbed.js");
 		let err = require("../functions/errors");
 

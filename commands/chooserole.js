@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'chooserole',
 	description: "this command adds the chosen roles to the game",
-	execute(message, args, moderatore){
+	execute(message, args, moderatore, auto){
 		const embed = require("../functions/sendEmbed.js");
 		const random = require("../functions/randomPick.js");
 		const assign = require("../functions/assignParameters.js");
@@ -40,7 +40,7 @@ module.exports = {
 
 		embed.sendEmbed([149,193,255], "Estrazione a sorte dei ruoli in corso...", message.channel);
 
-		random.execute(moderatore, message);
+		random.execute(moderatore, message, auto);
 		assign.execute(moderatore);
 
 		embed.sendEmbed([0,255,0], "Ruoli estratti correttamente, scrivere `-night` per inizializzare la notte ```oppure -reRoll per rieseguire l'estrazione dei ruoli.```", message.channel);

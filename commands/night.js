@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'night',
 	description: "this command starts the night and provide the night role order based on the night",
-	execute(message, args, moderatore, client, auto){
+	execute(message, args, moderatore, auto){
 		const embed = require("../functions/sendEmbed.js");
 		const figures = require('../figures.js');
 		const ytdl = require('ytdl-core');

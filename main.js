@@ -47,7 +47,7 @@ client.on('message', message =>{
 	}
 
 	if(client.commands.has(command))
-		client.commands.get(command).execute(message, args, mod.get(message.guild.id)[0], client, mod.get(message.guild.id)[1]);
+		client.commands.get(command).execute(message, args, mod.get(message.guild.id)[0], mod.get(message.guild.id)[1], client);
 });
 
 

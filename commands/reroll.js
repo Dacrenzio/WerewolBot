@@ -1,7 +1,7 @@
 module.exports = {
 	name:'reroll',
 	description: 'reroll the random roles and send the list to the moderator',
-	execute(message, args, moderatore){
+	execute(message, args, moderatore, auto){
 		const embed = require("../functions/sendEmbed.js");
 		const random = require("../functions/randomPick.js");
 		const assign = require("../functions/assignParameters.js");
@@ -25,7 +25,7 @@ module.exports = {
 		let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
 		message.guild.members.cache.each(member => member.roles.remove(ghostRole));
 
-		random.execute(moderatore, message);
+		random.execute(moderatore, message, auto);
 		assign.execute(moderatore);
 
 		

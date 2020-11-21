@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'newgame',
 	description: "this command starts a new game of n people and assign the role ''moderator'' to the caller",
-	execute(message, args, moderatore,client,auto){
+	execute(message, args, moderatore, auto){
 		const embed = require("../functions/sendEmbed.js");
 		let err = require("../functions/errors");
 
