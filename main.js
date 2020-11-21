@@ -4,6 +4,7 @@ const figures = require('./figures.js');
 const prefix = '-';
 const fs = require('fs');
 const Moderatore = require('./functions/Moderatore.js');
+const embed = require('./functions/sendEmbed.js');
 
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
@@ -43,6 +44,11 @@ client.on('message', message =>{
 
 	if(command.valueOf() === 'mode'){
 		client.commands.get(command).execute(message, args, mod);
+		return;
+	}
+
+	if(command.valueOf() === 'next' && mod.get(message.guild.id)[1]){
+		embed.sendEmbed([255,0,0], "Non puoi eseguire `-next` con la modalità auto", message.channel);
 		return;
 	}
 
