@@ -5,6 +5,7 @@ module.exports = {
 		const embed = require("../functions/sendEmbed.js");
 
 		embed.sendEmbed([149,193,255],"Questa è la lista completa dei comandi:\n"+
+			"`-mode auto/manual` questo comando imposta la modalità del bot\n"+
 			"`-newGame n` inizia un nuovo game con n giocatori\n"+
 			"`-join` fa entrare un giocatore in partita\n"+
 			"`-playerList` restituisce una lista dei giocatori in partita\n"+

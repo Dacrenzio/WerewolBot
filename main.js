@@ -20,13 +20,13 @@ client.once('ready', () =>{
 	console.log('bot is online\n');
 	
 	client.guilds.cache.each(guild =>{
-		mod.set(guild.id, new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0, true));
+		mod.set(guild.id, [new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0, true), false]);
 	});
 });
 
 
 client.on("guildCreate", guild =>{
-	mod.set(guild.id, new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0, true));
+	mod.set(guild.id, [new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0, true), false]);
 });
 
 client.on("guildDelete", guild =>{
@@ -41,8 +41,13 @@ client.on('message', message =>{
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
 
+	if(command.valueOf() === 'mode'){
+		client.commands.get(command).execute(message, args, mod);
+		return;
+	}
+
 	if(client.commands.has(command))
-		client.commands.get(command).execute(message, args, mod.get(message.guild.id), client);
+		client.commands.get(command).execute(message, args, mod.get(message.guild.id)[0], client, mod.get(message.guild.id)[1]);
 });
 
 

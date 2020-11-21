@@ -1,10 +1,12 @@
 module.exports = {
 	name: 'next',
 	description: "this metod call the next figure that has to play and gives the respective role to the player",
-	execute(message, args, moderatore){
+	execute(message, args, moderatore, client, auto){
 		const embed = require("../functions/sendEmbed.js");
 		const f = require("../figures.js");
-		let err = require("../functions/errors");
+		const err = require("../functions/errors");
+		const recursive = require("./next.js");
+		const mon = require('../functions/monaco.js');
 
 
 		let role = message.guild.roles.cache.find(r => r.name === "Uomini");//rimuovo il ruolo Uomini a tutti coloro che lo hanno
@@ -18,11 +20,11 @@ module.exports = {
 		
 		if(err.errors([0, 8], moderatore, message))return;
 
-		let channel = message.guild.channels.cache.find(c => c.name === 'generale');
+		let general = message.guild.channels.cache.find(c => c.name === 'generale');
 
 		
 		if(moderatore.nightOrder.length === 0){
-			embed.sendEmbed([149,193,255], "Ruoli terminati, iniziare il giorno con `-day`", channel);
+			embed.sendEmbed([149,193,255], "Ruoli terminati, iniziare il giorno con `-day`", general);
 			return;
 		}
 
@@ -30,7 +32,7 @@ module.exports = {
 		let roleID = moderatore.nightOrder.shift();//faccio venire il prossimo ruolo che deve giocare
 		while(!moderatore.roleListID.includes(roleID)){
 			if(moderatore.nightOrder.length === 0){
-				embed.sendEmbed([0,255,0], "Ruoli terminati, iniziare il giorno con `-day`", channel);
+				embed.sendEmbed([0,255,0], "Ruoli terminati, iniziare il giorno con `-day`", general);
 				return;
 			}
 			
@@ -66,8 +68,7 @@ module.exports = {
 					case f.veggente://veggente
 						role = message.guild.roles.cache.find(r => r.name === "Uomini");
 						player[0].roles.add(role).catch(console.error);
-						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, channel);
-						return;
+						break;
 
 
 					case 2://lupi
@@ -91,52 +92,25 @@ module.exports = {
 
 
 					case f.monaco://monaco
-						let presentRole = moderatore.roleListID.slice();
-						for(let value of moderatore.playerList.values()){//sottraggo i ruoli presenti
-							
-							let indexOf = presentRole.indexOf(value.id);
-							while(indexOf != -1){//tolgo tutti i ruoli di quel tipo
-								presentRole.splice(indexOf, 1);
-								indexOf = presentRole.indexOf(value.id);
-							}
-						}
-
-						if(presentRole.length === 0){//controllo se siano rimasti ruoli
-							embed.sendEmbed([149,193,255], "Tutti i ruoli sono in partita", player[0]);
-							break;
-						}
-
-						let ruoliNonPresenti = "";
-						let extracted = -1;
-						for(let j = 0; j < 2 && j < presentRole.length; j += 1){//estraggo 2 o meno ruoli casuali
-							let ran = Math.floor(Math.random() * presentRole.length);
-							
-							while(ran === extracted){
-								ran = Math.floor(Math.random() * presentRole.length);
-							}
-
-							ruoliNonPresenti += componi(presentRole[ran])[0] + "\n";
-
-							if(j === 0){
-								let extracted = ran;
-							}
-						}
-
-						embed.sendEmbed([149,193,255], ruoliNonPresenti, player[0]);
-					
-						break;
+						mon.monaco(moderatore);
+						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, general);
+						recursive.execute(message,args,moderatore,client,auto);
+						return;
 					
 					
 					case f.prete://prete
 						for(let player2 of moderatore.playerList.entries()){
 							if(player2[1].id === f.peccatore){
 								embed.sendEmbed([149,193,255], `${player2[0].toString()} è il Peccatore`, player[0]);
-								embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno`, message.channel);
+								embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno`, general);
+								recursive.execute(message,args,moderatore,client,auto);
 								return;
 							}
 						}
+						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, general);
 						embed.sendEmbed([149,193,255], "Il Peccatore non è in gioco", player[0]);
-						break;
+						recursive.execute(message,args,moderatore,client,auto);
+						return;
 				}
 			}
 		}
@@ -148,7 +122,13 @@ module.exports = {
 			}, 4000);
 		}
 
-		embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, channel);
+		embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, general);
+		
+
+		if(auto){
+			setTimeout(()=> {embed.sendEmbed([149,193,255], "mancano 10 secondi" , general)}, 20000);
+			setTimeout(()=> {recursive.execute(message,args,moderatore,client,auto)} , 30000);
+		}
 	}
 }
 

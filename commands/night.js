@@ -1,11 +1,12 @@
 module.exports = {
 	name: 'night',
 	description: "this command starts the night and provide the night role order based on the night",
-	execute(message, args, moderatore){
-		let embed = require("../functions/sendEmbed.js");
+	execute(message, args, moderatore, client, auto){
+		const embed = require("../functions/sendEmbed.js");
 		const figures = require('../figures.js');
 		const ytdl = require('ytdl-core');
-		let err = require("../functions/errors");
+		const err = require("../functions/errors");
+		const start = require('./next.js');
 
 		if(err.errors([0,5,4,8], moderatore, message))return;
 
@@ -35,5 +36,6 @@ module.exports = {
 		}
 
 		embed.sendEmbed([149,193,255], `Inizio della notte N.${moderatore.nightNum}`, message.channel);
+		start.execute(message, args, moderatore, client, auto);
 	}
 }
