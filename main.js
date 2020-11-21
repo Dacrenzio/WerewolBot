@@ -5,8 +5,6 @@ const prefix = '-';
 const fs = require('fs');
 const Moderatore = require('./functions/Moderatore.js');
 
-const t = require('./try');
-
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 
@@ -24,8 +22,6 @@ client.once('ready', () =>{
 	client.guilds.cache.each(guild =>{
 		mod.set(guild.id, new Moderatore(0,-1,false,new Map(), [], [], [], null, 0, [], 0, true));
 	});
-
-	//t.try();
 });
 
 
