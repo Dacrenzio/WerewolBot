@@ -5,6 +5,7 @@ module.exports = {
 		const embed = require("../functions/sendEmbed.js");
 		const check = require("../functions/checkVotes.js");
 		let err = require("../functions/errors");
+		const unMute = require('./unmuteall.js');
 
 		if(err.errors([0, 1, 2, 3, 4, 5, 8], moderatore, message))return;
 
@@ -14,12 +15,14 @@ module.exports = {
 			embed.sendEmbed([255, 0, 0], "Hai mandato il voto nella chat sbagliata!", message.channel);
 			return;
 		}
+
+		let mentioned = message.mentions.members.first();
 		if(moderatore.ballottaggio.length > 0 && !moderatore.ballottaggio.includes(mentioned)){
 			embed.sendEmbed([255, 0, 0], "Hai votato una persona che non è in ballottaggio!", message.channel);
 			return true;
 		}
 
-		let mentioned = message.mentions.members.first();
+		
 
 		moderatore.playerList.get(mentioned).votes.push(message.member);
 		moderatore.numberOfVotes += 1;
@@ -28,7 +31,7 @@ module.exports = {
 
 		if(moderatore.numberOfVotes === moderatore.playerList.size - moderatore.numberOfDeadPlayer - moderatore.ballottaggio.length){
 			//unmuting people
-			unMute.execute(message);
+			unMute.execute(message, moderatore);
 			check.execute(message,moderatore);
 		}
 		message.channel.delete();

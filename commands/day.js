@@ -12,7 +12,8 @@ module.exports = {
 		if(err.errors([0,5,4,8], moderatore, message))return;
 
 		//unmuting people
-		unMute.execute(message);
+		unMute.execute(message,moderatore);
+		message.member.voice.channel.leave();
 		
 
 		//killing people died during night

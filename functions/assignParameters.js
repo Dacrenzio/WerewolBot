@@ -4,7 +4,7 @@ module.exports ={
 
 			sendCard(member, moderatore.playerList.get(member).id);
 
-			moderatore.playerList.get(member).fazione = 'villaggio';
+			moderatore.playerList.get(member).fazione = "villaggio";
 			moderatore.playerList.get(member).aura = false;
 			moderatore.playerList.get(member).misticismo = false;
 			moderatore.playerList.get(member).tratto = [];
@@ -30,7 +30,7 @@ module.exports ={
 				case 6:
 				case 13:
 				case 17:
-					moderatore.playerList.get(member).fazione = '-';
+					moderatore.playerList.get(member).fazione = "-";
 					break;
 
 				case 7:
@@ -44,7 +44,7 @@ module.exports ={
 				case 2:
 				case 5:
 				case 8:
-					moderatore.playerList.get(member).fazione = 'lupi';
+					moderatore.playerList.get(member).fazione = "lupi";
 					moderatore.playerList.get(member).aura = true;
 					moderatore.playerList.get(member).tratto = ['ombra'];
 					break;

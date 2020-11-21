@@ -9,7 +9,7 @@ module.exports = {
 
 		let players = "Lista dei giocatori e attuale status:\n\n";
 		for(let player of moderatore.playerList.keys()){
-			players += "@"+player.user.username + " : " + stat(moderatore.playerList.get(player).alive);
+			players += "@"+player.user.username + " : " + stat(moderatore.playerList.get(player).alive) +"\n";
 		}
 
 		embed.sendEmbed([149,193,255], players, message.channel);

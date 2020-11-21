@@ -33,7 +33,7 @@ module.exports = {
 		moderatore.finished = false;
 
 		let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
-		message.guild.members.cache.each(member => member.roles.remove([ghostRole, modRole]));
+		message.guild.members.cache.each(member => member.roles.remove(ghostRole));
 
 		//inserisco i ruoli possibili nella lista
 		args.forEach(element=> moderatore.roleListID.push(parseInt(element)));
