@@ -5,12 +5,16 @@ module.exports ={
 		let extractedPlayer = [];
 		let memberList = [];
 
+		
+
 		for(let member of moderatore.playerList.keys()){
 			memberList.push(member);
 		}
 
 		let listRole = "";
-
+		let before8 = 0;
+		let before5 = 0;
+		
 		for (var i = 0; i < moderatore.playerList.size; i +=1 ) {
 			let ranPlayer = Math.floor(Math.random() * moderatore.playerList.size);
 			while(extractedPlayer.includes(ranPlayer))
@@ -21,23 +25,30 @@ module.exports ={
 			if(i === 0){
 				moderatore.playerList.get(memberList[ranPlayer]).id = 2;
 				listRole += `${memberList[ranPlayer].toString()} ` + compose(2);
+
 			} else if(i === 1){
 				moderatore.playerList.get(memberList[ranPlayer]).id = 18;
 				listRole += `${memberList[ranPlayer].toString()} `+ compose(18);
+
 			}else if(i <= moderatore.playerList.size/4){
-				let last = extractedRole[extractedRole.length -1];
-				if(moderatore.roleListID.indexOf(8, last) > 0){
+
+				if(moderatore.roleListID.indexOf(8, before8) > 0){
 					moderatore.playerList.get(memberList[ranPlayer]).id = 8;
 					listRole += `${memberList[ranPlayer].toString()} ` + compose(8);
-					extractedRole.push(moderatore.roleListID.indexOf(8, last));
-				}else if(moderatore.roleListID.indexOf(5, last) > 0){
+					extractedRole.push(moderatore.roleListID.indexOf(8, before8));
+					before8 = moderatore.roleListID.indexOf(8, before8);
+
+				}else if(moderatore.roleListID.indexOf(5, before5) > 0){
 					moderatore.playerList.get(memberList[ranPlayer]).id = 5;
 					listRole += `${memberList[ranPlayer].toString()} ` + compose(5);
-					extractedRole.push(moderatore.roleListID.indexOf(8, last));
+					extractedRole.push(moderatore.roleListID.indexOf(5, before5));
+					before5 = moderatore.roleListID.indexOf(5, before5);
+
 				}else{
-					embed.sendEmbed([255,0,0],"Inserire 1 lupo ogni 4 giocatori!");
+					embed.sendEmbed([255,0,0],"Inserire almeno 1 lupo ogni 4 giocatori!", message.channel);
 					return false;
 				}
+
 			}else{
 
 				let ranRole = Math.floor(Math.random() * moderatore.roleListID.length);
