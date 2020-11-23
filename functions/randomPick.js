@@ -24,6 +24,20 @@ module.exports ={
 			} else if(i === 1){
 				moderatore.playerList.get(memberList[ranPlayer]).id = 18;
 				listRole += `${memberList[ranPlayer].toString()} `+ compose(18);
+			}else if(i <= moderatore.playerList.size/4){
+				let last = extractedRole[extractedRole.length -1];
+				if(moderatore.roleListID.indexOf(8, last) > 0){
+					moderatore.playerList.get(memberList[ranPlayer]).id = 8;
+					listRole += `${memberList[ranPlayer].toString()} ` + compose(8);
+					extractedRole.push(moderatore.roleListID.indexOf(8, last));
+				}else if(moderatore.roleListID.indexOf(5, last) > 0){
+					moderatore.playerList.get(memberList[ranPlayer]).id = 5;
+					listRole += `${memberList[ranPlayer].toString()} ` + compose(5);
+					extractedRole.push(moderatore.roleListID.indexOf(8, last));
+				}else{
+					embed.sendEmbed([255,0,0],"Inserire 1 lupo ogni 4 giocatori!");
+					return false;
+				}
 			}else{
 
 				let ranRole = Math.floor(Math.random() * moderatore.roleListID.length);
@@ -39,6 +53,7 @@ module.exports ={
 		
 		if(!auto)
 			embed.sendEmbed([149,193,255], listRole, message.member);
+		return true;
 	}
 }
 

@@ -86,7 +86,7 @@ module.exports = {
 				embed.sendEmbed([149, 193, 255], `Il rogo di stasera brucia ${playerBurn.toString()}`, channel);
 				moderatore.burnedPlayer = playerBurn;
 				slay.execute(message, moderatore, moderatore.burnedPlayer);
-				moderatore.playerList.get(member).tratto.push('bruciato');
+				moderatore.playerList.get(moderatore.burnedPlayer).tratto.push('bruciato');
 
 
 				//check if game over

@@ -36,6 +36,6 @@ module.exports = {
 		}
 
 		embed.sendEmbed([149,193,255], `Inizio della notte N.${moderatore.nightNum}`, message.channel);
-		start.execute(message, args, moderatore, client, auto);
+		start.execute(message, args, moderatore, auto);
 	}
 }

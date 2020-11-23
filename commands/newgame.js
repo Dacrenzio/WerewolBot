@@ -38,7 +38,7 @@ module.exports = {
 		moderatore.numberOfVotes = 0;
 		moderatore.ballottaggio = [];
 		moderatore.numberOfDeadPlayer = 0;
-		moderatore.finished = false;
+		moderatore.finished = true;
 
 		let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
 		message.guild.members.cache.each(member => member.roles.remove(ghostRole));

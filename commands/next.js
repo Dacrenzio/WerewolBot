@@ -94,7 +94,7 @@ module.exports = {
 					case f.monaco://monaco
 						mon.monaco(moderatore);
 						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, general);
-						recursive.execute(message,args,moderatore,client,auto);
+						recursive.execute(message,args,moderatore,auto);
 						return;
 					
 					
@@ -103,13 +103,13 @@ module.exports = {
 							if(player2[1].id === f.peccatore){
 								embed.sendEmbed([149,193,255], `${player2[0].toString()} è il Peccatore`, player[0]);
 								embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno`, general);
-								recursive.execute(message,args,moderatore,client,auto);
+								recursive.execute(message,args,moderatore,auto);
 								return;
 							}
 						}
 						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, general);
 						embed.sendEmbed([149,193,255], "Il Peccatore non è in gioco", player[0]);
-						recursive.execute(message,args,moderatore,client,auto);
+						recursive.execute(message,args,moderatore,auto);
 						return;
 				}
 			}
@@ -126,8 +126,8 @@ module.exports = {
 		
 
 		if(auto){
-			setTimeout(()=> {embed.sendEmbed([149,193,255], "mancano 10 secondi" , general)}, 20000);
-			setTimeout(()=> {recursive.execute(message,args,moderatore,client,auto)} , 30000);
+			setTimeout(()=> {embed.sendEmbed([149,193,255], "mancano 15 secondi" , general)}, 30000);
+			setTimeout(()=> {recursive.execute(message,args,moderatore,auto)} , 45000);
 		}
 	}
 }

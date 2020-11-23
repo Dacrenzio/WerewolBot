@@ -30,7 +30,7 @@ module.exports = {
 		moderatore.numberOfVotes = 0;
 		moderatore.ballottaggio = [];
 		moderatore.numberOfDeadPlayer = 0;
-		moderatore.finished = false;
+		
 
 		let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
 		message.guild.members.cache.each(member => member.roles.remove(ghostRole));
@@ -40,8 +40,14 @@ module.exports = {
 
 		embed.sendEmbed([149,193,255], "Estrazione a sorte dei ruoli in corso...", message.channel);
 
-		random.execute(moderatore, message, auto);
-		assign.execute(moderatore);
+		if(random.execute(moderatore, message, auto)){
+			assign.execute(moderatore);
+			moderatore.finished = false;
+		}else{
+			moderatore.roleListID = [2, 18];
+			moderatore.finished = true;
+			return;
+		}
 
 		embed.sendEmbed([0,255,0], "Ruoli estratti correttamente, scrivere `-night` per inizializzare la notte ```oppure -reRoll per rieseguire l'estrazione dei ruoli.```", message.channel);
 	}

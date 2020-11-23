@@ -6,7 +6,10 @@ module.exports = {
 
 		if(err.errors([4], moderatore, message))return;
 
-		let bot = message.guild.roles.cache.find(r => r.name === "WereBot").members;
-		message.member.difference(bot).voice.channel.members.each(member => member.voice.setMute(false)).catch();
+		
+		message.member.voice.channel.members.each(member => {
+			if(!member.user.bot)
+				member.voice.setMute(false).catch()
+		});
 	}
 }

@@ -9,6 +9,11 @@ module.exports = {
 
 		if(err.errors([0], moderatore, message))return;
 
+		if(moderatore.playerList.size > moderatore.roleListID.length){
+			embed.sendEmbed([255,0,0], "Devi prima scegliere i ruoli con `-chooseRole`");
+			return;
+		}
+
 		embed.sendEmbed([149,193,255], "Ritiro a sorte dei ruoli in corso...", message.channel);
 
 		//resetting players

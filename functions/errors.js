@@ -54,8 +54,7 @@ module.exports ={
 				case 6:
 					const args = message.content.split(/ +/);
 					args.shift();
-					for (var i = 0; i < args.length; i++) {
-						if(isNaN(parseInt(args[i]))){//code 9
+						if(!args.each(value => !isNaN(parseInt(value))){
 							embed.sendEmbed([255,0,0], "Scrivere un numero!", message.channel);
 							return true;
 						}
