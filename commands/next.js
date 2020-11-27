@@ -117,7 +117,7 @@ module.exports = {
 
 		if(moderatore.nightNum === 1 && roleID === 2){
 			setTimeout(()=>{
-				let channel = message.guild.channels.cache.find(r => r.name === "lupi");
+				let channel = message.guild.channels.cache.find(r => r.name === "chat-segreta");
 				embed.sendEmbed([149,193,255], lupi, channel);
 			}, 4000);
 		}

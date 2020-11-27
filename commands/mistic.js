@@ -8,6 +8,7 @@ module.exports = {
 
 		if(err.errors([0,1,2,3,7,8], moderatore, message))return;
 
+		let mentioned = message.mentions.members.first();
 		let caller = moderatore.playerList.get(message.member);
 
 		if(caller.id === f.mago && caller.alive){ //check if he's roleID: 9 and alive

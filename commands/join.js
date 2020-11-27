@@ -17,7 +17,7 @@ module.exports = {
 
 			//add the player to the list with a standard role
 			moderatore.playerList.set(message.member, new PlayerRole( 0, 'neutra', false, false, [], false, []));
-			embed.sendEmbed([0,255,0], "OK!", message.channel);
+			message.react("✅");
 			
 			if(moderatore.playerList.size === moderatore.playerNum){//when reached the number of player wanted this option will pop-up
 				embed.sendEmbed([149,193,255], "digitare `-chooseRole` seguito dal codice identificativo dei ruoli disponibili senza [] (massimo 1,5 volte il numero di giocatori):\n"+

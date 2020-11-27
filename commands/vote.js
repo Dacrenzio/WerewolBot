@@ -31,7 +31,7 @@ module.exports = {
 
 		if(moderatore.numberOfVotes === moderatore.playerList.size - moderatore.numberOfDeadPlayer - moderatore.ballottaggio.length){
 			//unmuting people
-			unMute.execute(message, moderatore);
+			unMute.execute(message, args, moderatore);
 			check.execute(message,moderatore);
 		}
 		message.channel.delete();

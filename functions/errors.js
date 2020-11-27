@@ -54,11 +54,11 @@ module.exports ={
 				case 6:
 					const args = message.content.split(/ +/);
 					args.shift();
-						if(!args.each(value => !isNaN(parseInt(value))){
-							embed.sendEmbed([255,0,0], "Scrivere un numero!", message.channel);
-							return true;
-						}
-					}
+					
+					if(!args.every(value => !isNaN(parseInt(value)))){
+						embed.sendEmbed([255,0,0], "Scrivere un numero!", message.channel);
+						return true;
+					}	
 					break;
 
 				case 7:
