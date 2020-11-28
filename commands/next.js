@@ -83,6 +83,7 @@ module.exports = {
 					case f.medium:
 					case f.strega:
 					case f.veggente:
+					case f.angelo:
 						player[0].roles.add(secretRole);
 						break;
 
