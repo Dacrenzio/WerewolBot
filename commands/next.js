@@ -156,12 +156,12 @@ module.exports = {
 function componi(id){
 	switch(id){
 		case 2: return ["Il Branco", ", comando: `-kill @objective`"];
-		case 7: return ["Il Guaritore", ", comando: `-heal @objective`"];
-		case 9: return ["Il Mago", ", comando: `-mistic @objective`"];
-		case 10: return ["La Medium" , ", comando: `-aura @objective`"];
+		case 7: return ["Il Guaritore", ", comando: `-act @objective`"];
+		case 9: return ["Il Mago", ", comando: `-act @objective`"];
+		case 10: return ["La Medium" , ", comando: `-act @objective`"];
 		case 11: return ["Il Monaco" , ""];
 		case 15: return ["Il Prete", ""];
-		case 16: return ["La Strega", ", comando: `-protect @objective`"];
-		case 18: return ["La Veggente", ", comando: `-aura @objective`"];
+		case 16: return ["La Strega", ", comando: `-act @objective`"];
+		case 18: return ["La Veggente", ", comando: `-act @objective`"];
 	}
 }

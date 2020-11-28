@@ -5,7 +5,7 @@ module.exports = {
 		const embed = require("../functions/sendEmbed.js");
 
 		embed.sendEmbed([149,193,255],"Questa è la lista completa dei comandi:\n"+
-			"`-mode auto/manual` questo comando imposta la modalità del bot\n"+
+			"`-mode auto/manual` questo comando imposta la modalità del bot (auto di default)\n"+
 			"`-newGame n` inizia un nuovo game con n giocatori\n"+
 			"`-join` fa entrare un giocatore in partita\n"+
 			"`-playerList` restituisce una lista dei giocatori in partita\n"+
@@ -17,11 +17,8 @@ module.exports = {
 			"`-vote @player` serve per votare un determinato giocatore in partita\n"+
 			"`-unMuteAll` necessario per smutare i giocatori quando non in partita\n\n"+
 			"```Comandi specifici per ruolo:```\n"+
-			"`-aura @player` comando della Veggente e della Medium, serve a identificare l'aura del giocatore citato\n"+
-			"`-heal @player` comando del Guaritore, serve a guarire una volta per partita un morente\n"+
-			"`-kill @player1 @player2` comando dei Lupi, uccide un giocatore; quando il giovane lupo è stato mandato al rogo è possibile selezionare due vittime\n"+
-			"`-mistic @player` comando del Mago, serve per sapere se il giocatore indicato è un mistico\n"+
-			"`-protect @player` comando della Strega, serve per proteggere dai lupi il giocatore scelto\n"
+			"`-act @player` comando per i ruoli notturni generico che si adegua al ruolo del giocatore\n"+
+			"`-kill @player1 @player2` comando dei Lupi, uccide un giocatore; quando il giovane lupo è stato mandato al rogo è possibile selezionare due vittime"
 			, message.channel);
 	}
 }

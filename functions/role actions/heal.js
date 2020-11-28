@@ -1,12 +1,8 @@
 module.exports={
-	name: 'heal',
 	description: "let the Healer to heal a Dying player",
-	execute(message, args, moderatore){
+	execute(message, moderatore){
 		const embed = require("../functions/sendEmbed.js");
 		const f = require("../figures.js");
-		let err = require("../functions/errors");
-
-		if(err.errors([0,1,2,3,7,8], moderatore, message))return;
 
 		if(message.mentions.members.first() === message.member){
 			embed.sendEmbed([255,0,0], "Non puoi guarire te stessa!", message.channel);
@@ -16,7 +12,7 @@ module.exports={
 		let mentioned = message.mentions.members.first();
 		let caller = moderatore.playerList.get(message.member);
 
-		if(caller.id === f.guaritore && caller.alive){
+		if(caller.alive){
 
 			if(caller.tratto.includes('usato')){
 				embed.sendEmbed([255,0,0], "Hai già guarito una persona durante la partita", message.channel);
@@ -43,8 +39,7 @@ module.exports={
 			}
 
 		}else{
-			message.delete();
-			embed.sendEmbed([255,0,0], "Non hai il ruolo adatto per guarire.", message.author);
+			embed.sendEmbed([255,0,0], "Sei morto.", message.channel);
 		}
 	}
 }
