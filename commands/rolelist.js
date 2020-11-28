@@ -18,24 +18,24 @@ module.exports={
 
 function componi(id){
 	switch(id){
-		case 1: return "Il Bardo";
-		case 2: return "Il Branco";
-		case 3: return "Il Contadino";
-		case 4: return "L'Eremita";
-		case 5: return "Il Giovane Lupo";
-		case 6: return "Il Giullare";
-		case 7: return "Il Guaritore";
-		case 8: return "Il Lupo del Branco";
-		case 9: return "Il Mago";
-		case 10: return "La Medium";
-		case 11: return "Il Monaco";
-		case 12: return "L'Oste";
-		case 13: return "Il Pazzo";
-		case 14: return "Il Peccatore";
-		case 15: return "Il Prete";
-		case 16: return "La Strega";
-		case 17: return "Il Traditore";
-		case 18: return "La Veggente";
-		case 19: return "L'angelo custode";
+		case 1: return "Bardo";
+		case 2: return "Branco";
+		case 3: return "Contadino";
+		case 4: return "Eremita";
+		case 5: return "Giovane Lupo";
+		case 6: return "Giullare";
+		case 7: return "Guaritore";
+		case 8: return "Lupo del Branco";
+		case 9: return "Mago";
+		case 10: return "Medium";
+		case 11: return "Monaco";
+		case 12: return "Oste";
+		case 13: return "Pazzo";
+		case 14: return "Peccatore";
+		case 15: return "Prete";
+		case 16: return "Strega";
+		case 17: return "Traditore";
+		case 18: return "Veggente";
+		case 19: return "Angelo Custode";
 	}
 }
