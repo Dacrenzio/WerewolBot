@@ -16,5 +16,6 @@ module.exports = {
 	prete: 15,
 	strega: 16,
 	traditore: 17,
-	veggente: 18
+	veggente: 18,
+	angelo: 19
 }

@@ -1,5 +1,7 @@
 module.exports ={
 	execute(moderatore){
+		let secretID = ['','eroe','discendente'];
+
 		for(let member of moderatore.playerList.keys()){
 
 			sendCard(member, moderatore.playerList.get(member).id);
@@ -13,7 +15,6 @@ module.exports ={
 
 			switch(moderatore.playerList.get(member).id){
 				case 1:
-				case 3:
 				case 11:
 				case 12:
 				case 15:
@@ -30,6 +31,7 @@ module.exports ={
 				case 6:
 				case 13:
 				case 17:
+				case 19:
 					moderatore.playerList.get(member).fazione = "-";
 					break;
 
@@ -47,6 +49,13 @@ module.exports ={
 					moderatore.playerList.get(member).fazione = "lupi";
 					moderatore.playerList.get(member).aura = true;
 					moderatore.playerList.get(member).tratto = ['ombra'];
+					break;
+
+				case 3:
+					let ran = math.floor(Math.floor(Math.random() * secretID.length));
+					if(ran != 0){
+						moderatore.playerList.get(member).tratto.push(secretID.splice(ran,1)[0]);
+					}
 					break;
 
 				default:
@@ -76,5 +85,6 @@ function sendCard(user, id){
 		case 16: user.send("https://wherewolf.fandom.com/it/wiki/La_Strega");break;
 		case 17: user.send("https://wherewolf.fandom.com/it/wiki/Il_Traditore");break;
 		case 18: user.send("https://wherewolf.fandom.com/it/wiki/La_Veggente");break;
+		case 19: user.send("https://wherewolf.fandom.com/it/wiki/L'Angelo_Custode");break;
 	}
 }

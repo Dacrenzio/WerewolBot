@@ -7,15 +7,17 @@ module.exports = {
 		if(result[0]){
 			let mess = result[1];
 			if(result[2]){
-				if(result[3]){
-					mess += ", il Pazzo ed il Giullare";
-				}else{
-					mess += " ed il Pazzo";
-				}
-
-			}else if(result[3]){
-				mess += " ed il Giullare";
+				mess += ", il Pazzo";
 			}
+
+			if(result[3]){
+				mess += ", il Giullare";
+			}
+
+			if(result[4]){
+				mess += ", l'Angelo custode"
+			}
+
 			mess += "!!\n\n Fine della partita!!\n Digitare `-newGame n` per iniziare una nuova partita oppure \n`-reRoll` per mantenere gli stessi ruoli e giocatori oppure \n`-chooseRole` per cambiare solo i ruoli.";
 			embed.sendEmbed([149,193,255], mess, channel);
 			moderatore.finished = true;

@@ -27,7 +27,7 @@ module.exports = {
 		moderatore.ballottaggio = [];
 		
 		if(moderatore.nightNum === 1){
-			moderatore.nightOrder = [figures.veggente, figures.mago, figures.monaco, figures.prete, figures.capoBranco];
+			moderatore.nightOrder = [figures.veggente, figures.mago, figures.monaco, figures.prete, figures.angelo, figures.capoBranco];
 		}else{
 			moderatore.nightOrder = [figures.veggente, figures.medium, figures.mago, figures.strega, figures.capoBranco, figures.guaritore, 0];
 		}

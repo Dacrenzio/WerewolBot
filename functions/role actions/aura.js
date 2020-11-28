@@ -9,8 +9,6 @@ module.exports = {
 		let called = moderatore.playerList.get(mentioned);
 
 		if(caller.alive){
-					
-					
 			if((!called.alive && caller.id === f.veggente) ||
 			(called.alive && caller.id === f.medium)){ //check if the numbe 18 is checking someone alive and number 10 someone dead
 				embed.sendEmbed([255,0,0], "Hai controllato un giocatore morto (se sei la Veggente) o vivo (se sei la Medium)", message.channel);

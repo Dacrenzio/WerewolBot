@@ -8,6 +8,7 @@ module.exports = {
 		const heal = require('../functions/role actions/heal.js');
 		const mistic = require('../functions/role actions/mistic.js');
 		const protect = require('../functions/role actions/protect.js');
+		const amato = require('../functions/role actions/amato.js');
 
 		if(err.errors([0,1,2,3,7,8], moderatore, message))return;
 
@@ -29,6 +30,10 @@ module.exports = {
 
 			case f.guaritore:
 				heal.execute(message, moderatore);
+				break;
+
+			case f.angelo:
+				amato.execute(message, moderatore);
 				break;
 
 			default:

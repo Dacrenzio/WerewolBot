@@ -23,8 +23,14 @@ module.exports = {
 		}
 
 		
-
-		moderatore.playerList.get(mentioned).votes.push(message.member);
+		let indAmato = moderatore.playerList.get(mentioned).tratto.indexOf('amato');
+		if(indAmato != -1){
+			let angelo = moderatore.playerList.get(mentioned).tratto[indAmato+1];
+			moderatore.playerList.get(angelo).votes.push(message.member);
+		}else{
+			moderatore.playerList.get(mentioned).votes.push(message.member);
+		}
+		
 		moderatore.numberOfVotes += 1;
 		embed.sendEmbed([0, 255, 0], "Il tuo voto è stato accettato!", message.member);
 		

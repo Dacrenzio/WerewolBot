@@ -1,48 +1,42 @@
 module.exports ={
 	execute(moderatore, message, auto){
 		const embed = require("../functions/sendEmbed.js");
-		let extractedRole = [0, 1];
-		let extractedPlayer = [];
-		let memberList = [];
-
+		let roleList = moderatore.roleListID.slice();
 		
-
+		let memberList = [];
 		for(let member of moderatore.playerList.keys()){
 			memberList.push(member);
 		}
 
+		
 		let listRole = "";
-		let before8 = 0;
-		let before5 = 0;
 		
 		for (var i = 0; i < moderatore.playerList.size; i +=1 ) {
-			let ranPlayer = Math.floor(Math.random() * moderatore.playerList.size);
-			while(extractedPlayer.includes(ranPlayer))
-				ranPlayer = Math.floor(Math.random() * moderatore.playerList.size);
+			let ranPlayer = Math.floor(Math.random() * moderatore.memberList.size);
 
-			extractedPlayer.push(ranPlayer);
+			let extractedPlayer = memberList.splice(ranPlayer, 1)[0];
 
 			if(i === 0){
-				moderatore.playerList.get(memberList[ranPlayer]).id = 2;
-				listRole += `${memberList[ranPlayer].toString()} ` + compose(2);
+				moderatore.playerList.get(extractedPlayer).id = 2;
+				listRole += `${extractedPlayer.toString()} ` + compose(2);
+				roleList.splice(0,1);
 
 			} else if(i === 1){
-				moderatore.playerList.get(memberList[ranPlayer]).id = 18;
-				listRole += `${memberList[ranPlayer].toString()} `+ compose(18);
+				moderatore.playerList.get(extractedPlayer).id = 18;
+				listRole += `${extractedPlayer.toString()} `+ compose(18);
+				roleList.splice(0,1);
 
 			}else if(i <= moderatore.playerList.size/4){
 
-				if(moderatore.roleListID.indexOf(8, before8) > 0){
-					moderatore.playerList.get(memberList[ranPlayer]).id = 8;
-					listRole += `${memberList[ranPlayer].toString()} ` + compose(8);
-					extractedRole.push(moderatore.roleListID.indexOf(8, before8));
-					before8 = moderatore.roleListID.indexOf(8, before8);
+				if(roleList.indexOf(8) > -1){
+					moderatore.playerList.get(extractedPlayer).id = 8;
+					listRole += `${extractedPlayer.toString()} ` + compose(8);
+					roleList.splice(roleList.indexOf(8),1);
 
-				}else if(moderatore.roleListID.indexOf(5, before5) > 0){
-					moderatore.playerList.get(memberList[ranPlayer]).id = 5;
-					listRole += `${memberList[ranPlayer].toString()} ` + compose(5);
-					extractedRole.push(moderatore.roleListID.indexOf(5, before5));
-					before5 = moderatore.roleListID.indexOf(5, before5);
+				}else if(roleList.indexOf(5) > -1){
+					moderatore.playerList.get(extractedPlayer).id = 5;
+					listRole += `${extractedPlayer.toString()} ` + compose(5);
+					roleList.splice(roleList.indexOf(5),1);
 
 				}else{
 					embed.sendEmbed([255,0,0],"Inserire almeno 1 lupo ogni 4 giocatori!", message.channel);
@@ -51,14 +45,11 @@ module.exports ={
 
 			}else{
 
-				let ranRole = Math.floor(Math.random() * moderatore.roleListID.length);
-				while(extractedRole.includes(ranRole))
-					ranRole = Math.floor(Math.random() * moderatore.roleListID.length);
+				let ranRole = Math.floor(Math.random() * roleList.length);
+				let extractedRole = roleList.splice(ranRole,1)[0];
+				moderatore.playerList.get(extractedPlayer).id = extractedRole;
 
-				moderatore.playerList.get(memberList[ranPlayer]).id = moderatore.roleListID[ranRole];
-				extractedRole.push(ranRole);
-
-				listRole += `${memberList[ranPlayer].toString()} `+ compose(moderatore.roleListID[ranRole]);
+				listRole += `${extractedPlayer.toString()} `+ compose(extractedRole);
 			}
 		}
 		

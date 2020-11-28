@@ -71,8 +71,15 @@ module.exports = {
 
 				}else{
 					embed.sendEmbed([149,193,255], `${mentioned.toString()} sarà ucciso di mattina`, message.channel);
-					moderatore.playerList.get(mentioned).tratto.push('mangiato');
-					moderatore.playerDying.push(mentioned);
+					if(called.tratto.includes('amato')){
+						let amato = called.tratto[(called.tratto.indexOf('amato'))+1];
+						moderatore.playerList.get(amato).tratto.push('mangiato');
+						moderatore.playerDying.push(amato);
+						embed.sendEmbed([149,193,255], "Il tuo amato è in pericolo.",amato);
+					}else{
+						moderatore.playerList.get(mentioned).tratto.push('mangiato');
+						moderatore.playerDying.push(mentioned);
+					}
 				}
 			});
 

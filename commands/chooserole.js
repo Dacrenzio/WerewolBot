@@ -37,8 +37,9 @@ module.exports = {
 
 		//inserisco i ruoli possibili nella lista
 		args.forEach(element=>{
-			if(parseInt(element) <18 || parseInt(element)> 0){
-				moderatore.roleListID.push(parseInt(element))
+			elem = parseInt(element);
+			if((elem >= 1 && elem <= 19) && (elem != 2 && elem != 18)){
+				moderatore.roleListID.push(elem);
 			}else{
 				embed.sendEmbed([255,0,0], "Hai inserito un ID invalido!", message.channel)
 				return;
