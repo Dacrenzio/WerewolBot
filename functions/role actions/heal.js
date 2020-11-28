@@ -11,6 +11,7 @@ module.exports={
 		
 		let mentioned = message.mentions.members.first();
 		let caller = moderatore.playerList.get(message.member);
+		let called = moderatore.playerList.get(mentioned);
 
 		if(caller.alive){
 
@@ -19,23 +20,26 @@ module.exports={
 				return;
 			
 			}else{
+				let indexPlayer = moderatore.playerDying.indexOf(mentioned);
+				if(indexPlayer != -1){
+					if(called.tratto.includes('mangiato')){
+						let indexMangiato = called.tratto.indexOf('mangiato');
+						moderatore.playerList.get(mentioned).tratto.splice(indexMangiato, 1);
 
-				for(let i = 0; i < moderatore.playerDying.length; i += 1){//searching for the healed
-					if(mentioned === moderatore.playerDying[i]){
-						let index = moderatore.playerList.get(moderatore.playerDying[i]).tratto.indexOf('mangiato');
-						if(index !== -1)
-							moderatore.playerList.get(moderatore.playerDying[i]).tratto.splice(index, 1);
-						
-						moderatore.playerDying.splice(i,1);
-
-						moderatore.playerList.get(message.member).tratto.push('usato');
-						embed.sendEmbed([149,193,255], `Hai guarito ${mentioned.toString()}`, message.channel);
-						return;
+						//removing the killer from the hero
+						if(called.tratto.includes('eroe')){
+							let indexEroe = called.tratto.indexOf('eroe');
+							moderatore.playerList.get(mentioned).tratto.splice(indexEroe+1, 1);
+						}
 					}
-				}
+						
+					moderatore.playerDying.splice(indexPlayer,1);
 
-				embed.sendEmbed([255,0,0], "La persona indicata non sta morendo.", message.channel);
-				return;
+					moderatore.playerList.get(message.member).tratto.push('usato');
+					embed.sendEmbed([149,193,255], `Hai guarito ${mentioned.toString()}`, message.channel);
+				}else{
+					embed.sendEmbed([255,0,0], "La persona indicata non sta morendo.", message.channel);
+				}
 			}
 
 		}else{
