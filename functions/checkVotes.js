@@ -101,7 +101,16 @@ module.exports = {
 					nominati += `${entrie[0].toString()}\n`;
 				}
 			}
-			embed.sendEmbed([149, 193, 255], nominati+ "Sono chiamati al ballottaggio.", channel);
+
+			if(moderatore.ballottaggio.length === moderatore.playerList.size - moderatore.numberOfDeadPlayer){
+				embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
+				moderatore.burnedPlayer = null;
+				return;
+			
+			}else{
+				embed.sendEmbed([149, 193, 255], nominati+ "Sono chiamati al ballottaggio.", channel);
+			}
+		
 		}
 	}
 }

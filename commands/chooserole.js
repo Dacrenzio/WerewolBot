@@ -36,7 +36,14 @@ module.exports = {
 		message.guild.members.cache.each(member => member.roles.remove(ghostRole));
 
 		//inserisco i ruoli possibili nella lista
-		args.forEach(element=> moderatore.roleListID.push(parseInt(element)));
+		args.forEach(element=>{
+			if(parseInt(element) <18 || parseInt(element)> 0){
+				moderatore.roleListID.push(parseInt(element))
+			}else{
+				embed.sendEmbed([255,0,0], "Hai inserito un ID invalido!", message.channel)
+				return;
+			}
+		});
 
 		embed.sendEmbed([149,193,255], "Estrazione a sorte dei ruoli in corso...", message.channel);
 

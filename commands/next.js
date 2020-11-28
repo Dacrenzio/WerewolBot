@@ -7,32 +7,50 @@ module.exports = {
 		const err = require("../functions/errors");
 		const recursive = require("./next.js");
 		const mon = require('../functions/monaco.js');
+		const day = require('./day.js');
 
 
-		let role = message.guild.roles.cache.find(r => r.name === "Uomini");//rimuovo il ruolo Uomini a tutti coloro che lo hanno
-		role.members.each(member => member.roles.remove(role));
-
-		role = message.guild.roles.cache.find(r => r.name === "Lupi");//stessa cosa lupi
-		role.members.each(member => member.roles.remove(role));
-
-		role = message.guild.roles.cache.find(r => r.name === "Criminali");// stessa cosa criminali
-		role.members.each(member => member.roles.remove(role));
+		let secretRole = message.guild.roles.cache.find(r => r.name === "Secret");//rimuovo il ruolo segreto
+		role.members.each(member => member.roles.remove(secretRole));
 		
 		if(err.errors([0, 8], moderatore, message))return;
 
 		let general = message.guild.channels.cache.find(c => c.name === 'generale');
+		let secret = message.guild.channels.cache.find(r => r.name === "chat-segreta");
 
 		
 		if(moderatore.nightOrder.length === 0){
-			embed.sendEmbed([149,193,255], "Ruoli terminati, iniziare il giorno con `-day`", general);
+			if(!auto){
+				embed.sendEmbed([149,193,255], "Ruoli terminati, iniziare il giorno con `-day`", general);
+			}else{
+				day.execute(message, args, moderatore);
+			}
+
 			return;
 		}
 
 
 		let roleID = moderatore.nightOrder.shift();//faccio venire il prossimo ruolo che deve giocare
+
+		if(roleID === f.guaritore){//after the wolves the pazzo effect is gone
+			for(let wolves of moderatore.playerList.entries()){
+				if(wolves[1].id === f.capoBranco || wolves[1].id === f.lupoDelBranco){
+					//rimuovo il tratto pazzo
+					let index = player[1].tratto.indexOf('pazzo');
+					if(index != -1){
+						moderatore.playerList.get(wolves[0]).tratto.splice(index, 1);
+					}
+				}
+			}
+		}
+
 		while(!moderatore.roleListID.includes(roleID)){
 			if(moderatore.nightOrder.length === 0){
-				embed.sendEmbed([0,255,0], "Ruoli terminati, iniziare il giorno con `-day`", general);
+				if(!auto){
+					embed.sendEmbed([149,193,255], "Ruoli terminati, iniziare il giorno con `-day`", general);
+				}else{
+					day.execute(message, args, moderatore);
+				}
 				return;
 			}
 			
@@ -46,7 +64,7 @@ module.exports = {
 				(roleID === f.capoBranco && player[1].id === f.lupoDelBranco) ||
 				(roleID === f.capoBranco && player[1].id === f.traditore && moderatore.nightNum === 1)){
 				switch(roleID){
-					case f.guaritore://guaritore
+					case f.guaritore:
 						if(player[1].tratto.includes('usato')){
 							break;
 						}
@@ -58,18 +76,15 @@ module.exports = {
 						}
 						
 						setTimeout(()=>{
-							let channel = message.guild.channels.cache.find(r => r.name === "uomini");
-							embed.sendEmbed([149,193,255], morenti, channel);
+							embed.sendEmbed([149,193,255], morenti, secret);
 						}, 4000);
 						
-					case f.mago://mago
-					case f.medium://medium
-					case f.strega://strega
-					case f.veggente://veggente
-						role = message.guild.roles.cache.find(r => r.name === "Uomini");
-						player[0].roles.add(role).catch(console.error);
+					case f.mago:
+					case f.medium:
+					case f.strega:
+					case f.veggente:
+						player[0].roles.add(secretRole);
 						break;
-
 
 					case 2://lupi
 						if(moderatore.nightNum === 1){
@@ -86,46 +101,50 @@ module.exports = {
 						}
 						let index = player[1].tratto.indexOf('usato');
 						moderatore.playerList.get(player[0]).tratto.splice(index, 1);
-						role = message.guild.roles.cache.find(r => r.name === "Lupi");
-						player[0].roles.add(role).catch(console.error);
+						player[0].roles.add(secretRole);
 						break;
 
 
-					case f.monaco://monaco
+					case f.monaco:
 						mon.monaco(moderatore);
-						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, general);
-						recursive.execute(message,args,moderatore,auto);
-						return;
+						break;
 					
 					
-					case f.prete://prete
+					case f.prete:
 						for(let player2 of moderatore.playerList.entries()){
 							if(player2[1].id === f.peccatore){
 								embed.sendEmbed([149,193,255], `${player2[0].toString()} è il Peccatore`, player[0]);
-								embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno`, general);
+								embed.sendEmbed([149,193,255], `${componi(roleID)[0]} ti è stato mandato un messaggio privato`, general);
 								recursive.execute(message,args,moderatore,auto);
 								return;
 							}
 						}
-						embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, general);
+
 						embed.sendEmbed([149,193,255], "Il Peccatore non è in gioco", player[0]);
-						recursive.execute(message,args,moderatore,auto);
-						return;
+						break;
 				}
 			}
 		}
 
+		//la prima sera scrivi ai lupi
 		if(moderatore.nightNum === 1 && roleID === 2){
 			setTimeout(()=>{
-				let channel = message.guild.channels.cache.find(r => r.name === "chat-segreta");
-				embed.sendEmbed([149,193,255], lupi, channel);
+				embed.sendEmbed([149,193,255], lupi, secret);
 			}, 4000);
 		}
 
+		//il monaco e il prete non aspettano i 45 secondi
+		if(roleID === f.monaco || roleID === f.prete){
+			embed.sendEmbed([149,193,255], `${componi(roleID)[0]} ti è stato mandato un messaggio privato`, general);
+			recursive.execute(message,args,moderatore,auto);
+			return;
+		}
+
 		embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, general);
-		
 
 		if(auto){
+			let channel = message.guild.channels.cache.find(r => r.name === "chat-segreta");
+			setTimeout(()=> {embed.sendEmbed([149,193,255], "mancano 15 secondi" , secret)}, 30000);
 			setTimeout(()=> {embed.sendEmbed([149,193,255], "mancano 15 secondi" , general)}, 30000);
 			setTimeout(()=> {recursive.execute(message,args,moderatore,auto)} , 45000);
 		}
@@ -136,23 +155,13 @@ module.exports = {
 
 function componi(id){
 	switch(id){
-		case 1: return ["Il Bardo", "\n"];
-		case 2: return ["Il Branco", ", comando: `-kill @objective`\n"];
-		case 3: return ["Il Contadino", "\n"];
-		case 4: return ["L'Eremita", "\n"];
-		case 5: return ["Il Giovane Lupo" , "\n"];
-		case 6: return ["Il Giullare", "\n"];
-		case 7: return ["Il Guaritore", ", comando: `-heal @objective`\n"];
-		case 8: return ["Il Lupo del Branco", "\n"];
-		case 9: return ["Il Mago", ", comando: `-mistic @objective`\n"];
-		case 10: return ["Il Medium" , ", comando: `-aura @objective`\n"];
-		case 11: return ["Il Monaco" , "\n"];
-		case 12: return ["L'Oste", "\n"];
-		case 13: return ["Il Pazzo", "\n"];
-		case 14: return ["Il Peccatore", "\n"];
-		case 15: return ["Il Prete", "\n"];
-		case 16: return ["La Strega", ", comando: `-protect @objective`\n"];
-		case 17: return ["Il Traditore", "\n"];
-		case 18: return ["La Veggente", ", comando: `-aura @objective`\n"];
+		case 2: return ["Il Branco", ", comando: `-kill @objective`"];
+		case 7: return ["Il Guaritore", ", comando: `-heal @objective`"];
+		case 9: return ["Il Mago", ", comando: `-mistic @objective`"];
+		case 10: return ["La Medium" , ", comando: `-aura @objective`"];
+		case 11: return ["Il Monaco" , ""];
+		case 15: return ["Il Prete", ""];
+		case 16: return ["La Strega", ", comando: `-protect @objective`"];
+		case 18: return ["La Veggente", ", comando: `-aura @objective`"];
 	}
 }

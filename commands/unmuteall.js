@@ -9,7 +9,7 @@ module.exports = {
 		
 		message.member.voice.channel.members.each(member => {
 			if(!member.user.bot)
-				member.voice.setMute(false).catch(console.log("errore nel muteAll"))
+				member.voice.setMute(false).catch(console.log)
 		});
 	}
 }

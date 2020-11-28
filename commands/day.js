@@ -13,22 +13,14 @@ module.exports = {
 		if(err.errors([0,5,4,8], moderatore, message))return;
 
 		//unmuting people
-		unMute.execute(message,moderatore);
+		unMute.execute(message, args, moderatore);
 		message.member.voice.channel.leave();
-
-		//splicing the pazzo effect
-		for(let player of moderatore.playerList.entries()){
-			if(player[1].id === f.capoBranco || player[1].id === f.lupoDelBranco){
-				let index = player[1].tratto.indexOf('pazzo');
-				moderatore.playerList.get(player[0]).tratto.splice(index, 1);
-			}
-		}
 		
 
 		//killing people died during night
 		let deadPeople = "";
 		moderatore.playerDying.forEach(member =>{
-			if(moderatore.playerList.get(member).id === f.pazzo){//attivazione del pazzo
+			if(moderatore.playerList.get(member).id === f.pazzo && moderatore.playerList.get(member).tratto.includes('mangiato')){//attivazione del pazzo
 				for(let player of moderatore.playerList.entries()){
 					if(player[1].id === f.capoBranco || player[1].id === f.lupoDelBranco){
 						moderatore.playerList.get(player[0]).tratto.push('pazzo');

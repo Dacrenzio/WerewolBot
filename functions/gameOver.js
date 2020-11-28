@@ -9,8 +9,10 @@ module.exports = {
 			if(result[2]){
 				if(result[3]){
 					mess += ", il Pazzo ed il Giullare";
+				}else{
+					mess += " ed il Pazzo";
 				}
-				mess += " ed il Pazzo";
+
 			}else if(result[3]){
 				mess += " ed il Giullare";
 			}

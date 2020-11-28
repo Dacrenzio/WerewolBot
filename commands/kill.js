@@ -19,7 +19,6 @@ module.exports = {
 		//check if the burned is the young wolf
 		if(moderatore.burnedPlayer !== null && 
 		moderatore.playerList.get(moderatore.burnedPlayer).id === f.giovaneLupo){
-			
 			youngWolfBurned = true;
 		}
 		
@@ -42,7 +41,7 @@ module.exports = {
 				let called = moderatore.playerList.get(mentioned);
 
 				if(!called.alive){
-					embed.sendEmbed([149,193,255], `${mentioned.toString()} è già morto!`, message.channel);
+					embed.sendEmbed([255,0,0], `${mentioned.toString()} è già morto!`, message.channel);
 					return;
 				}
 
@@ -50,7 +49,7 @@ module.exports = {
 					embed.sendEmbed([149,193,255], `${mentioned.toString()} sarà avvisato della vostra presenza`, message.channel);
 					
 					let lupi = "";
-					for(let player of moderatore.playerList.values()){
+					for(let player of moderatore.playerList.entries()){
 						if(player[1].id === f.capoBranco ||
 						player[1].id === f.giovaneLupo ||
 						player[1].id === f.lupoDelBranco)
@@ -81,6 +80,12 @@ module.exports = {
 			for(let wolves of moderatore.playerList.entries()){
 				if(wolves[1].id === f.capoBranco || wolves[1].id === f.lupoDelBranco){
 					moderatore.playerList.get(wolves[0]).tratto.push('usato');
+
+					//rimuovo il tratto pazzo
+					let index = player[1].tratto.indexOf('pazzo');
+					if(index != -1){
+						moderatore.playerList.get(wolves[0]).tratto.splice(index, 1);
+					}
 				}
 			}
 				

@@ -34,7 +34,7 @@ module.exports = {
 			ruoliNonPresenti += componi(presentRole[ran]) + "\n";
 
 			if(j === 0){
-				let extracted = ran;
+				extracted = ran;
 			}
 		}
 
