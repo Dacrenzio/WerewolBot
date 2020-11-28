@@ -164,5 +164,6 @@ function componi(id){
 		case 15: return ["Il Prete", ""];
 		case 16: return ["La Strega", ", comando: `-act @objective`"];
 		case 18: return ["La Veggente", ", comando: `-act @objective`"];
+		case 19: return ["L'Angelo Custode",", comando: `-act @objective`"];
 	}
 }

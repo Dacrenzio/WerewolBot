@@ -43,7 +43,7 @@ module.exports = {
 
 				//contact the traditore
 				if(called.id === f.traditore){
-					traditore(moderatore, embed, message);
+					traditore(moderatore, embed, mentioned, message);
 					continue;
 				}
 
@@ -151,7 +151,7 @@ function discendente(moderatore, mentioned, embed, message){
 	return moderatore;
 }
 
-function traditore(moderatore, embed, message){
+function traditore(moderatore, embed, mentioned, message){
 	embed.sendEmbed([149,193,255], `${mentioned.toString()} sarà avvisato della vostra presenza`, message.channel);
 	let lupi = "";
 	for(let player of moderatore.playerList.entries()){

@@ -9,6 +9,7 @@ module.exports = {
 			"`-newGame n` inizia un nuovo game con n giocatori\n"+
 			"`-join` fa entrare un giocatore in partita\n"+
 			"`-playerList` restituisce una lista dei giocatori in partita\n"+
+			"`-roleList` restituisce i ruoli inseriti\n"+
 			"`-chooseRole` seguito dai codici identificativi dei ruoli che si vuole mettere nel mazzo\n"+
 			"`-night` inizia la notte per il gruppo mutando i giocatori\n"+
 			"`-next` chiama il prossimo ruolo giocante (anche se non in partita o morto)\n"+
