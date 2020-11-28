@@ -22,10 +22,10 @@ module.exports = {
 			return true;
 		}
 
-		
+		//checking the amato
 		let indAmato = moderatore.playerList.get(mentioned).tratto.indexOf('amato');
-		if(indAmato != -1){
-			let angelo = moderatore.playerList.get(mentioned).tratto[indAmato+1];
+		let angelo = moderatore.playerList.get(mentioned).tratto[indAmato+1];
+		if(indAmato != -1 && moderatore.playerList.get(angelo).alive){
 			moderatore.playerList.get(angelo).votes.push(message.member);
 		}else{
 			moderatore.playerList.get(mentioned).votes.push(message.member);

@@ -63,5 +63,6 @@ function componi(id){
 		case 16: return "La Strega";
 		case 17: return "Il Traditore";
 		case 18: return "La Veggente";
+		case 19: return "L'angelo custode";
 	}
 }
