@@ -11,7 +11,7 @@ module.exports = {
 
 
 		let secretRole = message.guild.roles.cache.find(r => r.name === "Secret");//rimuovo il ruolo segreto
-		role.members.each(member => member.roles.remove(secretRole));
+		secretRole.members.each(member => member.roles.remove(secretRole));
 		
 		if(err.errors([0, 8], moderatore, message))return;
 
@@ -36,7 +36,7 @@ module.exports = {
 			for(let wolves of moderatore.playerList.entries()){
 				if(wolves[1].id === f.capoBranco || wolves[1].id === f.lupoDelBranco){
 					//rimuovo il tratto pazzo
-					let index = player[1].tratto.indexOf('pazzo');
+					let index = wolves[1].tratto.indexOf('pazzo');
 					if(index != -1){
 						moderatore.playerList.get(wolves[0]).tratto.splice(index, 1);
 					}

@@ -6,14 +6,7 @@ module.exports = {
 
 		let channel = message.guild.channels.cache.find(c => c.name === 'generale');
 
-		if(moderatore.ballottaggio.length > 0){
-			if(moderatore.ballottaggio.length === moderatore.playerList.size - moderatore.numberOfDeadPlayer){
-				
-				embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
-				moderatore.burnedPlayer = null;
-				moderatore.ballottaggio = [];
-				return;
-			}
+		if(moderatore.ballottaggio.length > 0){//if in ballottaggio
 
 			if(moderatore.burnedPlayer !== null && 
 			moderatore.playerList.get(moderatore.burnedPlayer).id === 6){//check giullare

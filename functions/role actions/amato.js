@@ -1,8 +1,8 @@
 module.exports = {
 	description: "gives the Amato trait to someone that is advised",
 	execute(message, moderatore){
-		const embed = require("../functions/sendEmbed.js");
-		const f = require("../figures.js");
+		const embed = require("../sendEmbed.js");
+		const f = require("../../figures.js");
 
 		let mentioned = message.mentions.members.first();
 

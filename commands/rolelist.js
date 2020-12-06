@@ -19,7 +19,7 @@ module.exports={
 function componi(id){
 	switch(id){
 		case 1: return "Bardo";
-		case 2: return "Branco";
+		case 2: return "Capo Branco";
 		case 3: return "Contadino";
 		case 4: return "Eremita";
 		case 5: return "Giovane Lupo";

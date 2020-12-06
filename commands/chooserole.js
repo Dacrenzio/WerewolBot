@@ -15,7 +15,7 @@ module.exports = {
 			return;
 		}
 
-		if(args.length > moderatore.playerNum*1.5 -2){
+		if(args.length > moderatore.playerNum*2-2){
 			embed.sendEmbed([255,0,0], "Inseriti troppi ruoli!", message.channel);
 			return;
 		}

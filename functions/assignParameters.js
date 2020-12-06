@@ -52,7 +52,7 @@ module.exports ={
 					break;
 
 				case 3:
-					let ran = math.floor(Math.floor(Math.random() * secretID.length));
+					let ran = Math.floor(Math.floor(Math.random() * secretID.length));
 					if(ran != 0){
 						moderatore.playerList.get(member).tratto.push(secretID.splice(ran,1)[0]);
 					}

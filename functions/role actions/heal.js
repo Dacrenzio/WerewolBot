@@ -1,8 +1,8 @@
 module.exports={
 	description: "let the Healer to heal a Dying player",
 	execute(message, moderatore){
-		const embed = require("../functions/sendEmbed.js");
-		const f = require("../figures.js");
+		const embed = require("../sendEmbed.js");
+		const f = require("../../figures.js");
 
 		if(message.mentions.members.first() === message.member){
 			embed.sendEmbed([255,0,0], "Non puoi guarire te stessa!", message.channel);

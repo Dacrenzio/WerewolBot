@@ -12,7 +12,7 @@ module.exports ={
 		let listRole = "";
 		
 		for (var i = 0; i < moderatore.playerList.size; i +=1 ) {
-			let ranPlayer = Math.floor(Math.random() * moderatore.memberList.size);
+			let ranPlayer = Math.floor(Math.random() * memberList.length);
 
 			let extractedPlayer = memberList.splice(ranPlayer, 1)[0];
 
@@ -80,5 +80,6 @@ function compose(ranRole){
 		case 16: return `è il Strega.\n`;
 		case 17: return `è il Traditore.\n`;
 		case 18: return `è la Veggente.\n`;
+		case 19: return `è l'Angelo Custode.\n`;
 	}
 }

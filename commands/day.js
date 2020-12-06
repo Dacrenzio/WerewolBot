@@ -43,8 +43,10 @@ module.exports = {
 	}
 }
 
-function kill(moderatore, message, embed){
+function kill(moderatore, message){
+	const embed = require("../functions/sendEmbed.js");
 	const slay = require('../functions/slay.js');
+	const f = require("../figures.js");
 
 	let deadPeople = "";
 	moderatore.playerDying.forEach(member =>{

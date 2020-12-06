@@ -1,8 +1,8 @@
 module.exports ={
 	description: "this command allows the witch to protect 1 player",
-	execute(message, args, moderatore){
-		const embed = require("../functions/sendEmbed.js");
-		const f = require("../figures.js");
+	execute(message, moderatore){
+		const embed = require("../sendEmbed.js");
+		const f = require("../../figures.js");
 
 		if(message.mentions.members.first() === message.member){
 			embed.sendEmbed([255,0,0], "Non puoi proteggere te stessa!", message.channel);

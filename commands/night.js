@@ -14,7 +14,7 @@ module.exports = {
 		
 		let mod = message.guild.roles.cache.find(r => r.name === "Moderatore").members;
 			
-		channel.join().then(connection => connection.play(ytdl('https://www.youtube.com/watch?v=WPpVMmTt74Q&ab_channel=SwordCoastSoundscapes', {quality: 'lowestaudio'})));
+		channel.join().then(connection => connection.play(ytdl('https://www.youtube.com/watch?v=WPpVMmTt74Q', {quality: 'lowestaudio'})));
 		
 		
 		channel.members.difference(mod).each(member =>{

@@ -1,8 +1,8 @@
 module.exports = {
 	description: "says if the mentioned player is a mistic",
-	execute(message, args, moderatore){
-		const embed = require("../functions/sendEmbed.js");
-		const f = require("../figures.js");
+	execute(message, moderatore){
+		const embed = require("../sendEmbed.js");
+		const f = require("../../figures.js");
 
 		let mentioned = message.mentions.members.first();
 		let caller = moderatore.playerList.get(message.member);

@@ -2,6 +2,7 @@ module.exports = {
 	name: 'act',
 	description: 'Choose the correct command for the player',
 	execute(message,args,moderatore){
+		const embed = require("../functions/sendEmbed.js");
 		const err = require("../functions/errors");
 		const f = require("../figures.js");
 		const aura = require('../functions/role actions/aura.js');

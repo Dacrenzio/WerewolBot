@@ -1,8 +1,8 @@
 module.exports = {
 	description: "this command is used by roleID: 18 Veggente, says to the player if the Aura is dark (true) or white (false)",
 	execute(message, moderatore){
-		const embed = require("../functions/sendEmbed.js");
-		const f = require("../figures.js");
+		const embed = require("../sendEmbed.js");
+		const f = require("../../figures.js");
 
 		let mentioned = message.mentions.members.first();
 		let caller = moderatore.playerList.get(message.member);
