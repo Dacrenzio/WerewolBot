@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'day',
 	description: "unmute all the people, check if the ",
-	execute(message, args, moderatore){
+	async execute(message, args, moderatore){
 		const embed = require("../functions/sendEmbed.js");
 		const unMute = require('./unmuteall.js');
 		const gameOver = require('../functions/gameOver.js');
@@ -13,7 +13,7 @@ module.exports = {
 
 		//unmuting people
 		unMute.execute(message, args, moderatore);
-		message.member.voice.channel.leave();
+		await message.member.voice.channel.leave();
 		
 
 		//killing people died during night

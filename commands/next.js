@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'next',
 	description: "this metod call the next figure that has to play and gives the respective role to the player",
-	execute(message, args, moderatore, auto){
+	async execute(message, args, moderatore, auto){
 		const embed = require("../functions/sendEmbed.js");
 		const f = require("../figures.js");
 		const err = require("../functions/errors");
@@ -9,10 +9,13 @@ module.exports = {
 		const mon = require('../functions/monaco.js');
 		const day = require('./day.js');
 
-
+		await message.guild.members.fetch();
 		let secretRole = message.guild.roles.cache.find(r => r.name === "Secret");//rimuovo il ruolo segreto
-		secretRole.members.each(member => member.roles.remove(secretRole));
-		
+		while (secretRole.members.array().length !== 0){
+			await secretRole.members.array()[0].roles.remove(secretRole);
+			await message.guild.members.fetch();
+		}
+
 		if(err.errors([0, 8], moderatore, message))return;
 
 		let general = message.guild.channels.cache.find(c => c.name === 'generale');
@@ -74,17 +77,19 @@ module.exports = {
 						if(morenti.valueOf() === ""){
 							morenti = "Nessuno sta morendo.";
 						}
-						
+
+						await player[0].roles.add(secretRole);
 						setTimeout(()=>{
 							embed.sendEmbed([149,193,255], morenti, secret);
 						}, 4000);
+						break;
 						
 					case f.mago:
 					case f.medium:
 					case f.strega:
 					case f.veggente:
 					case f.angelo:
-						player[0].roles.add(secretRole);
+						await player[0].roles.add(secretRole);
 						break;
 
 					case 2://lupi
@@ -102,7 +107,7 @@ module.exports = {
 						}
 						let index = player[1].tratto.indexOf('usato');
 						moderatore.playerList.get(player[0]).tratto.splice(index, 1);
-						player[0].roles.add(secretRole);
+						await player[0].roles.add(secretRole);
 						break;
 
 
@@ -144,7 +149,6 @@ module.exports = {
 		embed.sendEmbed([149,193,255], `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`, general);
 
 		if(auto){
-			let channel = message.guild.channels.cache.find(r => r.name === "chat-segreta");
 			setTimeout(()=> {embed.sendEmbed([149,193,255], "mancano 15 secondi" , secret)}, 30000);
 			setTimeout(()=> {embed.sendEmbed([149,193,255], "mancano 15 secondi" , general)}, 30000);
 			setTimeout(()=> {recursive.execute(message,args,moderatore,auto)} , 45000);

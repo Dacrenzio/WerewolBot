@@ -1,13 +1,13 @@
 module.exports = {
 	name: 'chooserole',
 	description: "this command adds the chosen roles to the game",
-	execute(message, args, moderatore, auto){
+	async execute(message, args, moderatore, auto){
 		const embed = require("../functions/sendEmbed.js");
 		const random = require("../functions/randomPick.js");
 		const assign = require("../functions/assignParameters.js");
 		let err = require("../functions/errors");
 
-		if(err.errors([0,6], moderatore, message))return;
+		//if(err.errors([0,6], moderatore, message))return;
 
 		
 		if(args.length < moderatore.playerNum -2){
@@ -31,9 +31,12 @@ module.exports = {
 		moderatore.ballottaggio = [];
 		moderatore.numberOfDeadPlayer = 0;
 		
-
+		await message.guild.members.fetch();
 		let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
-		message.guild.members.cache.each(member => member.roles.remove(ghostRole));
+		for(i = 0; i < ghostRole.members.array().length; i++) {
+			await ghostRole.members.array()[i].roles.remove(ghostRole);
+		}
+		await message.guild.members.fetch();
 
 		//inserisco i ruoli possibili nella lista
 		args.forEach(element=>{

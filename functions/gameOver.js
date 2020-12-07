@@ -1,5 +1,5 @@
 module.exports = {
-	execute(message, channel, moderatore){
+	async execute(message, channel, moderatore){
 		const fin = require("../functions/victory.js");
 		const embed = require("../functions/sendEmbed.js");
 		
@@ -22,10 +22,17 @@ module.exports = {
 			embed.sendEmbed([149,193,255], mess, channel);
 			moderatore.finished = true;
 
-
+			await message.guild.members.fetch();
 			let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
 			let modRole = message.guild.roles.cache.find(r => r.name === "Moderatore");
-			message.guild.members.cache.each(member => member.roles.remove([ghostRole, modRole]));
+			for(i = 0; i < ghostRole.members.array().length; i++) {
+				await ghostRole.members.array()[i].roles.remove(ghostRole);
+			}
+			for(i = 0; i < modRole.members.array().length; i++) {
+				await ghostRole.members.array()[i].roles.remove(modRole);
+			}
+			await message.guild.members.fetch();
+		
 		} return result[0];
 	}
 }

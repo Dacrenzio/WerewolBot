@@ -1,20 +1,21 @@
 module.exports = {
 	name: 'night',
 	description: "this command starts the night and provide the night role order based on the night",
-	execute(message, args, moderatore, auto){
+	async execute(message, args, moderatore, auto){
 		const embed = require("../functions/sendEmbed.js");
 		const figures = require('../figures.js');
 		const ytdl = require('ytdl-core');
 		const err = require("../functions/errors");
 		const start = require('./next.js');
 
-		if(err.errors([0,5,4,8], moderatore, message))return;
+		//if(err.errors([0,5,4,8], moderatore, message))return;
 
 		let channel = message.member.voice.channel;
 		
+		await message.guild.members.fetch();
 		let mod = message.guild.roles.cache.find(r => r.name === "Moderatore").members;
 			
-		channel.join().then(connection => connection.play(ytdl('https://www.youtube.com/watch?v=WPpVMmTt74Q', {quality: 'lowestaudio'})));
+		await channel.join().then(connection => connection.play('../music.mp3'));
 		
 		
 		channel.members.difference(mod).each(member =>{

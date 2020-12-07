@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'newgame',
 	description: "this command starts a new game of n people and assign the role ''moderator'' to the caller",
-	execute(message, args, moderatore, auto){
+	async execute(message, args, moderatore, auto){
 		const embed = require("../functions/sendEmbed.js");
 		let err = require("../functions/errors");
 
@@ -19,11 +19,16 @@ module.exports = {
 			return;
 		}
 
+		await message.guild.members.fetch();
 		let role = message.guild.roles.cache.find(r => r.name === "Moderatore");
-		role.members.each(member => member.roles.remove(role));
+		for(i = 0; i < role.members.array().length; i++) {
+			await ghostRole.members.array()[i].roles.remove(role);
+		}
+		await message.guild.members.fetch();
+
 
 		if(!auto)
-			message.member.roles.add(role).catch(console.error);
+			await message.member.roles.add(role).catch(console.error);
 
 		embed.sendEmbed([149,193,255], "Creato nuovo game, gli utenti che intendono giocare scrivano `-join`", message.channel);
 
@@ -40,7 +45,11 @@ module.exports = {
 		moderatore.numberOfDeadPlayer = 0;
 		moderatore.finished = true;
 
+
 		let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");
-		message.guild.members.cache.each(member => member.roles.remove(ghostRole));
+		for(i = 0; i < ghostRole.members.array().length; i++) {
+			await ghostRole.members.array()[i].roles.remove(ghostRole);
+		}
+		await message.guild.members.fetch();
 	}
 }
