@@ -16,7 +16,7 @@ module.exports = {
 
 		embed.sendEmbed([149,193,255], "Ritiro a sorte dei ruoli in corso...", message.channel);
 
-		//resetting players
+		//resetting player
 		moderatore.nightNum = 0;
 		moderatore.auraType = false;
 		moderatore.playerDying = [];
@@ -25,6 +25,7 @@ module.exports = {
 		moderatore.numberOfVotes = 0;
 		moderatore.ballottaggio = [];
 		moderatore.numberOfDeadPlayer = 0;
+		moderatore.finished = false;
 
 		await message.guild.members.fetch();
 		let ghostRole = message.guild.roles.cache.find(r => r.name === "Ghost");

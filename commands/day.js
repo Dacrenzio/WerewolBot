@@ -17,7 +17,7 @@ module.exports = {
 		
 
 		//killing people died during night
-		moderatore = kill(moderatore,message)
+		kill(moderatore,message)
 		
 
 		//checking if the game is over
@@ -76,6 +76,5 @@ function kill(moderatore, message){
 		deadPeople = "Nessuno è morto stanotte";
 	}
 	embed.sendEmbed([149, 193, 255], deadPeople, message.channel);
-
-	return moderatore;
+	moderatore.playerDying = [];
 }

@@ -8,14 +8,14 @@ module.exports = {
 		const err = require("../functions/errors");
 		const start = require('./next.js');
 
-		//if(err.errors([0,5,4,8], moderatore, message))return;
+		if(err.errors([0,5,4,8], moderatore, message))return;
 
 		let channel = message.member.voice.channel;
 		
 		await message.guild.members.fetch();
 		let mod = message.guild.roles.cache.find(r => r.name === "Moderatore").members;
 			
-		await channel.join().then(connection => connection.play('../music.mp3'));
+		await channel.join().play('../music.mp3');
 		
 		
 		channel.members.difference(mod).each(member =>{
