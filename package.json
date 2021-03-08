@@ -11,6 +11,8 @@
   "dependencies": {
     "@discordjs/opus": "github:discordjs/opus",
     "discord.js": "^12.5.1",
-    "ytdl": "^1.3.5"
+    "opus": "^0.0.0",
+    "opusscript": "^0.0.8",
+    "ytdl": "^1.4.1"
   }
 }
