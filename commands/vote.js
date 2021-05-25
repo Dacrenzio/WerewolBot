@@ -1,11 +1,12 @@
+const embed = require("../functions/sendEmbed.js");
+const check = require("../functions/checkVotes.js");
+const err = require("../functions/errors");
+const unMute = require("./unmuteall.js");
+
 module.exports = {
   name: "vote",
   description: "this command allows player to vote someone",
   execute(message, args, moderatore) {
-    const embed = require("../functions/sendEmbed.js");
-    const check = require("../functions/checkVotes.js");
-    let err = require("../functions/errors");
-    const unMute = require("./unmuteall.js");
 
     if (message.channel.name.valueOf() !== message.member.user.id.valueOf()) {
       message.delete();

@@ -3,7 +3,7 @@ module.exports = {
   description: "send in the channel the list of all the player",
   execute(message, args, moderatore) {
     const embed = require("../functions/sendEmbed.js");
-    let err = require("../functions/errors");
+    const err = require("../functions/errors");
 
     if (err.errors([0], moderatore, message)) return;
 

@@ -5,7 +5,7 @@ module.exports = {
     const embed = require("../functions/sendEmbed.js");
     const random = require("../functions/randomPick.js");
     const assign = require("../functions/assignParameters.js");
-    let err = require("../functions/errors");
+    const err = require("../functions/errors");
 
     if (err.errors([0], moderatore, message)) return;
 

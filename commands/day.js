@@ -1,13 +1,16 @@
+const embed = require("../functions/sendEmbed.js");
+const unMute = require("./unmuteall.js");
+const gameOver = require("../functions/gameOver.js");
+const f = require("../figures.js");
+const err = require("../functions/errors");
+const osteria = require("../functions/osteria.js");
+const slay = require("../functions/slay.js");
+
 module.exports = {
   name: "day",
   description: "unmute all the people, check if the ",
   async execute(message, args, moderatore) {
-    const embed = require("../functions/sendEmbed.js");
-    const unMute = require("./unmuteall.js");
-    const gameOver = require("../functions/gameOver.js");
-    const f = require("../figures.js");
-    const err = require("../functions/errors");
-    const osteria = require("../functions/osteria.js");
+    
 
     if (err.errors([0, 5, 4, 8], moderatore, message)) return;
 
@@ -45,10 +48,6 @@ module.exports = {
 };
 
 function kill(moderatore, message) {
-  const embed = require("../functions/sendEmbed.js");
-  const slay = require("../functions/slay.js");
-  const f = require("../figures.js");
-
   let deadPeople = "";
   moderatore.playerDying.forEach((member) => {
     let deadPlayer = moderatore.playerList.get(member);

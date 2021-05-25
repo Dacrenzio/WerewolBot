@@ -1,15 +1,17 @@
-module.exports = {
+const embed = require("../functions/sendEmbed.js");
+const err = require("../functions/errors");
+const f = require("../figures.js");
+const aura = require("../functions/role actions/aura.js");
+const heal = require("../functions/role actions/heal.js");
+const mistic = require("../functions/role actions/mistic.js");
+const protect = require("../functions/role actions/protect.js");
+const amato = require("../functions/role actions/amato.js");
+
+    module.exports = {
   name: "act",
   description: "Choose the correct command for the player",
   execute(message, args, moderatore) {
-    const embed = require("../functions/sendEmbed.js");
-    const err = require("../functions/errors");
-    const f = require("../figures.js");
-    const aura = require("../functions/role actions/aura.js");
-    const heal = require("../functions/role actions/heal.js");
-    const mistic = require("../functions/role actions/mistic.js");
-    const protect = require("../functions/role actions/protect.js");
-    const amato = require("../functions/role actions/amato.js");
+    
 
     if (err.errors([0, 1, 2, 3, 7, 8], moderatore, message)) return;
 

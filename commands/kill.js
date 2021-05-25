@@ -1,10 +1,12 @@
+const embed = require("../functions/sendEmbed.js");
+const f = require("../figures.js");
+const err = require("../functions/errors");
+
 module.exports = {
   name: "kill",
   description: "this command let the wolf kill a player",
   execute(message, args, moderatore) {
-    const embed = require("../functions/sendEmbed.js");
-    const f = require("../figures.js");
-    const err = require("../functions/errors");
+    
     let mentionedArray = message.mentions.members.array();
 
     //check errors
@@ -117,7 +119,6 @@ module.exports = {
 };
 
 function giovaneErr(moderatore, message, mentionedArray) {
-  const f = require("../figures.js");
   let youngWolfBurned = false;
   //check if the burned is the young wolf
   if (

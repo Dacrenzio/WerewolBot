@@ -4,7 +4,7 @@ module.exports = {
     "this command reset the votes of the previus night, check if the ID: ",
   async execute(message, args, moderatore, auto, client) {
     const embed = require("../functions/sendEmbed.js");
-    let err = require("../functions/errors");
+    const err = require("../functions/errors");
 
     if (err.errors([0, 4, 5, 8], moderatore, message)) return;
 
