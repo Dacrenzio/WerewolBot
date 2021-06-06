@@ -1,15 +1,14 @@
-const embed = require("../functions/sendEmbed.js");
-const f = require("../figures.js");
-const err = require("../functions/errors");
-const recursive = require("./next.js");
-const mon = require("../functions/monaco.js");
-const day = require("./day.js");
-
 module.exports = {
   name: "next",
   description:
     "this metod call the next figure that has to play and gives the respective role to the player",
   async execute(message, args, moderatore, auto) {
+    const embed = require("../functions/sendEmbed.js");
+    const f = require("../figures.js");
+    const err = require("../functions/errors");
+    const recursive = require("./next.js");
+    const mon = require("../functions/monaco.js");
+    const day = require("./day.js");
 
     await message.guild.members.fetch();
     let secretRole = message.guild.roles.cache.find((r) => r.name === "Secret"); //rimuovo il ruolo segreto
@@ -167,7 +166,7 @@ module.exports = {
     if (moderatore.nightNum === 1 && roleID === 2) {
       setTimeout(() => {
         embed.sendEmbed([149, 193, 255], lupi, secret);
-      }, 4000);
+      }, 10000);
     }
 
     //il monaco e il prete non aspettano i 45 secondi

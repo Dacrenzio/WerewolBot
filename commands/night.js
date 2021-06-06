@@ -9,17 +9,17 @@ module.exports = {
   description:
     "this command starts the night and provide the night role order based on the night",
   async execute(message, args, moderatore, auto) {
-
     if (err.errors([0, 5, 4, 8], moderatore, message)) return;
 
     await message.member.voice.channel.join().then((connection) => {
-      connection.play(ytdl("https://www.youtube.com/watch?v=58dAcjgtfbk"));
+      connection.play(ytdl("https://youtu.be/-heSRbvCErU"));
     });
 
     await message.guild.members.fetch();
 
-    let mod = message.guild.roles.cache.find((r) => r.name === "Moderatore")
-      .members;
+    let mod = message.guild.roles.cache.find(
+      (r) => r.name === "Moderatore"
+    ).members;
 
     message.member.voice.channel.members.difference(mod).each((member) => {
       if (!member.user.bot) member.voice.setMute(true);

@@ -1,10 +1,9 @@
-const embed = require("../functions/sendEmbed.js");
-const err = require("../functions/errors");
-
 module.exports = {
   name: "mode",
   description: "Set the mod of the bot: auto or manual",
   execute(message, args, mod) {
+    const embed = require("../functions/sendEmbed.js");
+    const err = require("../functions/errors");
 
     if (args.length !== 1) {
       let modali;

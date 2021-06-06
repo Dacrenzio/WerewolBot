@@ -1,12 +1,10 @@
-const embed = require("../functions/sendEmbed.js");
-const err = require("../functions/errors");
-
 module.exports = {
   name: "newgame",
   description:
     "this command starts a new game of n people and assign the role ''moderator'' to the caller",
   async execute(message, args, moderatore, auto) {
-    
+    const embed = require("../functions/sendEmbed.js");
+    const err = require("../functions/errors");
 
     if (args.length !== 1) {
       embed.sendEmbed(
