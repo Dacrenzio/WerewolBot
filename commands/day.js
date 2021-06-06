@@ -10,8 +10,6 @@ module.exports = {
   name: "day",
   description: "unmute all the people, check if the ",
   async execute(message, args, moderatore) {
-    
-
     if (err.errors([0, 5, 4, 8], moderatore, message)) return;
 
     //unmuting people
@@ -22,7 +20,9 @@ module.exports = {
     kill(moderatore, message);
 
     //checking if the game is over
-    if (gameOver.execute(message, message.channel, moderatore)) return;
+    if (gameOver.execute(message, message.channel, moderatore)) {
+      return;
+    }
 
     //controlling bard and Oste
     osteria.sing(moderatore, message);

@@ -1,6 +1,5 @@
 module.exports = {
   sing(moderatore, message) {
-    console.log("entrato qua");
     const embed = require("../functions/sendEmbed.js");
     const f = require("../figures.js");
 
@@ -8,7 +7,6 @@ module.exports = {
     let isOsteIn = moderatore.roleListID.includes(f.oste);
 
     if (isBardIn || isOsteIn) {
-      console.log("c'è o oste o bardo");
       let foundAliveBard = false;
       let foundAliveOste = false;
       let isVeggenteAlive = false;

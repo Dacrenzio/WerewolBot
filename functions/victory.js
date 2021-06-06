@@ -39,6 +39,6 @@ module.exports = {
       return [true, "Hanno vinto: i Contadini", pazzo, giullare, angelo];
     }
 
-    return [false];
+    return [false, "", pazzo, giullare, angelo];
   },
 };
