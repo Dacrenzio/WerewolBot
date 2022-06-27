@@ -27,10 +27,12 @@ module.exports = class Moderatore {
   canJoin(message) {
     if (this.playerList.size + 1 <= this.playerNum) {
       //if there's space
+
       if (!this.playerList.has(message.member)) {
-        //if the player isn't alredy joined
         return true;
       } else {
+        //if the player is alredy joined
+
         embed.sendEmbed(
           [255, 0, 0],
           "Giocatore gia presente.",
@@ -38,6 +40,8 @@ module.exports = class Moderatore {
         );
       }
     } else {
+      //if there isn't space
+
       embed.sendEmbed(
         [255, 0, 0],
         "Raggiunto il numero massimo di giocatori!",
@@ -49,10 +53,13 @@ module.exports = class Moderatore {
   }
 
   async newGame(numberOfPlayer) {
+    //starts a new game
+
     this.reset();
     this.playerNum = numberOfPlayer;
     this.roleListID = [2, 18];
 
+    //removes the ghosts
     await message.guild.members.fetch();
     let ghostRole = message.guild.roles.cache.find((r) => r.name === "Ghost");
     for (i = 0; i < ghostRole.members.array().length; i++) {
@@ -62,6 +69,8 @@ module.exports = class Moderatore {
   }
 
   addRoles(args, message) {
+    //this method updates the possible roles for the game
+
     let validArgs = true;
     args.forEach((element) => {
       elem = parseInt(element);
@@ -93,6 +102,8 @@ module.exports = class Moderatore {
   }
 
   reset() {
+    //set the default values
+
     this.nightNum = 0;
     this.playerNum = -1;
     this.auraType = false;
