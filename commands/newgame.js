@@ -42,6 +42,6 @@ module.exports = {
     );
 
     //start a new Game
-    moderatore.newGame(parseInt(args[0]));
+    moderatore.newGame(parseInt(args[0]), message);
   },
 };

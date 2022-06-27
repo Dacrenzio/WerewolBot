@@ -24,7 +24,7 @@ module.exports = {
     }
 
     //resetting players while keeping the number of players
-    moderatore.newGame(moderatore.getPlayerNum());
+    moderatore.newGame(moderatore.getPlayerNum(), message);
 
     //inserisco i ruoli possibili nella lista
     if (!moderatore.addRoles(args, message)) return;

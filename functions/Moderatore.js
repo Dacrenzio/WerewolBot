@@ -52,7 +52,7 @@ module.exports = class Moderatore {
     return false;
   }
 
-  async newGame(numberOfPlayer) {
+  async newGame(numberOfPlayer, message) {
     //starts a new game
 
     this.reset();
