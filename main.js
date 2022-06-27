@@ -5,6 +5,7 @@ const prefix = "-";
 const fs = require("fs");
 const Moderatore = require("./functions/Moderatore.js");
 const embed = require("./functions/sendEmbed.js");
+const secretKey = require("./secretKey");
 
 client.commands = new Discord.Collection();
 const commandFiles = fs
@@ -78,4 +79,4 @@ client.on("message", (message) => {
       );
 });
 
-client.login("NzczNzI4NzE2OTc0ODUwMDU5.Gqj12D.Ioq7Asyi6fXnno029KRMEYvO5Tb0Xj2B818YAg");
+client.login(secretKey.key);
