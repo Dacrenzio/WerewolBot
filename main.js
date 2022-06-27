@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const figures = require("./figures.js");
 const prefix = "-";
 const fs = require("fs");
 const Moderatore = require("./functions/Moderatore.js");
@@ -18,28 +17,24 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
-var mod = new Map();
+var mods = new Map();
 
 client.once("ready", () => {
   console.log("bot is online\n");
 
+  client.user.setActivity("-help", { type: 2 });
+
   client.guilds.cache.each((guild) => {
-    mod.set(guild.id, [
-      new Moderatore(0, -1, false, new Map(), [], [], [], null, 0, [], 0, true),
-      true,
-    ]);
+    mods.set(guild.id, [new Moderatore(), true]);
   });
 });
 
 client.on("guildCreate", (guild) => {
-  mod.set(guild.id, [
-    new Moderatore(0, -1, false, new Map(), [], [], [], null, 0, [], 0, true),
-    true,
-  ]);
+  mods.set(guild.id, [new Moderatore(), true]);
 });
 
 client.on("guildDelete", (guild) => {
-  mod.delete(guild.id);
+  mods.delete(guild.id);
 });
 
 client.on("message", (message) => {
@@ -54,11 +49,11 @@ client.on("message", (message) => {
   const command = args.shift().toLowerCase();
 
   if (command.valueOf() === "mode") {
-    client.commands.get(command).execute(message, args, mod);
+    client.commands.get(command).execute(message, args, mods);
     return;
   }
 
-  if (command.valueOf() === "next" && mod.get(message.guild.id)[1]) {
+  if (command.valueOf() === "next" && mods.get(message.guild.id)[1]) {
     embed.sendEmbed(
       [255, 0, 0],
       "Non puoi eseguire `-next` con la modalità auto",
@@ -73,8 +68,8 @@ client.on("message", (message) => {
       .execute(
         message,
         args,
-        mod.get(message.guild.id)[0],
-        mod.get(message.guild.id)[1],
+        mods.get(message.guild.id)[0],
+        mods.get(message.guild.id)[1],
         client
       );
 });

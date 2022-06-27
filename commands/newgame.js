@@ -41,23 +41,7 @@ module.exports = {
       message.channel
     );
 
-    moderatore.nightNum = 0;
-    moderatore.playerNum = parseInt(args[0]);
-    moderatore.auraType = false;
-    moderatore.playerList = new Map();
-    moderatore.playerDying = [];
-    moderatore.roleListID = [2, 18];
-    moderatore.nightOrder = [];
-    moderatore.burnedPlayer = null;
-    moderatore.numberOfVotes = 0;
-    moderatore.ballottaggio = [];
-    moderatore.numberOfDeadPlayer = 0;
-    moderatore.finished = true;
-
-    let ghostRole = message.guild.roles.cache.find((r) => r.name === "Ghost");
-    for (i = 0; i < ghostRole.members.array().length; i++) {
-      await ghostRole.members.array()[i].roles.remove(ghostRole);
-    }
-    await message.guild.members.fetch();
+    //start a new Game
+    moderatore.newGame(parseInt(args[0]));
   },
 };

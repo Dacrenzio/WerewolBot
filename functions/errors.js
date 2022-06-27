@@ -6,8 +6,8 @@ module.exports = {
       switch (errIdList[i]) {
         case 0:
           if (
-            moderatore.playerNum < 6 ||
-            moderatore.playerList.size < moderatore.playerNum
+            moderatore.getPlayerNum() < 6 ||
+            moderatore.getPlayerList().size < moderatore.getPlayerNum()
           ) {
             embed.sendEmbed(
               [255, 0, 0],
@@ -19,7 +19,7 @@ module.exports = {
           break;
 
         case 1:
-          if (!moderatore.playerList.has(message.member)) {
+          if (!moderatore.getPlayerList().has(message.member)) {
             embed.sendEmbed(
               [255, 0, 0],
               "Devi essere in gioco per poter eseguire i comandi.",
@@ -44,8 +44,9 @@ module.exports = {
           let mentioned = message.mentions.members.array();
 
           if (
-            !moderatore.playerList.has(mentioned[0]) ||
-            (mentioned.length == 2 && !moderatore.playerList.has(mentioned[1]))
+            !moderatore.getPlayerList().has(mentioned[0]) ||
+            (mentioned.length == 2 &&
+              !moderatore.getPlayerList().has(mentioned[1]))
           ) {
             embed.sendEmbed(
               [255, 0, 0],
@@ -104,6 +105,17 @@ module.exports = {
             embed.sendEmbed(
               [255, 0, 0],
               "La partita è conclusa!\nIniziare una nuova partita con `-newGame n` oppure\n`-chooseRole` per cambiare i ruoli con i giocatori attuali o\n`-reroll` per mantere ruoli e giocatori.",
+              message.channel
+            );
+            return true;
+          }
+          break;
+
+        case 9:
+          if (moderatore.getRoleListID().length <= 2) {
+            embed.sendEmbed(
+              [255, 0, 0],
+              "Non sono stati inseriti i ruoli.",
               message.channel
             );
             return true;

@@ -9,7 +9,7 @@ module.exports = {
   description:
     "this command starts the night and provide the night role order based on the night",
   async execute(message, args, moderatore, auto) {
-    if (err.errors([0, 5, 4, 8], moderatore, message)) return;
+    if (err.errors([0, 5, 4, 9, 8], moderatore, message)) return;
 
     await message.member.voice.channel.join().then((connection) => {
       connection.play(ytdl("https://youtu.be/-heSRbvCErU"));

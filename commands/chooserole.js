@@ -9,7 +9,7 @@ module.exports = {
   async execute(message, args, moderatore, auto) {
     if (err.errors([0, 6], moderatore, message)) return;
 
-    if (args.length < moderatore.playerNum - 2) {
+    if (args.length < moderatore.getPlayerNum() - 2) {
       embed.sendEmbed(
         [255, 0, 0],
         "Inseriti troppi pochi ruoli!",
@@ -18,43 +18,16 @@ module.exports = {
       return;
     }
 
-    if (args.length > moderatore.playerNum * 2 - 2) {
+    if (args.length > moderatore.getPlayerNum() * 2 - 2) {
       embed.sendEmbed([255, 0, 0], "Inseriti troppi ruoli!", message.channel);
       return;
     }
 
-    //resetting players
-    moderatore.nightNum = 0;
-    moderatore.auraType = false;
-    moderatore.playerDying = [];
-    moderatore.roleListID = [2, 18];
-    moderatore.nightOrder = [];
-    moderatore.burnedPlayer = null;
-    moderatore.numberOfVotes = 0;
-    moderatore.ballottaggio = [];
-    moderatore.numberOfDeadPlayer = 0;
-
-    await message.guild.members.fetch();
-    let ghostRole = message.guild.roles.cache.find((r) => r.name === "Ghost");
-    for (i = 0; i < ghostRole.members.array().length; i++) {
-      await ghostRole.members.array()[i].roles.remove(ghostRole);
-    }
-    await message.guild.members.fetch();
+    //resetting players while keeping the number of players
+    moderatore.newGame(moderatore.getPlayerNum());
 
     //inserisco i ruoli possibili nella lista
-    args.forEach((element) => {
-      elem = parseInt(element);
-      if (elem >= 1 && elem <= 19 && elem != 2 && elem != 18) {
-        moderatore.roleListID.push(elem);
-      } else {
-        embed.sendEmbed(
-          [255, 0, 0],
-          "Hai inserito un ID invalido!",
-          message.channel
-        );
-        return;
-      }
-    });
+    if (!moderatore.addRoles(args, message)) return;
 
     embed.sendEmbed(
       [149, 193, 255],

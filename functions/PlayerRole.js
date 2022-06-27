@@ -1,17 +1,9 @@
-module.exports = function PlayerRole(
-  id,
-  fazione,
-  aura,
-  misticismo,
-  tratto,
-  alive,
-  votes
-) {
-  this.id = id;
-  this.aura = aura;
-  this.misticismo = misticismo;
-  this.fazione = fazione;
-  this.tratto = tratto;
-  this.alive = alive;
-  this.votes = votes;
+module.exports = class PlayerRole {
+  id = 0;
+  fazione = "neutral";
+  aura = false;
+  misticismo = false;
+  tratto = [];
+  alive = false;
+  votes = [];
 };

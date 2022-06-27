@@ -1,5 +1,4 @@
 const embed = require("../functions/sendEmbed.js");
-const PlayerRole = require("../functions/PlayerRole.js");
 
 module.exports = {
   name: "join",
@@ -7,27 +6,15 @@ module.exports = {
     "this command starts a new game of n people and assign the role ''moderator'' to the caller",
   execute(message, args, moderatore) {
     //someone wants to join
-    if (moderatore.playerList.size + 1 <= moderatore.playerNum) {
+    if (moderatore.canJoin(message)) {
       //if there's space in the lobby
+      //if the player is alredy in the game Moderatore won't add them
 
-      //if the player is alredy in the game don't add
-      if (moderatore.playerList.has(message.member)) {
-        embed.sendEmbed(
-          [255, 0, 0],
-          "Giocatore gia presente.",
-          message.channel
-        );
-        return;
-      }
+      moderatore.addPlayer(message.member);
 
-      //add the player to the list with a standard role
-      moderatore.playerList.set(
-        message.member,
-        new PlayerRole(0, "neutra", false, false, [], false, [])
-      );
       message.react("✅");
 
-      if (moderatore.playerList.size === moderatore.playerNum) {
+      if (moderatore.arePlayerFull()) {
         //when reached the number of player wanted this option will pop-up
         embed.sendEmbed(
           [149, 193, 255],
@@ -57,12 +44,6 @@ module.exports = {
           message.channel
         );
       }
-    } else {
-      embed.sendEmbed(
-        [255, 0, 0],
-        "Raggiunto il numero massimo di giocatori!",
-        message.channel
-      );
     }
   },
 };
