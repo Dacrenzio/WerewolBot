@@ -7,12 +7,10 @@ const mistic = require("../functions/role actions/mistic.js");
 const protect = require("../functions/role actions/protect.js");
 const amato = require("../functions/role actions/amato.js");
 
-    module.exports = {
+module.exports = {
   name: "act",
   description: "Choose the correct command for the player",
   execute(message, args, moderatore) {
-    
-
     if (err.errors([0, 1, 2, 3, 7, 8], moderatore, message)) return;
 
     let caller = moderatore.playerList.get(message.member);
