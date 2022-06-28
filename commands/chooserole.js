@@ -1,12 +1,10 @@
 const embed = require("../functions/sendEmbed.js");
-const random = require("../functions/randomPick.js");
-const assign = require("../functions/assignParameters.js");
 const err = require("../functions/errors");
 
 module.exports = {
   name: "chooserole",
   description: "this command adds the chosen roles to the game",
-  async execute(message, args, moderatore, auto) {
+  async execute(message, args, moderatore) {
     if (err.errors([0, 6], moderatore, message)) return;
 
     if (args.length < moderatore.getPlayerNum() - 2) {
@@ -35,9 +33,7 @@ module.exports = {
       message.channel
     );
 
-    if (random.execute(moderatore, message, auto)) {
-      assign.execute(moderatore);
-      moderatore.finished = false;
+    if (moderatore.randomExtraction(message)) {
       embed.sendEmbed(
         [0, 255, 0],
         "Ruoli estratti correttamente, scrivere `-night` per inizializzare la notte ```oppure -reRoll per rieseguire l'estrazione dei ruoli.```",

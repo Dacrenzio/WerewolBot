@@ -8,7 +8,7 @@ module.exports = {
     if (err.errors([0], moderatore, message)) return;
 
     let listRole = "";
-    moderatore.roleListID.forEach((role) => {
+    moderatore.getRoleListID().forEach((role) => {
       listRole += componi(role) + "\n";
     });
 

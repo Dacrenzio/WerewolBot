@@ -8,7 +8,7 @@ module.exports = {
   name: "night",
   description:
     "this command starts the night and provide the night role order based on the night",
-  async execute(message, args, moderatore, auto) {
+  async execute(message, args, moderatore) {
     if (err.errors([0, 5, 4, 9, 8], moderatore, message)) return;
 
     await message.member.voice.channel.join().then((connection) => {
@@ -54,6 +54,6 @@ module.exports = {
       `Inizio della notte N.${moderatore.nightNum}`,
       message.channel
     );
-    if (auto) start.execute(message, args, moderatore, auto);
+    if (moderatore.automatic) start.execute(message, args, moderatore);
   },
 };

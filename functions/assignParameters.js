@@ -2,17 +2,12 @@ module.exports = {
   execute(moderatore) {
     let secretID = ["", "eroe", "discendente"];
 
-    for (let member of moderatore.playerList.keys()) {
-      sendCard(member, moderatore.playerList.get(member).id);
+    for (let member of moderatore.getPlayerList().keys()) {
+      sendCard(member, moderatore.getRole(member).id);
 
-      moderatore.playerList.get(member).fazione = "villaggio";
-      moderatore.playerList.get(member).aura = false;
-      moderatore.playerList.get(member).misticismo = false;
-      moderatore.playerList.get(member).tratto = [];
-      moderatore.playerList.get(member).alive = true;
-      moderatore.playerList.get(member).votes = [];
+      moderatore.getRole(member).assignStandardParameters();
 
-      switch (moderatore.playerList.get(member).id) {
+      switch (moderatore.getRole(member).id) {
         case 1:
         case 11:
         case 12:
@@ -20,18 +15,14 @@ module.exports = {
           break;
 
         case 4:
-          moderatore.playerList.get(member).tratto = ["protetto"];
-          break;
-
-        case 14:
-          moderatore.playerList.get(member).aura = true;
+          moderatore.getRole(member).tratto = ["protetto"];
           break;
 
         case 6:
         case 13:
         case 17:
         case 19:
-          moderatore.playerList.get(member).fazione = "-";
+          moderatore.getRole(member).fazione = "-";
           break;
 
         case 7:
@@ -39,29 +30,29 @@ module.exports = {
         case 10:
         case 16:
         case 18:
-          moderatore.playerList.get(member).misticismo = true;
+          moderatore.getRole(member).misticismo = true;
           break;
 
         case 2:
         case 5:
         case 8:
-          moderatore.playerList.get(member).fazione = "lupi";
-          moderatore.playerList.get(member).aura = true;
-          moderatore.playerList.get(member).tratto = ["ombra"];
+          moderatore.getRole(member).fazione = "lupi";
+          moderatore.getRole(member).tratto = ["ombra"];
+
+        case 14:
+          moderatore.getRole(member).aura = true;
           break;
 
         case 3:
           let ran = Math.floor(Math.floor(Math.random() * secretID.length));
           if (ran != 0) {
-            moderatore.playerList
-              .get(member)
-              .tratto.push(secretID.splice(ran, 1)[0]);
+            moderatore.getRole(member).tratto.push(secretID.splice(ran, 1)[0]);
           }
           break;
 
         default:
           console.log(
-            `something went wrong; ID: ${moderatore.playerList.get(member).id}`
+            `something went wrong; ID: ${moderatore.getRole(member).id}`
           );
       }
     }

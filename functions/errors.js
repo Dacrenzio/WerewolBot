@@ -112,10 +112,12 @@ module.exports = {
           break;
 
         case 9:
-          if (moderatore.getRoleListID().length <= 2) {
+          if (
+            moderatore.getPlayerList().size > moderatore.getRoleListID().length
+          ) {
             embed.sendEmbed(
               [255, 0, 0],
-              "Non sono stati inseriti i ruoli.",
+              "Non sono stati inseriti i ruoli con `-chooseRole`.",
               message.channel
             );
             return true;

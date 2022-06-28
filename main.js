@@ -24,12 +24,12 @@ client.once("ready", () => {
   client.user.setActivity("-help", { type: 2 });
 
   client.guilds.cache.each((guild) => {
-    mods.set(guild.id, [new Moderatore(), true]);
+    mods.set(guild.id, new Moderatore());
   });
 });
 
 client.on("guildCreate", (guild) => {
-  mods.set(guild.id, [new Moderatore(), true]);
+  mods.set(guild.id, new Moderatore());
 });
 
 client.on("guildDelete", (guild) => {
@@ -47,12 +47,7 @@ client.on("message", (message) => {
   const args = message.content.slice(prefix.length).split(/ +/);
   const command = args.shift().toLowerCase();
 
-  if (command.valueOf() === "mode") {
-    client.commands.get(command).execute(message, args, mods);
-    return;
-  }
-
-  if (command.valueOf() === "next" && mods.get(message.guild.id)[1]) {
+  if (command.valueOf() === "next" && mods.get(message.guild.id).automatic) {
     embed.sendEmbed(
       [255, 0, 0],
       "Non puoi eseguire `-next` con la modalità auto",
@@ -64,13 +59,7 @@ client.on("message", (message) => {
   if (client.commands.has(command))
     client.commands
       .get(command)
-      .execute(
-        message,
-        args,
-        mods.get(message.guild.id)[0],
-        mods.get(message.guild.id)[1],
-        client
-      );
+      .execute(message, args, mods.get(message.guild.id), client);
 });
 
 client.login(process.env.DJS_TOKEN);

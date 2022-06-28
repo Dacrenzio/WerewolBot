@@ -2,7 +2,7 @@ module.exports = {
   name: "next",
   description:
     "this metod call the next figure that has to play and gives the respective role to the player",
-  async execute(message, args, moderatore, auto) {
+  async execute(message, args, moderatore) {
     const embed = require("../functions/sendEmbed.js");
     const f = require("../figures.js");
     const err = require("../functions/errors");
@@ -27,7 +27,7 @@ module.exports = {
     );
 
     if (moderatore.nightOrder.length === 0) {
-      if (!auto) {
+      if (!moderatore.automatic) {
         embed.sendEmbed(
           [149, 193, 255],
           "Ruoli terminati, iniziare il giorno con `-day`",
@@ -57,7 +57,7 @@ module.exports = {
 
     while (!moderatore.roleListID.includes(roleID)) {
       if (moderatore.nightOrder.length === 0) {
-        if (!auto) {
+        if (!moderatore.automatic) {
           embed.sendEmbed(
             [149, 193, 255],
             "Ruoli terminati, iniziare il giorno con `-day`",
@@ -147,7 +147,7 @@ module.exports = {
                   } ti è stato mandato un messaggio privato`,
                   general
                 );
-                recursive.execute(message, args, moderatore, auto);
+                recursive.execute(message, args, moderatore);
                 return;
               }
             }
@@ -176,7 +176,7 @@ module.exports = {
         `${componi(roleID)[0]} ti è stato mandato un messaggio privato`,
         general
       );
-      recursive.execute(message, args, moderatore, auto);
+      recursive.execute(message, args, moderatore);
       return;
     }
 
@@ -186,7 +186,7 @@ module.exports = {
       general
     );
 
-    if (auto) {
+    if (moderatore.automatic) {
       setTimeout(() => {
         embed.sendEmbed([149, 193, 255], "mancano 15 secondi", secret);
       }, 30000);
@@ -194,7 +194,7 @@ module.exports = {
         embed.sendEmbed([149, 193, 255], "mancano 15 secondi", general);
       }, 30000);
       setTimeout(() => {
-        recursive.execute(message, args, moderatore, auto);
+        recursive.execute(message, args, moderatore);
       }, 45000);
     }
   },

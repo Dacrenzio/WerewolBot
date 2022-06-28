@@ -1,5 +1,7 @@
 const PlayerRole = require("./PlayerRole.js");
 const embed = require("../functions/sendEmbed.js");
+const assignParameters = require("./assignParameters.js");
+const random = require("./randomPick.js");
 
 module.exports = class Moderatore {
   nightNum = 0;
@@ -14,6 +16,7 @@ module.exports = class Moderatore {
   ballottaggio = [];
   numberOfDeadPlayer = 0;
   finished = true;
+  automatic = true;
 
   addPlayer(guildMember) {
     this.playerList.set(guildMember, new PlayerRole());
@@ -53,7 +56,7 @@ module.exports = class Moderatore {
   }
 
   async newGame(numberOfPlayer, message) {
-    //starts a new game
+    //starts a new game with same ppl but different roles
 
     this.reset();
     this.playerNum = numberOfPlayer;
@@ -66,6 +69,14 @@ module.exports = class Moderatore {
       await ghostRole.members.array()[i].roles.remove(ghostRole);
     }
     await message.guild.members.fetch();
+  }
+
+  newgGame(numberOfPlayer, roleListID, message) {
+    //starts a new game with same ppl and same roles
+    let players = this.playerList;
+    this.newGame(numberOfPlayer, message);
+    this.roleListID = roleListID;
+    this.playerList = players;
   }
 
   addRoles(args, message) {
@@ -87,6 +98,19 @@ module.exports = class Moderatore {
       }
     });
     return validArgs;
+  }
+
+  randomExtraction(message) {
+    if (random.execute(this, message)) {
+      assignParameters.execute(this);
+      this.finished = false;
+      return true;
+    }
+    return false;
+  }
+
+  getRole(player) {
+    return this.playerList.get(player);
   }
 
   getPlayerList() {

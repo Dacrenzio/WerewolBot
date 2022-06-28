@@ -1,13 +1,13 @@
 module.exports = {
   name: "mode",
   description: "Set the mod of the bot: auto or manual",
-  execute(message, args, mod) {
+  execute(message, args, moderatore) {
     const embed = require("../functions/sendEmbed.js");
     const err = require("../functions/errors");
 
     if (args.length !== 1) {
       let modali;
-      if (mod.get(message.guild.id)[1]) {
+      if (moderatore.automatic) {
         modali = "Automatica";
       } else {
         modali = "Manuale";
@@ -20,12 +20,12 @@ module.exports = {
       return;
     }
 
-    if (err.errors([5], mod.get(message.guild.id)[0], message)) return;
+    if (err.errors([5], moderatore, message)) return;
 
     let role = message.guild.roles.cache.find((r) => r.name === "Moderatore");
 
     if (args[0].valueOf() === "auto") {
-      mod.get(message.guild.id)[1] = true;
+      moderatore.automatic = true;
       role.members.each((member) => member.roles.remove(role));
       embed.sendEmbed(
         [149, 193, 255],
@@ -39,7 +39,7 @@ module.exports = {
         "Modalità auto disattivata",
         message.channel
       );
-      mod.get(message.guild.id)[1] = false;
+      moderatore.automatic = false;
     } else {
       embed.sendEmbed(
         [255, 0, 0],

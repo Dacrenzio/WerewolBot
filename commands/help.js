@@ -21,7 +21,8 @@ module.exports = {
         "`-unMuteAll` necessario per smutare i giocatori quando non in partita\n\n" +
         "```Comandi specifici per ruolo:```\n" +
         "`-act @player` comando per i ruoli notturni generico che si adegua al ruolo del giocatore\n" +
-        "`-kill @player1 @player2` comando dei Lupi, uccide un giocatore; quando il giovane lupo è stato mandato al rogo è possibile selezionare due vittime",
+        "`-kill @player1 @player2` comando dei Lupi, uccide un giocatore; quando il giovane lupo è stato mandato al rogo è possibile selezionare due vittime" +
+        "`-reset` per riportare il bot alle impostazioni di default",
       message.channel
     );
   },

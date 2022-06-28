@@ -1,36 +1,45 @@
 module.exports = {
-  execute(moderatore, message, auto) {
+  execute(moderatore, message) {
     const embed = require("../functions/sendEmbed.js");
-    let roleList = moderatore.roleListID.slice();
 
+    //creo una copia dei ruoli
+    let roleList = moderatore.getRoleListID().slice();
+
+    //mi salvo i giocatori
     let memberList = [];
-    for (let member of moderatore.playerList.keys()) {
+    for (let member of moderatore.getPlayerList().keys()) {
       memberList.push(member);
     }
 
-    let listRole = "";
+    //creo il messaggio da mandare al moderatore
+    let listRoleMessage = "";
 
-    for (var i = 0; i < moderatore.playerList.size; i += 1) {
+    for (var i = 0; i < moderatore.getPlayerList().size; i += 1) {
+      //randomizzo il giocatore estratto e lo tolgo dalla lista
       let ranPlayer = Math.floor(Math.random() * memberList.length);
-
       let extractedPlayer = memberList.splice(ranPlayer, 1)[0];
 
+      //al primo giocatore estratto assegno il Capo branco
       if (i === 0) {
-        moderatore.playerList.get(extractedPlayer).id = 2;
-        listRole += `${extractedPlayer.toString()} ` + compose(2);
+        moderatore.getRole(extractedPlayer).id = 2;
+        listRoleMessage += `${extractedPlayer.toString()} ` + compose(2);
         roleList.splice(0, 1);
-      } else if (i === 1) {
-        moderatore.playerList.get(extractedPlayer).id = 18;
-        listRole += `${extractedPlayer.toString()} ` + compose(18);
+      }
+      //al secondo giocatore estratto assegno la veggente
+      else if (i === 1) {
+        moderatore.getRole(extractedPlayer).id = 18;
+        listRoleMessage += `${extractedPlayer.toString()} ` + compose(18);
         roleList.splice(0, 1);
-      } else if (i <= moderatore.playerList.size / 4) {
+      }
+      //per ogni 4 giocatori assegno o lupo del branco o giovane lupo
+      else if (i <= moderatore.getPlayerList().size / 4) {
         if (roleList.indexOf(8) > -1) {
-          moderatore.playerList.get(extractedPlayer).id = 8;
-          listRole += `${extractedPlayer.toString()} ` + compose(8);
+          moderatore.getRole(extractedPlayer).id = 8;
+          listRoleMessage += `${extractedPlayer.toString()} ` + compose(8);
           roleList.splice(roleList.indexOf(8), 1);
         } else if (roleList.indexOf(5) > -1) {
-          moderatore.playerList.get(extractedPlayer).id = 5;
-          listRole += `${extractedPlayer.toString()} ` + compose(5);
+          moderatore.getRole(extractedPlayer).id = 5;
+          listRoleMessage += `${extractedPlayer.toString()} ` + compose(5);
           roleList.splice(roleList.indexOf(5), 1);
         } else {
           embed.sendEmbed(
@@ -40,16 +49,22 @@ module.exports = {
           );
           return false;
         }
-      } else {
-        let ranRole = Math.floor(Math.random() * roleList.length);
-        let extractedRole = roleList.splice(ranRole, 1)[0];
-        moderatore.playerList.get(extractedPlayer).id = extractedRole;
+      }
+      //estraggo un ruolo random e lo assegno al giocatore estratto a caso (per evitare che vengano esclusi sempre gli ultimi ruoli aggiunti)
+      else {
+        let randRole = Math.floor(Math.random() * roleList.length);
+        let extractedRole = roleList.splice(randRole, 1)[0];
+        moderatore.getRole(extractedPlayer).id = extractedRole;
 
-        listRole += `${extractedPlayer.toString()} ` + compose(extractedRole);
+        listRoleMessage +=
+          `${extractedPlayer.toString()} ` + compose(extractedRole);
       }
     }
 
-    if (!auto) embed.sendEmbed([149, 193, 255], listRole, message.member);
+    //invio il messaggio al moderatore con i ruoli
+    if (!moderatore.automatic)
+      embed.sendEmbed([149, 193, 255], listRoleMessage, message.member);
+
     return true;
   },
 };

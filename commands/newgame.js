@@ -2,7 +2,7 @@ module.exports = {
   name: "newgame",
   description:
     "this command starts a new game of n people and assign the role ''moderator'' to the caller",
-  async execute(message, args, moderatore, auto) {
+  async execute(message, args, moderatore) {
     const embed = require("../functions/sendEmbed.js");
     const err = require("../functions/errors");
 
@@ -33,7 +33,8 @@ module.exports = {
     }
     await message.guild.members.fetch();
 
-    if (!auto) await message.member.roles.add(role).catch(console.error);
+    if (!moderatore.automatic)
+      await message.member.roles.add(role).catch(console.error);
 
     embed.sendEmbed(
       [149, 193, 255],

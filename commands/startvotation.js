@@ -2,7 +2,7 @@ module.exports = {
   name: "startvotation",
   description:
     "this command reset the votes of the previus night, check if the ID: ",
-  async execute(message, args, moderatore, auto, client) {
+  async execute(message, args, moderatore, client) {
     const embed = require("../functions/sendEmbed.js");
     const err = require("../functions/errors");
 
@@ -12,8 +12,9 @@ module.exports = {
 
     await message.guild.members.fetch();
     let channel = message.member.voice.channel;
-    let mod = message.guild.roles.cache.find((r) => r.name === "Moderatore")
-      .members;
+    let mod = message.guild.roles.cache.find(
+      (r) => r.name === "Moderatore"
+    ).members;
 
     channel.members
       .difference(mod)

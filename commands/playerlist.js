@@ -13,7 +13,7 @@ module.exports = {
         "@" +
         player.user.username +
         " : " +
-        stat(moderatore.playerList.get(player).alive) +
+        stat(moderatore.getRole(player).alive) +
         "\n";
     }
 
