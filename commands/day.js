@@ -5,16 +5,17 @@ const f = require("../figures.js");
 const err = require("../functions/errors");
 const osteria = require("../functions/osteria.js");
 const slay = require("../functions/slay.js");
+const shutUp = require("./trySing.js");
 
 module.exports = {
   name: "day",
-  description: "unmute all the people, check if the ",
+  description: "unmute all the people, check if the game is over",
   async execute(message, args, moderatore) {
-    if (err.errors([0, 5, 4, 8], moderatore, message)) return;
+    //if (err.errors([0, 5, 4, 8], moderatore, message)) return;
 
     //unmuting people
     unMute.execute(message, args, moderatore);
-    await message.member.voice.channel.leave();
+    shutUp.stop(message);
 
     //killing people died during night
     kill(moderatore, message);

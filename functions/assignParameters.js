@@ -62,61 +62,81 @@ module.exports = {
 function sendCard(user, id) {
   switch (id) {
     case 1:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Bardo");
+      user.send({ content: "https://wherewolf.fandom.com/it/wiki/Il_Bardo" });
       break;
     case 2:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Capo_Branco");
+      user.send({
+        content: "https://wherewolf.fandom.com/it/wiki/Il_Capo_Branco",
+      });
       break;
     case 3:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Contadino");
+      user.send({
+        content: "https://wherewolf.fandom.com/it/wiki/Il_Contadino",
+      });
       break;
     case 4:
-      user.send("https://wherewolf.fandom.com/it/wiki/L'Eremita");
+      user.send({ content: "https://wherewolf.fandom.com/it/wiki/L'Eremita" });
       break;
     case 5:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Giovane_Lupo");
+      user.send({
+        content: "https://wherewolf.fandom.com/it/wiki/Il_Giovane_Lupo",
+      });
       break;
     case 6:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Giullare");
+      user.send({
+        content: "https://wherewolf.fandom.com/it/wiki/Il_Giullare",
+      });
       break;
     case 7:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Guaritore");
+      user.send({
+        content: "https://wherewolf.fandom.com/it/wiki/Il_Guaritore",
+      });
       break;
     case 8:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Lupo_del_Branco");
+      user.send({
+        content: "https://wherewolf.fandom.com/it/wiki/Il_Lupo_del_Branco",
+      });
       break;
     case 9:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Mago");
+      user.send({ content: "https://wherewolf.fandom.com/it/wiki/Il_Mago" });
       break;
     case 10:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Medium");
+      user.send({ content: "https://wherewolf.fandom.com/it/wiki/Il_Medium" });
       break;
     case 11:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Monaco");
+      user.send({ content: "https://wherewolf.fandom.com/it/wiki/Il_Monaco" });
       break;
     case 12:
-      user.send("https://wherewolf.fandom.com/it/wiki/L'Oste");
+      user.send({ content: "https://wherewolf.fandom.com/it/wiki/L'Oste" });
       break;
     case 13:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Pazzo");
+      user.send({ content: "https://wherewolf.fandom.com/it/wiki/Il_Pazzo" });
       break;
     case 14:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Peccatore");
+      user.send({
+        content: "https://wherewolf.fandom.com/it/wiki/Il_Peccatore",
+      });
       break;
     case 15:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Prete");
+      user.send({ content: "https://wherewolf.fandom.com/it/wiki/Il_Prete" });
       break;
     case 16:
-      user.send("https://wherewolf.fandom.com/it/wiki/La_Strega");
+      user.send({ content: "https://wherewolf.fandom.com/it/wiki/La_Strega" });
       break;
     case 17:
-      user.send("https://wherewolf.fandom.com/it/wiki/Il_Traditore");
+      user.send({
+        content: "https://wherewolf.fandom.com/it/wiki/Il_Traditore",
+      });
       break;
     case 18:
-      user.send("https://wherewolf.fandom.com/it/wiki/La_Veggente");
+      user.send({
+        content: "https://wherewolf.fandom.com/it/wiki/La_Veggente",
+      });
       break;
     case 19:
-      user.send("https://wherewolf.fandom.com/it/wiki/L'Angelo_Custode");
+      user.send({
+        content: "https://wherewolf.fandom.com/it/wiki/L'Angelo_Custode",
+      });
       break;
   }
 }

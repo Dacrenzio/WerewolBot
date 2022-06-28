@@ -1,9 +1,20 @@
 const Discord = require("discord.js");
-const client = new Discord.Client();
+const { Client, Intents } = require("discord.js");
+const client = new Client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_VOICE_STATES,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+    Intents.FLAGS.DIRECT_MESSAGES,
+  ],
+});
 const prefix = "-";
 const fs = require("fs");
 const Moderatore = require("./functions/Moderatore.js");
 const embed = require("./functions/sendEmbed.js");
+const secretKey = require("./secretKey.js");
 
 client.commands = new Discord.Collection();
 const commandFiles = fs
@@ -36,7 +47,7 @@ client.on("guildDelete", (guild) => {
   mods.delete(guild.id);
 });
 
-client.on("message", (message) => {
+client.on("messageCreate", (message) => {
   if (
     !message.content.startsWith(prefix) ||
     message.author.bot ||
@@ -62,4 +73,4 @@ client.on("message", (message) => {
       .execute(message, args, mods.get(message.guild.id), client);
 });
 
-client.login(process.env.DJS_TOKEN);
+client.login(secretKey.key);

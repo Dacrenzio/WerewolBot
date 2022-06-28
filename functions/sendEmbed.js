@@ -3,5 +3,5 @@ exports.sendEmbed = function (color, description, destinatario) {
   embed = new Discord.MessageEmbed();
   embed.setDescription(description);
   embed.setColor(color);
-  destinatario.send(embed);
+  destinatario.send({ embeds: [embed] });
 };

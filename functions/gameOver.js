@@ -28,12 +28,15 @@ module.exports = {
       let modRole = message.guild.roles.cache.find(
         (r) => r.name === "Moderatore"
       );
-      for (i = 0; i < ghostRole.members.array().length; i++) {
-        await ghostRole.members.array()[i].roles.remove(ghostRole);
-      }
-      for (i = 0; i < modRole.members.array().length; i++) {
-        await ghostRole.members.array()[i].roles.remove(modRole);
-      }
+
+      await modRole.members.forEach((member) => {
+        member.roles.remove(modRole);
+      });
+
+      await ghostRole.members.forEach((member) => {
+        member.roles.remove(ghostRole);
+      });
+
       await message.guild.members.fetch();
     }
     return result[0];

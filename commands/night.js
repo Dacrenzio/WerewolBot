@@ -3,6 +3,7 @@ const figures = require("../figures.js");
 const ytdl = require("ytdl-core");
 const err = require("../functions/errors");
 const start = require("./next.js");
+const sing = require("./trySing.js");
 
 module.exports = {
   name: "night",
@@ -11,9 +12,7 @@ module.exports = {
   async execute(message, args, moderatore) {
     if (err.errors([0, 5, 4, 9, 8], moderatore, message)) return;
 
-    await message.member.voice.channel.join().then((connection) => {
-      connection.play(ytdl("https://youtu.be/-heSRbvCErU"));
-    });
+    sing.execute(message);
 
     await message.guild.members.fetch();
 

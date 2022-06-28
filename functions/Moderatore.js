@@ -65,9 +65,9 @@ module.exports = class Moderatore {
     //removes the ghosts
     await message.guild.members.fetch();
     let ghostRole = message.guild.roles.cache.find((r) => r.name === "Ghost");
-    for (i = 0; i < ghostRole.members.array().length; i++) {
-      await ghostRole.members.array()[i].roles.remove(ghostRole);
-    }
+    await ghostRole.members.forEach((member) => {
+      member.roles.remove(ghostRole);
+    });
     await message.guild.members.fetch();
   }
 
