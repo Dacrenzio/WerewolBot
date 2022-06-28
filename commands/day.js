@@ -11,7 +11,7 @@ module.exports = {
   name: "day",
   description: "unmute all the people, check if the game is over",
   async execute(message, args, moderatore) {
-    //if (err.errors([0, 5, 4, 8], moderatore, message)) return;
+    if (err.errors([0, 5, 4, 8], moderatore, message)) return;
 
     //unmuting people
     unMute.execute(message, args, moderatore);
