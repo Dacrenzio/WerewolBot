@@ -18,11 +18,11 @@ module.exports = {
         "`-day` finisce la notte e uccide i giocatori uccisi durante la notte\n" +
         "`-startVotation` quando dopo la discussione di giorno si vuole dare inizio alle votazioni\n" +
         "`-vote @player` serve per votare un determinato giocatore in partita\n" +
-        "`-unMuteAll` necessario per smutare i giocatori quando non in partita\n\n" +
+        "`-unMuteAll` necessario per smutare i giocatori quando non in partita\n" +
+        "`-reset` per riportare il bot alle impostazioni di default\n\n" +
         "```Comandi specifici per ruolo:```\n" +
         "`-act @player` comando per i ruoli notturni generico che si adegua al ruolo del giocatore\n" +
-        "`-kill @player1 @player2` comando dei Lupi, uccide un giocatore; quando il giovane lupo è stato mandato al rogo è possibile selezionare due vittime" +
-        "`-reset` per riportare il bot alle impostazioni di default",
+        "`-kill @player1 @player2` comando dei Lupi, uccide un giocatore; quando il giovane lupo è stato mandato al rogo è possibile selezionare due vittime",
       message.channel
     );
   },
