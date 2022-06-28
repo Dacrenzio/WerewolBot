@@ -73,4 +73,4 @@ client.on("messageCreate", (message) => {
       .execute(message, args, mods.get(message.guild.id), client);
 });
 
-client.login(secretKey.key);
+client.login(process.env.DJS_TOKEN);
