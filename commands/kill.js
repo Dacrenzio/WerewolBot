@@ -6,8 +6,7 @@ module.exports = {
   name: "kill",
   description: "this command let the wolf kill a player",
   execute(message, args, moderatore) {
-    
-    let mentionedArray = message.mentions.members.array();
+    let mentionedArray = message.mentions.members.values();
 
     //check errors
     if (err.errors([0, 1, 7, 8], moderatore, message)) return;

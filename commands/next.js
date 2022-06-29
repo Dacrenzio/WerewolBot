@@ -12,8 +12,8 @@ module.exports = {
     //rimuovo il ruolo segreto
     await message.guild.members.fetch();
     let secretRole = message.guild.roles.cache.find((r) => r.name === "Secret");
-    for (i = 0; i < secretRole.members.array().length; i++) {
-      await secretRole.members.array()[i].roles.remove(secretRole);
+    for (i = 0; i < secretRole.members.values().length; i++) {
+      await secretRole.members.values()[i].roles.remove(secretRole);
     }
     await message.guild.members.fetch();
 
