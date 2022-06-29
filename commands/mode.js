@@ -1,7 +1,7 @@
 module.exports = {
   name: "mode",
   description: "Set the mod of the bot: auto or manual",
-  execute(message, args, moderatore) {
+  async execute(message, args, moderatore) {
     const embed = require("../functions/sendEmbed.js");
     const err = require("../functions/errors");
 
@@ -22,11 +22,12 @@ module.exports = {
 
     if (err.errors([5], moderatore, message)) return;
 
+    await message.guild.members.fetch();
     let role = message.guild.roles.cache.find((r) => r.name === "Moderatore");
 
     if (args[0].valueOf() === "auto") {
       moderatore.automatic = true;
-      role.members.each((member) => member.roles.remove(role));
+      role.members.forEach((member) => member.roles.remove(role));
       embed.sendEmbed(
         [149, 193, 255],
         "Modalità auto attivata",
@@ -47,5 +48,6 @@ module.exports = {
         message.channel
       );
     }
+    await message.guild.members.fetch();
   },
 };

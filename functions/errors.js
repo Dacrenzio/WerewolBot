@@ -30,7 +30,7 @@ module.exports = {
           break;
 
         case 2:
-          if (Iterators.size(message.mentions.members.values()) !== 1) {
+          if (message.mentions.members.values().length !== 1) {
             embed.sendEmbed(
               [255, 0, 0],
               "Citare una persona.",
@@ -45,7 +45,7 @@ module.exports = {
 
           if (
             !moderatore.getPlayerList().has(mentioned[0]) ||
-            (Iterators.size(mentioned) == 2 &&
+            (mentioned.length == 2 &&
               !moderatore.getPlayerList().has(mentioned[1]))
           ) {
             embed.sendEmbed(

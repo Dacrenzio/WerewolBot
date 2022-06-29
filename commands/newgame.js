@@ -28,8 +28,8 @@ module.exports = {
 
     await message.guild.members.fetch();
     let role = message.guild.roles.cache.find((r) => r.name === "Moderatore");
-    role.members.forEach((value) => {
-      value.roles.remove(role);
+    role.members.forEach((member) => {
+      member.roles.remove(role);
     });
     await message.guild.members.fetch();
 
