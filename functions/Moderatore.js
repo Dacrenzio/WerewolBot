@@ -2,23 +2,25 @@ const PlayerRole = require("./PlayerRole.js");
 const embed = require("../functions/sendEmbed.js");
 const assignParameters = require("./assignParameters.js");
 const random = require("./randomPick.js");
+const f = require("../figures.js");
 
 const nightRoleOrder = {
   firstNight: [
-    figures.veggente,
-    figures.mago,
-    figures.monaco,
-    figures.prete,
-    figures.angelo,
-    figures.capoBranco,
+    f.veggente,
+    f.mago,
+    f.monaco,
+    f.prete,
+    f.angelo,
+    f.capoBranco,
+    0,
   ],
   otherNight: [
-    figures.veggente,
-    figures.medium,
-    figures.mago,
-    figures.strega,
-    figures.capoBranco,
-    figures.guaritore,
+    f.veggente,
+    f.medium,
+    f.mago,
+    f.strega,
+    f.capoBranco,
+    f.guaritore,
     0,
   ],
 };
@@ -91,7 +93,7 @@ module.exports = class Moderatore {
   }
 
   addPlayer(guildMember) {
-    this.playerList.set(guildMember, new PlayerRole());
+    this.playerList.set(guildMember, new PlayerRole(guildMember));
     return false;
   }
 
@@ -135,7 +137,7 @@ module.exports = class Moderatore {
     //this.numberOfVotes = 0;
     //this.playerDying = [];
 
-    if (moderatore.nightNum === 1) {
+    if (this.nightNum === 1) {
       this.nightOrder = nightRoleOrder.firstNight;
     } else {
       this.nightOrder = nightRoleOrder.otherNight;
@@ -146,6 +148,43 @@ module.exports = class Moderatore {
       `Inizio della notte N.${this.nightNum}`,
       message.channel
     );
+  }
+
+  hasNightRoleLeft() {
+    return this.nightOrder.length != 0 || this.nightOrder[0] != 0;
+  }
+
+  nextRole(secretRole) {
+    //faccio venire il prossimo ruolo che deve giocare
+    let roleID = this.nightOrder.shift();
+
+    if (roleID === f.guaritore) {
+      //after the wolves the pazzo effect is gone
+      for (let wolves of this.playerList.entries()) {
+        if (wolves[1].id === f.capoBranco || wolves[1].id === f.lupoDelBranco) {
+          //rimuovo il tratto pazzo
+          this.getRole(wolves[0]).removeTrait("pazzo");
+        }
+      }
+    }
+
+    //scorro i ruoli che non sono stati messi tra i ruoli possibili
+    while (!this.roleListID.includes(roleID)) {
+      if (!this.hasNightRoleLeft()) {
+        this.nightOrder.shift();
+        return roleID;
+      }
+      roleID = this.nightOrder.shift();
+    }
+
+    let lupi;
+    this.playerList.forEach((value) => {
+      if (value.isHisTurn(roleID, this.nightNum)) {
+        lupi = value.startTurn(roleID, this, secretRole);
+      }
+    });
+
+    return roleID, lupi;
   }
 
   getRole(player) {
