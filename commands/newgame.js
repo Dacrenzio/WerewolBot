@@ -28,9 +28,9 @@ module.exports = {
 
     await message.guild.members.fetch();
     let role = message.guild.roles.cache.find((r) => r.name === "Moderatore");
-    for (i = 0; i < role.members.values().length; i++) {
-      await ghostRole.members.values()[i].roles.remove(role);
-    }
+    role.members.forEach((value) => {
+      value.roles.remove(role);
+    });
     await message.guild.members.fetch();
 
     if (!moderatore.automatic)

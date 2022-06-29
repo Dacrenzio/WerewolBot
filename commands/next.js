@@ -15,8 +15,6 @@ module.exports = {
     secretRole.members.forEach((value) => {
       value.roles.remove(secretRole);
     });
-    {
-    }
     await message.guild.members.fetch();
 
     if (err.errors([0, 8], moderatore, message)) return;

@@ -32,7 +32,7 @@ module.exports = {
     ) {
       //check if he's roleID: 2 or 8
 
-      for (var i = 0; i < mentionedArray.length; i += 1) {
+      for (var i = 0; i < Iterators.size(mentionedArray); i += 1) {
         let mentioned = mentionedArray[i];
         let called = moderatore.playerList.get(mentioned);
 
