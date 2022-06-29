@@ -172,7 +172,7 @@ module.exports = class Moderatore {
     while (!this.roleListID.includes(roleID)) {
       if (!this.hasNightRoleLeft()) {
         this.nightOrder.shift();
-        return roleID;
+        return [roleID, ""];
       }
       roleID = this.nightOrder.shift();
     }
@@ -184,7 +184,7 @@ module.exports = class Moderatore {
       }
     });
 
-    return roleID, lupi;
+    return [roleID, lupi];
   }
 
   getRole(player) {

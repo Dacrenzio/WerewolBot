@@ -42,21 +42,20 @@ module.exports = {
     }
 
     //inizializzo il prossimo ruolo
-    let roleID,
-      lupi = moderatore.nextRole(message, general, secretRole);
+    let returnings = moderatore.nextRole(message, general, secretRole);
 
     //la prima sera scrivi ai lupi
-    if (moderatore.nightNum === 1 && roleID === 2) {
+    if (moderatore.nightNum === 1 && returnings[0] === 2) {
       setTimeout(() => {
-        embed.sendEmbed([149, 193, 255], lupi, secret);
+        embed.sendEmbed([149, 193, 255], returnings[1], secret);
       }, 10000);
     }
 
     //il monaco e il prete non aspettano i 45 secondi
-    if (roleID === f.monaco || roleID === f.prete) {
+    if (returnings[0] === f.monaco || returnings[0] === f.prete) {
       embed.sendEmbed(
         [149, 193, 255],
-        `${componi(roleID)[0]} ti è stato mandato un messaggio privato`,
+        `${componi(returnings[0])[0]} ti è stato mandato un messaggio privato`,
         general
       );
       recursive.execute(message, args, moderatore);
@@ -65,7 +64,7 @@ module.exports = {
 
     embed.sendEmbed(
       [149, 193, 255],
-      `${componi(roleID)[0]} è il tuo turno${componi(roleID)[1]}`,
+      `${componi(returnings[0])[0]} è il tuo turno${componi(returnings[0])[1]}`,
       general
     );
 
