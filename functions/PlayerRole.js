@@ -1,5 +1,12 @@
 const f = require("../figures.js");
-const mon = require("../functions/monaco.js");
+const embed = require("./sendEmbed.js");
+
+const aura = require("./role actions/aura.js");
+const heal = require("./role actions/heal.js");
+const mistic = require("./role actions/mistic.js");
+const protect = require("./role actions/protect.js");
+const amato = require("./role actions/amato.js");
+const mon = require("./monaco.js");
 
 module.exports = class PlayerRole {
   player = null;
@@ -101,6 +108,35 @@ module.exports = class PlayerRole {
         break;
     }
     return lupi;
+  }
+
+  act(message, moderatore) {
+    switch (this.id) {
+      case f.veggente:
+      case f.medium:
+        aura.execute(message, moderatore);
+        break;
+
+      case f.mago:
+        mistic.execute(message, moderatore);
+        break;
+
+      case f.strega:
+        protect.execute(message, moderatore);
+        break;
+
+      case f.guaritore:
+        heal.execute(message, moderatore);
+        break;
+
+      case f.angelo:
+        amato.execute(message, moderatore);
+        break;
+
+      default:
+        return false;
+    }
+    return true;
   }
 
   assignStandardParameters() {
