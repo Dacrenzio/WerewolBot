@@ -26,9 +26,12 @@ module.exports = class PlayerRole {
     this.id = id;
   }
 
+  hasTrait(trait) {
+    return this.tratto.indexOf(trait) != -1;
+  }
+
   pushTrait(trait) {
-    let index = this.tratto.indexOf(trait);
-    if (index == -1) {
+    if (!this.hasTrait(trait)) {
       this.tratto.push(trait);
     }
   }
