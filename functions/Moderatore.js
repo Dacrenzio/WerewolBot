@@ -33,6 +33,7 @@ module.exports = class Moderatore {
   playerDying = [];
   roleListID = [];
   nightOrder = [];
+  currentRoleID = -1;
   burnedPlayer = null;
   numberOfVotes = 0;
   ballottaggio = [];
@@ -156,9 +157,9 @@ module.exports = class Moderatore {
 
   nextRole(secretRole) {
     //faccio venire il prossimo ruolo che deve giocare
-    let roleID = this.nightOrder.shift();
+    currentRoleID = this.nightOrder.shift();
 
-    if (roleID === f.guaritore) {
+    if (currentRoleID === f.guaritore) {
       //after the wolves the pazzo effect is gone
       for (let wolves of this.playerList.entries()) {
         if (wolves[1].id === f.capoBranco || wolves[1].id === f.lupoDelBranco) {
@@ -169,22 +170,23 @@ module.exports = class Moderatore {
     }
 
     //scorro i ruoli che non sono stati messi tra i ruoli possibili
-    while (!this.roleListID.includes(roleID)) {
+    while (!this.roleListID.includes(currentRoleID)) {
       if (!this.hasNightRoleLeft()) {
         this.nightOrder.shift();
-        return [roleID, ""];
+        this.currentRoleID = -1;
+        return [currentRoleID, ""];
       }
-      roleID = this.nightOrder.shift();
+      currentRoleID = this.nightOrder.shift();
     }
 
     let lupi;
     this.playerList.forEach((value) => {
-      if (value.isHisTurn(roleID, this.nightNum)) {
-        lupi = value.startTurn(roleID, this, secretRole);
+      if (value.isHisTurn(currentRoleID, this.nightNum)) {
+        lupi = value.startTurn(currentRoleID, this, secretRole);
       }
     });
 
-    return [roleID, lupi];
+    return [currentRoleID, lupi];
   }
 
   getRole(player) {

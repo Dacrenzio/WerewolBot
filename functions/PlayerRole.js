@@ -33,18 +33,20 @@ module.exports = class PlayerRole {
     }
   }
 
-  isHisTurn(roleID, nightNum) {
+  isHisTurn(currentRoleID, nightNum) {
     return (
-      this.id === roleID ||
-      (roleID === f.capoBranco && this.id === f.giovaneLupo) ||
-      (roleID === f.capoBranco && this.id === f.lupoDelBranco) ||
-      (roleID === f.capoBranco && this.id === f.traditore && nightNum === 1)
+      this.id === currentRoleID ||
+      (currentRoleID === f.capoBranco && this.id === f.giovaneLupo) ||
+      (currentRoleID === f.capoBranco && this.id === f.lupoDelBranco) ||
+      (currentRoleID === f.capoBranco &&
+        this.id === f.traditore &&
+        nightNum === 1)
     );
   }
 
-  async startTurn(roleID, moderatore, secretRole) {
+  async startTurn(currentRoleID, moderatore, secretRole) {
     let lupi = "";
-    switch (roleID) {
+    switch (currentRoleID) {
       case f.guaritore:
         if (this.tratto.includes("usato")) {
           break;
@@ -111,31 +113,36 @@ module.exports = class PlayerRole {
   }
 
   act(message, moderatore) {
-    switch (this.id) {
-      case f.veggente:
-      case f.medium:
-        aura.execute(message, moderatore);
-        break;
+    if (moderatore.currentRoleID != this.id) {
+      return false;
+    } else {
+      switch (this.id) {
+        case f.veggente:
+        case f.medium:
+          aura.execute(message, moderatore);
+          break;
 
-      case f.mago:
-        mistic.execute(message, moderatore);
-        break;
+        case f.mago:
+          mistic.execute(message, moderatore);
+          break;
 
-      case f.strega:
-        protect.execute(message, moderatore);
-        break;
+        case f.strega:
+          protect.execute(message, moderatore);
+          break;
 
-      case f.guaritore:
-        heal.execute(message, moderatore);
-        break;
+        case f.guaritore:
+          heal.execute(message, moderatore);
+          break;
 
-      case f.angelo:
-        amato.execute(message, moderatore);
-        break;
+        case f.angelo:
+          amato.execute(message, moderatore);
+          break;
 
-      default:
-        return false;
+        default:
+          return false;
+      }
     }
+
     return true;
   }
 

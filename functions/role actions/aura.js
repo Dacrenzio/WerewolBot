@@ -6,15 +6,15 @@ module.exports = {
     const f = require("../../figures.js");
 
     let mentioned = message.mentions.members.first();
-    let caller = moderatore.playerList.get(message.member);
-    let called = moderatore.playerList.get(mentioned);
+    let caller = moderatore.getRole(message.member);
+    let called = moderatore.getRole(mentioned);
 
     if (caller.alive) {
       if (
-        (!called.alive && caller.id === f.veggente) ||
-        (called.alive && caller.id === f.medium)
+        (caller.id === f.veggente && !called.alive) ||
+        (caller.id === f.medium && called.alive)
       ) {
-        //check if the numbe 18 is checking someone alive and number 10 someone dead
+        //check if the number 18 is checking someone alive and number 10 someone dead
         embed.sendEmbed(
           [255, 0, 0],
           "Hai controllato un giocatore morto (se sei la Veggente) o vivo (se sei la Medium)",
