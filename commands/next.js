@@ -13,9 +13,9 @@ module.exports = {
     await message.guild.members.fetch();
     let secretRole = message.guild.roles.cache.find((r) => r.name === "Secret");
     secretRole.members.forEach((value) => {
-      await value.roles.remove(secretRole);
-    });{
-      
+      value.roles.remove(secretRole);
+    });
+    {
     }
     await message.guild.members.fetch();
 
