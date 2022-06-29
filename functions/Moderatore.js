@@ -3,6 +3,26 @@ const embed = require("../functions/sendEmbed.js");
 const assignParameters = require("./assignParameters.js");
 const random = require("./randomPick.js");
 
+const night = {
+  firstNight: [
+    figures.veggente,
+    figures.mago,
+    figures.monaco,
+    figures.prete,
+    figures.angelo,
+    figures.capoBranco,
+  ],
+  otherNight: [
+    figures.veggente,
+    figures.medium,
+    figures.mago,
+    figures.strega,
+    figures.capoBranco,
+    figures.guaritore,
+    0,
+  ],
+};
+
 module.exports = class Moderatore {
   nightNum = 0;
   playerNum = -1;
@@ -18,13 +38,28 @@ module.exports = class Moderatore {
   finished = true;
   automatic = true;
 
-  addPlayer(guildMember) {
-    this.playerList.set(guildMember, new PlayerRole());
-    return false;
+  async newGame(numberOfPlayer, message) {
+    //starts a new game with same ppl but different roles
+
+    this.reset();
+    this.playerNum = numberOfPlayer;
+    this.roleListID = [2, 18];
+
+    //removes the ghosts
+    await message.guild.members.fetch();
+    let ghostRole = message.guild.roles.cache.find((r) => r.name === "Ghost");
+    await ghostRole.members.forEach((member) => {
+      member.roles.remove(ghostRole);
+    });
+    await message.guild.members.fetch();
   }
 
-  arePlayerFull() {
-    return this.playerList.size === this.playerNum;
+  newgGame(numberOfPlayer, roleListID, message) {
+    //starts a new game with same ppl and same roles
+    let players = this.playerList;
+    this.newGame(numberOfPlayer, message);
+    this.roleListID = roleListID;
+    this.playerList = players;
   }
 
   canJoin(message) {
@@ -55,28 +90,13 @@ module.exports = class Moderatore {
     return false;
   }
 
-  async newGame(numberOfPlayer, message) {
-    //starts a new game with same ppl but different roles
-
-    this.reset();
-    this.playerNum = numberOfPlayer;
-    this.roleListID = [2, 18];
-
-    //removes the ghosts
-    await message.guild.members.fetch();
-    let ghostRole = message.guild.roles.cache.find((r) => r.name === "Ghost");
-    await ghostRole.members.forEach((member) => {
-      member.roles.remove(ghostRole);
-    });
-    await message.guild.members.fetch();
+  addPlayer(guildMember) {
+    this.playerList.set(guildMember, new PlayerRole());
+    return false;
   }
 
-  newgGame(numberOfPlayer, roleListID, message) {
-    //starts a new game with same ppl and same roles
-    let players = this.playerList;
-    this.newGame(numberOfPlayer, message);
-    this.roleListID = roleListID;
-    this.playerList = players;
+  arePlayerFull() {
+    return this.playerList.size === this.playerNum;
   }
 
   addRoles(args, message) {
@@ -107,6 +127,25 @@ module.exports = class Moderatore {
       return true;
     }
     return false;
+  }
+
+  startNight(message) {
+    this.nightNum += 1;
+    this.ballottaggio = [];
+    //this.numberOfVotes = 0;
+    //this.playerDying = [];
+
+    if (moderatore.nightNum === 1) {
+      this.nightOrder = night.firstNight;
+    } else {
+      this.nightOrder = night.otherNight;
+    }
+
+    embed.sendEmbed(
+      [149, 193, 255],
+      `Inizio della notte N.${this.nightNum}`,
+      message.channel
+    );
   }
 
   getRole(player) {
