@@ -35,7 +35,7 @@ module.exports = class PlayerRole {
     );
   }
 
-  startTurn(roleID, moderatore, secretRole){
+  async startTurn(roleID, moderatore, secretRole) {
     let lupi = "";
     switch (roleID) {
       case f.guaritore:
@@ -87,7 +87,7 @@ module.exports = class PlayerRole {
         break;
 
       case f.prete:
-        moderatore.playerList.forEach((key, value)=> {
+        moderatore.playerList.forEach((key, value) => {
           if (value.id === f.peccatore) {
             embed.sendEmbed(
               [149, 193, 255],
@@ -97,11 +97,7 @@ module.exports = class PlayerRole {
           }
         });
 
-        embed.sendEmbed(
-          [149, 193, 255],
-          "Il Peccatore non è in gioco",
-          player
-        );
+        embed.sendEmbed([149, 193, 255], "Il Peccatore non è in gioco", player);
         break;
     }
     return lupi;
