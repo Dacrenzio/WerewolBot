@@ -1,6 +1,3 @@
-const embed = require("../functions/sendEmbed.js");
-const figures = require("../figures.js");
-const ytdl = require("ytdl-core");
 const err = require("../functions/errors");
 const start = require("./next.js");
 const sing = require("./trySing.js");
@@ -24,35 +21,8 @@ module.exports = {
       if (!member.user.bot) member.voice.setMute(true);
     });
 
-    moderatore.nightNum += 1;
-    moderatore.ballottaggio = [];
+    moderatore.startNight(message);
 
-    if (moderatore.nightNum === 1) {
-      moderatore.nightOrder = [
-        figures.veggente,
-        figures.mago,
-        figures.monaco,
-        figures.prete,
-        figures.angelo,
-        figures.capoBranco,
-      ];
-    } else {
-      moderatore.nightOrder = [
-        figures.veggente,
-        figures.medium,
-        figures.mago,
-        figures.strega,
-        figures.capoBranco,
-        figures.guaritore,
-        0,
-      ];
-    }
-
-    embed.sendEmbed(
-      [149, 193, 255],
-      `Inizio della notte N.${moderatore.nightNum}`,
-      message.channel
-    );
     if (moderatore.automatic) start.execute(message, args, moderatore);
   },
 };
