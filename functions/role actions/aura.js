@@ -7,12 +7,12 @@ module.exports = {
 
     let mentioned = message.mentions.members.first();
     let caller = moderatore.getRole(message.member);
-    let called = moderatore.getRole(mentioned);
+    let target = moderatore.getRole(mentioned);
 
     if (caller.alive) {
       if (
-        (caller.id === f.veggente && !called.alive) ||
-        (caller.id === f.medium && called.alive)
+        (caller.id === f.veggente && !target.alive) ||
+        (caller.id === f.medium && target.alive)
       ) {
         //check if the number 18 is checking someone alive and number 10 someone dead
         embed.sendEmbed(
@@ -23,7 +23,7 @@ module.exports = {
         return;
       }
 
-      if (called.aura) {
+      if (target.aura) {
         embed.sendEmbed(
           [149, 193, 255],
           `${mentioned.toString()} ha un'aura Oscura`,

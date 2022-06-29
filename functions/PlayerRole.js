@@ -26,9 +26,22 @@ module.exports = class PlayerRole {
     this.id = id;
   }
 
+  pushTrait(trait) {
+    let index = this.tratto.indexOf(trait);
+    if (index == -1) {
+      this.tratto.push(trait);
+    }
+  }
+
   removeTrait(trait) {
-    let index = wolves[1].tratto.indexOf(trait);
+    let index = this.tratto.indexOf(trait);
     if (index != -1) {
+      switch (trait.valueOf()) {
+        case "eroe":
+          index += 1;
+        default:
+      }
+
       this.tratto.splice(index, 1);
     }
   }
@@ -48,10 +61,6 @@ module.exports = class PlayerRole {
     let lupi = "";
     switch (currentRoleID) {
       case f.guaritore:
-        if (this.tratto.includes("usato")) {
-          break;
-        }
-
         let morenti = "";
         moderatore.playerDying.forEach(
           (dying) => (morenti += `${dying.toString()} sta morendo\n`)

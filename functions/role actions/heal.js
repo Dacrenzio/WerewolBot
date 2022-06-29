@@ -14,8 +14,8 @@ module.exports = {
     }
 
     let mentioned = message.mentions.members.first();
-    let caller = moderatore.playerList.get(message.member);
-    let called = moderatore.playerList.get(mentioned);
+    let caller = moderatore.getRole(message.member);
+    let target = moderatore.getRole(mentioned);
 
     if (caller.alive) {
       if (caller.tratto.includes("usato")) {
@@ -25,39 +25,30 @@ module.exports = {
           message.channel
         );
         return;
-      } else {
-        let indexPlayer = moderatore.playerDying.indexOf(mentioned);
-        if (indexPlayer != -1) {
-          if (called.tratto.includes("mangiato")) {
-            let indexMangiato = called.tratto.indexOf("mangiato");
-            moderatore.playerList
-              .get(mentioned)
-              .tratto.splice(indexMangiato, 1);
+      }
 
-            //removing the killer from the hero
-            if (called.tratto.includes("eroe")) {
-              let indexEroe = called.tratto.indexOf("eroe");
-              moderatore.playerList
-                .get(mentioned)
-                .tratto.splice(indexEroe + 1, 1);
-            }
-          }
-
-          moderatore.playerDying.splice(indexPlayer, 1);
-
-          moderatore.playerList.get(message.member).tratto.push("usato");
-          embed.sendEmbed(
-            [149, 193, 255],
-            `Hai guarito ${mentioned.toString()}`,
-            message.channel
-          );
-        } else {
-          embed.sendEmbed(
-            [255, 0, 0],
-            "La persona indicata non sta morendo.",
-            message.channel
-          );
+      let indexPlayer = moderatore.playerDying.indexOf(mentioned);
+      if (indexPlayer != -1) {
+        if (target.tratto.includes("mangiato")) {
+          //removing traits
+          moderatore.getRole(mentioned).removeTrait("mangiato");
+          moderatore.getRole(mentioned).removeTrait("eroe");
         }
+
+        moderatore.playerDying.splice(indexPlayer, 1);
+
+        moderatore.getRole(message.member).pushTrait("usato");
+        embed.sendEmbed(
+          [149, 193, 255],
+          `Hai guarito ${mentioned.toString()}`,
+          message.channel
+        );
+      } else {
+        embed.sendEmbed(
+          [255, 0, 0],
+          "La persona indicata non sta morendo.",
+          message.channel
+        );
       }
     } else {
       embed.sendEmbed([255, 0, 0], "Sei morto.", message.channel);

@@ -2,7 +2,6 @@ module.exports = {
   description: "this command allows the witch to protect 1 player",
   execute(message, moderatore) {
     const embed = require("../sendEmbed.js");
-    const f = require("../../figures.js");
 
     if (message.mentions.members.first() === message.member) {
       embed.sendEmbed(
@@ -14,13 +13,11 @@ module.exports = {
     }
 
     let mentioned = message.mentions.members.first();
-    let caller = moderatore.playerList.get(message.member);
-    let called = moderatore.playerList.get(mentioned);
+    let caller = moderatore.getRole(message.member);
+    let target = moderatore.getRole(mentioned);
 
     if (caller.alive) {
-      //check if he's roleID: 18
-
-      if (!called.alive) {
+      if (!target.alive) {
         embed.sendEmbed(
           [255, 0, 0],
           "Hai protetto un giocatore morto!",
@@ -29,7 +26,7 @@ module.exports = {
         return;
       }
 
-      moderatore.playerList.get(mentioned).tratto.push("protetto");
+      moderatore.getRole(mentioned).pushTrait("protetto");
       embed.sendEmbed(
         [149, 193, 255],
         `${mentioned.toString()} sarà protetto stanotte.`,
