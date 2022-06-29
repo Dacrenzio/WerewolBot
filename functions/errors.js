@@ -30,7 +30,7 @@ module.exports = {
           break;
 
         case 2:
-          if (message.mentions.members.array().length !== 1) {
+          if (message.mentions.members.values().length !== 1) {
             embed.sendEmbed(
               [255, 0, 0],
               "Citare una persona.",
@@ -41,7 +41,7 @@ module.exports = {
           break;
 
         case 3:
-          let mentioned = message.mentions.members.array();
+          let mentioned = message.mentions.members.values();
 
           if (
             !moderatore.getPlayerList().has(mentioned[0]) ||
