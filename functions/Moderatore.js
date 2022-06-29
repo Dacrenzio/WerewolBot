@@ -3,7 +3,7 @@ const embed = require("../functions/sendEmbed.js");
 const assignParameters = require("./assignParameters.js");
 const random = require("./randomPick.js");
 
-const night = {
+const nightRoleOrder = {
   firstNight: [
     figures.veggente,
     figures.mago,
@@ -136,9 +136,9 @@ module.exports = class Moderatore {
     //this.playerDying = [];
 
     if (moderatore.nightNum === 1) {
-      this.nightOrder = night.firstNight;
+      this.nightOrder = nightRoleOrder.firstNight;
     } else {
-      this.nightOrder = night.otherNight;
+      this.nightOrder = nightRoleOrder.otherNight;
     }
 
     embed.sendEmbed(
