@@ -66,7 +66,8 @@ module.exports = class PlayerRole {
       case f.guaritore:
         let morenti = "";
         moderatore.playerDying.forEach(
-          (dying) => (morenti += `${dying.toString()} sta morendo\n`)
+          (dyingRole) =>
+            (morenti += `${dyingRole.player.toString()} sta morendo\n`)
         );
         if (morenti.valueOf() === "") {
           morenti = "Nessuno sta morendo.";
@@ -158,6 +159,10 @@ module.exports = class PlayerRole {
     return true;
   }
 
+  addVote(member) {
+    this.votes.push(member);
+  }
+
   assignStandardParameters() {
     this.fazione = "villaggio";
     this.aura = false;
@@ -165,5 +170,9 @@ module.exports = class PlayerRole {
     this.tratto = [];
     this.alive = true;
     this.votes = [];
+  }
+
+  getTraitIndex(trait) {
+    return this.tratto.indexOf(trait);
   }
 };

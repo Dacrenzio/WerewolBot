@@ -11,20 +11,24 @@ module.exports = {
       let foundAliveOste = false;
       let isVeggenteAlive = false;
 
-      for (let player of moderatore.playerList.entries()) {
-        if (player[1].id === f.bardo && player[1].alive) {
+      for (let playerRole of moderatore.playerRoleList.values()) {
+        //checking if the bardo and the osteria are alive
+        if (playerRole.id === f.bardo && playerRole.alive) {
           foundAliveBard = true;
+          continue;
         }
 
-        if (player[1].id === f.oste && player[1].alive) {
+        if (playerRole.id === f.oste && playerRole.alive) {
           foundAliveOste = true;
+          continue;
         }
 
         if (
-          player[1].id === f.veggente &&
-          (player[1].alive || moderatore.playerDying.includes(player[0]))
+          playerRole.id === f.veggente &&
+          (playerRole.alive || moderatore.playerDying.includes(playerRole))
         ) {
           isVeggenteAlive = true;
+          continue;
         }
       }
 
@@ -78,7 +82,7 @@ module.exports = {
             );
           }
         }
-      } else {
+      } else if (isOsteIn) {
         //if there's only the Oste
         if (foundAliveOste && moderatore.auraType) {
           //check Oste condition
@@ -94,6 +98,12 @@ module.exports = {
             message.channel
           );
         }
+      } else {
+        embed.sendEmbed(
+          [149, 193, 255],
+          "Non giungono notizie dall'Osteria.",
+          message.channel
+        );
       }
     }
   },

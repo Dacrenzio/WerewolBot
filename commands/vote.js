@@ -1,4 +1,5 @@
 const embed = require("../functions/sendEmbed.js");
+const love = require("../functions/amato.js");
 const check = require("../functions/checkVotes.js");
 const err = require("../functions/errors");
 const unMute = require("./unmuteall.js");
@@ -20,6 +21,8 @@ module.exports = {
     if (err.errors([0, 1, 2, 3, 4, 5, 8], moderatore, message)) return;
 
     let mentioned = message.mentions.members.first();
+    let mentionedRole = moderatore.getRole(mentioned);
+
     if (
       moderatore.ballottaggio.length > 0 &&
       !moderatore.ballottaggio.includes(mentioned)
@@ -33,13 +36,7 @@ module.exports = {
     }
 
     //checking the amato
-    let indAmato = moderatore.get(mentioned).tratto.indexOf("amato");
-    let angelo = moderatore.playerList.get(mentioned).tratto[indAmato + 1];
-    if (indAmato != -1 && moderatore.playerList.get(angelo).alive) {
-      moderatore.playerList.get(angelo).votes.push(message.member);
-    } else {
-      moderatore.playerList.get(mentioned).votes.push(message.member);
-    }
+    love.incrementAmatoVotes(mentionedRole);
 
     moderatore.numberOfVotes += 1;
     embed.sendEmbed(
@@ -50,7 +47,7 @@ module.exports = {
 
     if (
       moderatore.numberOfVotes ===
-      moderatore.playerList.size -
+      moderatore.playerNum -
         moderatore.numberOfDeadPlayer -
         moderatore.ballottaggio.length
     ) {

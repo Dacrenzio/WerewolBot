@@ -14,11 +14,11 @@ module.exports = {
     }
 
     let mentioned = message.mentions.members.first();
-    let caller = moderatore.getRole(message.member);
-    let target = moderatore.getRole(mentioned);
+    let callerRole = moderatore.getRole(message.member);
+    let targetRole = moderatore.getRole(mentioned);
 
-    if (caller.alive) {
-      if (caller.tratto.includes("usato")) {
+    if (callerRole.alive) {
+      if (callerRole.tratto.includes("usato")) {
         embed.sendEmbed(
           [255, 0, 0],
           "Hai già guarito una persona durante la partita",
@@ -27,17 +27,17 @@ module.exports = {
         return;
       }
 
-      let indexPlayer = moderatore.playerDying.indexOf(mentioned);
+      let indexPlayer = moderatore.playerDying.indexOf(targetRole);
       if (indexPlayer != -1) {
-        if (target.tratto.includes("mangiato")) {
+        if (targetRole.tratto.includes("mangiato")) {
           //removing traits
-          moderatore.getRole(mentioned).removeTrait("mangiato");
-          moderatore.getRole(mentioned).removeTrait("eroe");
+          targetRole.removeTrait("mangiato");
+          targetRole.getRole(mentioned).removeTrait("eroe");
         }
 
         moderatore.playerDying.splice(indexPlayer, 1);
 
-        moderatore.getRole(message.member).pushTrait("usato");
+        callerRole.pushTrait("usato");
         embed.sendEmbed(
           [149, 193, 255],
           `Hai guarito ${mentioned.toString()}`,

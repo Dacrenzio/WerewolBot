@@ -1,5 +1,5 @@
 module.exports = {
-  async execute(message, channel, moderatore) {
+  async check(message, moderatore) {
     const fin = require("../functions/victory.js");
     const embed = require("../functions/sendEmbed.js");
 
@@ -20,7 +20,7 @@ module.exports = {
 
       mess +=
         "!!\n\n Fine della partita!!\n Digitare `-newGame n` per iniziare una nuova partita oppure \n`-reRoll` per mantenere gli stessi ruoli e giocatori oppure \n`-chooseRole` per cambiare solo i ruoli.";
-      embed.sendEmbed([149, 193, 255], mess, channel);
+      embed.sendEmbed([149, 193, 255], mess, message.channel);
       moderatore.finished = true;
 
       await message.guild.members.fetch();

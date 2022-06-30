@@ -107,16 +107,12 @@ module.exports = {
       //remembering who killed the hero
       if (eatenRole.hasTrait("eroe")) {
         let indexEroe = eatenRole.tratto.indexOf("eroe");
-        eatenRole.tratto.splice(
-          indexEroe + 1,
-          0,
-          moderatore.getRole(message.member)
-        );
+        eatenRole.tratto.splice(indexEroe + 1, 0, callerRole);
       }
 
       //killing the player
       eatenRole.tratto.push("mangiato");
-      moderatore.playerDying.push(eatenRole.player);
+      moderatore.playerDying.push(eatenRole);
     }
 
     //metto ai lupi il tratto 'usato' per la notte

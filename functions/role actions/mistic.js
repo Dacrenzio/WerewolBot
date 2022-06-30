@@ -4,12 +4,13 @@ module.exports = {
     const embed = require("../sendEmbed.js");
 
     let mentioned = message.mentions.members.first();
-    let caller = moderatore.playerList.get(message.member);
+    let mentionedRole = moderatore.getRole(mentioned);
+    let callerRole = moderatore.getRole(message.member);
 
-    if (caller.alive) {
+    if (callerRole.alive) {
       //check if he's roleID: 9 and alive
 
-      if (moderatore.getRole(mentioned).misticismo) {
+      if (mentionedRole.misticismo) {
         embed.sendEmbed(
           [149, 193, 255],
           `${mentioned.toString()} è un mistico`,

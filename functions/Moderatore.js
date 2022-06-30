@@ -135,8 +135,6 @@ module.exports = class Moderatore {
   startNight(message) {
     this.nightNum += 1;
     this.ballottaggio = [];
-    //this.numberOfVotes = 0;
-    //this.playerDying = [];
 
     if (this.nightNum === 1) {
       this.nightOrder = nightRoleOrder.firstNight;

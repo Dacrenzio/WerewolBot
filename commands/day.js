@@ -22,7 +22,7 @@ module.exports = {
     embed.sendEmbed([149, 193, 255], deadPeopleText, message.channel);
 
     //checking if the game is over
-    if (gameOver.execute(message, message.channel, moderatore)) {
+    if (gameOver.check(message, moderatore)) {
       return;
     }
 
@@ -32,14 +32,13 @@ module.exports = {
     //cleaning the dead body
     moderatore.playerDying = [];
 
-    //togliendo la protezione della strega
+    //togliendo la protezione della strega tranne che all'eremita che è sempre immune
     for (let playerRole of moderatore.playerList.values()) {
       if (
         playerRole.tratto.includes("protetto") &&
-        player[1].id !== f.eremita
+        playerRole.id !== f.eremita
       ) {
-        let index = playerRole.tratto.indexOf("protetto");
-        playerRole.tratto.splice(index, 1);
+        playerRole.removeTrait("protetto");
         break;
       }
     }

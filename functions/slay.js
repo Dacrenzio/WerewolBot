@@ -3,14 +3,9 @@ const love = require("./amato.js");
 module.exports = {
   execute(moderatore, message) {
     let deadPeople = "";
-    moderatore.playerDying.forEach((member) => {
-      let deadPlayerRole = moderatore.getRole(member);
-
+    moderatore.playerDying.forEach((playerRole) => {
       //checking pazzo
-      if (
-        deadPlayerRole.id === f.pazzo &&
-        deadPlayerRole.hasTrait("mangiato")
-      ) {
+      if (playerRole.id === f.pazzo && playerRole.hasTrait("mangiato")) {
         //attivazione del pazzo
         for (let playerRole of moderatore.playerList.values()) {
           if (
@@ -23,12 +18,9 @@ module.exports = {
       }
 
       //checking eroe
-      if (
-        deadPlayerRole.hasTrait("eroe") &&
-        deadPlayerRole.hasTrait("mangiato")
-      ) {
+      if (playerRole.hasTrait("eroe") && playerRole.hasTrait("mangiato")) {
         let revengeRole =
-          deadPlayerRole.tratto[deadPlayerRole.tratto.indexOf("eroe") + 1];
+          playerRole.tratto[playerRole.getTraitIndex("eroe") + 1];
 
         //check if the wolf is the amato
         let amatoRole = love.returnAmato(revengeRole);
@@ -37,22 +29,22 @@ module.exports = {
           amatoRole.player.toString() + " è morto durante la notte.\n";
       }
 
-      slay(message, moderatore, member);
-      deadPeople += member.toString() + " è morto durante la notte.\n";
+      slay(message, moderatore, playerRole);
+      deadPeople +=
+        playerRole.player.toString() + " è morto durante la notte.\n";
     });
 
     if (deadPeople.valueOf() === "") {
       deadPeople = "Nessuno è morto stanotte";
     }
-    moderatore.playerDying = [];
     return deadPeople;
   },
 };
 
-async function slay(message, moderatore, member) {
-  moderatore.getRole(member).alive = false;
+async function slay(message, moderatore, playerRole) {
+  playerRole.alive = false;
   moderatore.numberOfDeadPlayer += 1;
 
   let ghostRole = message.guild.roles.cache.find((r) => r.name === "Ghost");
-  await member.roles.add(ghostRole).catch(console.error);
+  await playerRole.player.roles.add(ghostRole).catch(console.error);
 }
