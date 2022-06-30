@@ -4,7 +4,7 @@ module.exports = {
   name: "join",
   description:
     "this command starts a new game of n people and assign the role ''moderator'' to the caller",
-  execute(message, args, moderatore) {
+  execute(message, moderatore) {
     //someone wants to join
     if (moderatore.canJoin(message)) {
       //if there's space in the lobby

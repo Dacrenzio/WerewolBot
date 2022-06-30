@@ -1,7 +1,7 @@
 module.exports = {
   name: "unmuteall",
   description: "unmute all the member in the server",
-  execute(message, args, moderatore) {
+  execute(message, moderatore) {
     const err = require("../functions/errors");
 
     if (err.errors([4], moderatore, message)) return;

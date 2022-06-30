@@ -1,11 +1,12 @@
 const embed = require("../functions/sendEmbed.js");
 const f = require("../figures.js");
 const err = require("../functions/errors");
+const love = require("../functions/amato.js");
 
 module.exports = {
   name: "kill",
   description: "this command let the wolf kill a player",
-  execute(message, args, moderatore) {
+  execute(message, moderatore) {
     //get the mentions
     let mentionedArray = message.mentions.members.values();
 
@@ -34,12 +35,12 @@ module.exports = {
     if (giovaneErr(moderatore, message, mentionedArray)) return;
     if (err.errors([3], moderatore, message)) return;
 
-    let caller = moderatore.getRole(message.member);
+    let callerRole = moderatore.getRole(message.member);
 
     //check if he's roleID: 2 or 8 and alive
     if (
-      !(caller.id === f.capoBranco || caller.id === f.lupoDelBranco) &&
-      caller.alive
+      !(callerRole.id === f.capoBranco || callerRole.id === f.lupoDelBranco) &&
+      callerRole.alive
     ) {
       message.delete();
       embed.sendEmbed(
@@ -52,10 +53,10 @@ module.exports = {
     //stop check errors
 
     for (let mentioned in mentionedArray) {
-      let target = moderatore.getRole(mentioned);
+      let targetRole = moderatore.getRole(mentioned);
 
       //check if they're killing someone dead
-      if (!target.alive) {
+      if (!targetRole.alive) {
         embed.sendEmbed(
           [255, 0, 0],
           `${mentioned.toString()} è già morto!`,
@@ -65,20 +66,20 @@ module.exports = {
       }
 
       //turn the discendente into wolf
-      if (target.hasTrait("discendente")) {
+      if (targetRole.hasTrait("discendente")) {
         discendente(target, message);
         continue;
       }
 
       //contact the traditore
-      if (target.id === f.traditore) {
-        traditore(moderatore, target);
+      if (targetRole.id === f.traditore) {
+        traditore(moderatore, targetRole);
         continue;
       }
 
       //check if the objective is protetto or the wolf is pazzo
-      if (target.hasTrait("protetto") || caller.hasTrait("pazzo")) {
-        if (caller.hasTrait("pazzo")) {
+      if (targetRole.hasTrait("protetto") || callerRole.hasTrait("pazzo")) {
+        if (callerRole.hasTrait("pazzo")) {
           embed.sendEmbed(
             [149, 193, 255],
             `${mentioned.toString()} sarà ucciso di mattina`,
@@ -101,25 +102,27 @@ module.exports = {
       );
 
       //checking the amato
-      let eaten = amato(moderatore, target, mentioned, embed);
+      let eatenRole = love.returnAmato(targetRole);
 
       //remembering who killed the hero
-      if (moderatore.getRole(eaten).hasTrait("eroe")) {
-        let indexEroe = moderatore.getRole(eaten).tratto.indexOf("eroe");
-        moderatore
-          .getRole(eaten)
-          .tratto.splice(indexEroe + 1, 0, message.member);
+      if (eatenRole.hasTrait("eroe")) {
+        let indexEroe = eatenRole.tratto.indexOf("eroe");
+        eatenRole.tratto.splice(
+          indexEroe + 1,
+          0,
+          moderatore.getRole(message.member)
+        );
       }
 
       //killing the player
-      moderatore.getRole(eaten).tratto.push("mangiato");
-      moderatore.playerDying.push(eaten);
+      eatenRole.tratto.push("mangiato");
+      moderatore.playerDying.push(eatenRole.player);
     }
 
     //metto ai lupi il tratto 'usato' per la notte
-    for (let wolves of moderatore.playerList.values()) {
-      if (wolves.id === f.capoBranco || wolves.id === f.lupoDelBranco) {
-        wolves.tratto.push("usato");
+    for (let wolfRole of moderatore.playerList.values()) {
+      if (wolfRole.id === f.capoBranco || wolfRole.id === f.lupoDelBranco) {
+        wolfRole.tratto.push("usato");
       }
     }
   },
@@ -153,16 +156,6 @@ function giovaneErr(moderatore, message, mentionedArray) {
     return true;
   }
   return false;
-}
-
-function amato(moderatore, target, mentioned) {
-  let angelo = target.tratto[target.tratto.indexOf("amato") + 1];
-  if (target.hasTrait("amato") && moderatore.getRole(angelo).alive) {
-    embed.sendEmbed([149, 193, 255], "Il tuo amato è in pericolo.", angelo);
-    return angelo;
-  } else {
-    return mentioned;
-  }
 }
 
 async function discendente(playerRole, message) {

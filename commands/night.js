@@ -6,7 +6,7 @@ module.exports = {
   name: "night",
   description:
     "this command starts the night and provide the night role order based on the night",
-  async execute(message, args, moderatore) {
+  async execute(message, moderatore) {
     if (err.errors([0, 5, 4, 9, 8], moderatore, message)) return;
 
     sing.execute(message);
@@ -23,6 +23,6 @@ module.exports = {
 
     moderatore.startNight(message);
 
-    if (moderatore.automatic) start.execute(message, args, moderatore);
+    if (moderatore.automatic) start.execute(message, moderatore);
   },
 };

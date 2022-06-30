@@ -2,7 +2,7 @@ module.exports = {
   name: "newgame",
   description:
     "this command starts a new game of n people and assign the role ''moderator'' to the caller",
-  async execute(message, args, moderatore) {
+  async execute(message, moderatore, args) {
     const embed = require("../functions/sendEmbed.js");
     const err = require("../functions/errors");
 

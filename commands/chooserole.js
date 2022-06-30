@@ -4,7 +4,7 @@ const err = require("../functions/errors");
 module.exports = {
   name: "chooserole",
   description: "this command adds the chosen roles to the game",
-  async execute(message, args, moderatore) {
+  async execute(message, moderatore, args) {
     if (err.errors([0, 6], moderatore, message)) return;
 
     if (args.length < moderatore.getPlayerNum() - 2) {

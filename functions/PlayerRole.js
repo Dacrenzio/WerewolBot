@@ -5,7 +5,7 @@ const aura = require("./role actions/aura.js");
 const heal = require("./role actions/heal.js");
 const mistic = require("./role actions/mistic.js");
 const protect = require("./role actions/protect.js");
-const amato = require("./role actions/amato.js");
+const amato = require("./role actions/angelo.js");
 const mon = require("./monaco.js");
 
 module.exports = class PlayerRole {

@@ -1,7 +1,7 @@
 module.exports = {
   name: "rolelist",
   description: "returns the role list",
-  execute(message, args, moderatore) {
+  execute(message, moderatore) {
     const embed = require("../functions/sendEmbed.js");
     const err = require("../functions/errors");
 

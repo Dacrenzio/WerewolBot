@@ -1,7 +1,7 @@
 module.exports = {
   name: "playerlist",
   description: "send in the channel the list of all the player",
-  execute(message, args, moderatore) {
+  execute(message, moderatore) {
     const embed = require("../functions/sendEmbed.js");
     const err = require("../functions/errors");
 

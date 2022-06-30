@@ -2,7 +2,7 @@ module.exports = {
   name: "startvotation",
   description:
     "this command reset the votes of the previus night, check if the ID: ",
-  async execute(message, args, moderatore, client) {
+  async execute(message, moderatore, args, client) {
     const embed = require("../functions/sendEmbed.js");
     const err = require("../functions/errors");
 

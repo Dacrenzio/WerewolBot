@@ -2,12 +2,12 @@ module.exports = {
   execute(moderatore) {
     let secretID = ["", "eroe", "discendente"];
 
-    for (let member of moderatore.getPlayerList().keys()) {
-      sendCard(member, moderatore.getRole(member).id);
+    for (let playerRole of moderatore.playerList.values()) {
+      sendCard(playerRole.player, playerRole.id);
 
-      moderatore.getRole(member).assignStandardParameters();
+      playerRole.assignStandardParameters();
 
-      switch (moderatore.getRole(member).id) {
+      switch (playerRole.id) {
         case 1:
         case 11:
         case 12:
@@ -15,14 +15,14 @@ module.exports = {
           break;
 
         case 4:
-          moderatore.getRole(member).tratto = ["protetto"];
+          playerRole.tratto = ["protetto"];
           break;
 
         case 6:
         case 13:
         case 17:
         case 19:
-          moderatore.getRole(member).fazione = "-";
+          playerRole.fazione = "-";
           break;
 
         case 7:
@@ -30,30 +30,28 @@ module.exports = {
         case 10:
         case 16:
         case 18:
-          moderatore.getRole(member).misticismo = true;
+          playerRole.misticismo = true;
           break;
 
         case 2:
         case 5:
         case 8:
-          moderatore.getRole(member).fazione = "lupi";
-          moderatore.getRole(member).tratto = ["ombra"];
+          playerRole.fazione = "lupi";
+          playerRole.tratto = ["ombra"];
 
         case 14:
-          moderatore.getRole(member).aura = true;
+          playerRole.aura = true;
           break;
 
         case 3:
           let ran = Math.floor(Math.floor(Math.random() * secretID.length));
           if (ran != 0) {
-            moderatore.getRole(member).tratto.push(secretID.splice(ran, 1)[0]);
+            playerRole.tratto.push(secretID.splice(ran, 1)[0]);
           }
           break;
 
         default:
-          console.log(
-            `something went wrong; ID: ${moderatore.getRole(member).id}`
-          );
+          console.log(`something went wrong; ID: ${playerRole.id}`);
       }
     }
   },

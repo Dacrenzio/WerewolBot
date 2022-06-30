@@ -8,7 +8,7 @@ module.exports = {
   name: "next",
   description:
     "this metod call the next figure that has to play and gives the respective role to the player",
-  async execute(message, args, moderatore) {
+  async execute(message, moderatore) {
     //rimuovo il ruolo segreto
     await message.guild.members.fetch();
     let secretRole = message.guild.roles.cache.find((r) => r.name === "Secret");
@@ -36,7 +36,7 @@ module.exports = {
           general
         );
       } else {
-        day.execute(message, args, moderatore);
+        day.execute(message, moderatore);
       }
       return;
     }
@@ -58,7 +58,7 @@ module.exports = {
         `${componi(returnings[0])[0]} ti è stato mandato un messaggio privato`,
         general
       );
-      recursive.execute(message, args, moderatore);
+      recursive.execute(message, moderatore);
       return;
     }
 
@@ -76,7 +76,7 @@ module.exports = {
         embed.sendEmbed([149, 193, 255], "mancano 15 secondi", general);
       }, 30000);
       setTimeout(() => {
-        recursive.execute(message, args, moderatore);
+        recursive.execute(message, moderatore);
       }, 45000);
     }
   },

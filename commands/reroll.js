@@ -1,7 +1,7 @@
 module.exports = {
   name: "reroll",
   description: "reroll the random roles and send the list to the moderator",
-  async execute(message, args, moderatore) {
+  async execute(message, moderatore) {
     const embed = require("../functions/sendEmbed.js");
     const err = require("../functions/errors");
 

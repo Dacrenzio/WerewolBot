@@ -3,7 +3,7 @@ const embed = require("../functions/sendEmbed.js");
 module.exports = {
   name: "reset",
   description: "Choose the correct command for the player",
-  execute(message, args, moderatore) {
+  execute(message, moderatore) {
     //this command reset the moderatore
 
     moderatore.reset();

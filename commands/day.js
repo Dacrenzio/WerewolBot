@@ -5,20 +5,21 @@ const f = require("../figures.js");
 const err = require("../functions/errors");
 const osteria = require("../functions/osteria.js");
 const slay = require("../functions/slay.js");
-const shutUp = require("./trySing.js");
+const sing = require("./trySing.js");
 
 module.exports = {
   name: "day",
   description: "unmute all the people, check if the game is over",
-  async execute(message, args, moderatore) {
+  async execute(message, moderatore) {
     if (err.errors([0, 5, 4, 8], moderatore, message)) return;
 
     //unmuting people
-    unMute.execute(message, args, moderatore);
-    shutUp.stop(message);
+    unMute.execute(message, moderatore);
+    sing.stop(message);
 
     //killing people died during night
-    kill(moderatore, message);
+    let deadPeopleText = slay.execute(moderatore, message);
+    embed.sendEmbed([149, 193, 255], deadPeopleText, message.channel);
 
     //checking if the game is over
     if (gameOver.execute(message, message.channel, moderatore)) {
@@ -32,10 +33,13 @@ module.exports = {
     moderatore.playerDying = [];
 
     //togliendo la protezione della strega
-    for (let player of moderatore.playerList.entries()) {
-      if (player[1].tratto.includes("protetto") && player[1].id !== f.eremita) {
-        let index = player[1].tratto.indexOf("protetto");
-        moderatore.playerList.get(player[0]).tratto.splice(index, 1);
+    for (let playerRole of moderatore.playerList.values()) {
+      if (
+        playerRole.tratto.includes("protetto") &&
+        player[1].id !== f.eremita
+      ) {
+        let index = playerRole.tratto.indexOf("protetto");
+        playerRole.tratto.splice(index, 1);
         break;
       }
     }
@@ -47,39 +51,3 @@ module.exports = {
     );
   },
 };
-
-function kill(moderatore, message) {
-  let deadPeople = "";
-  moderatore.playerDying.forEach((member) => {
-    let deadPlayer = moderatore.playerList.get(member);
-
-    //checking pazzo
-    if (deadPlayer.id === f.pazzo && deadPlayer.tratto.includes("mangiato")) {
-      //attivazione del pazzo
-      for (let player of moderatore.playerList.entries()) {
-        if (player[1].id === f.capoBranco || player[1].id === f.lupoDelBranco) {
-          moderatore.playerList.get(player[0]).tratto.push("pazzo");
-        }
-      }
-    }
-
-    //checking eroe
-    if (
-      deadPlayer.tratto.includes("eroe") &&
-      deadPlayer.tratto.includes("mangiato")
-    ) {
-      let revenge = deadPlayer.tratto[deadPlayer.tratto.indexOf("eroe") + 1];
-      slay.execute(message, moderatore, revenge);
-      deadPeople += revenge.toString() + " è morto durante la notte.\n";
-    }
-
-    slay.execute(message, moderatore, member);
-    deadPeople += member.toString() + " è morto durante la notte.\n";
-  });
-
-  if (deadPeople.valueOf() === "") {
-    deadPeople = "Nessuno è morto stanotte";
-  }
-  embed.sendEmbed([149, 193, 255], deadPeople, message.channel);
-  moderatore.playerDying = [];
-}

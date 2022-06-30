@@ -1,7 +1,7 @@
 module.exports = {
   name: "mode",
   description: "Set the mod of the bot: auto or manual",
-  async execute(message, args, moderatore) {
+  async execute(message, moderatore, args) {
     const embed = require("../functions/sendEmbed.js");
     const err = require("../functions/errors");
 
