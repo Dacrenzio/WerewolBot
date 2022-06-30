@@ -24,12 +24,12 @@ module.exports = {
 
         //check if the wolf is the amato
         let amatoRole = love.returnAmato(revengeRole);
-        slay(message, moderatore, amatoRole);
+        this.slay(message, moderatore, amatoRole);
         deadPeople +=
           amatoRole.player.toString() + " è morto durante la notte.\n";
       }
 
-      slay(message, moderatore, playerRole);
+      this.slay(message, moderatore, playerRole);
       deadPeople +=
         playerRole.player.toString() + " è morto durante la notte.\n";
     });
@@ -39,12 +39,12 @@ module.exports = {
     }
     return deadPeople;
   },
+
+  async slay(message, moderatore, playerRole) {
+    playerRole.alive = false;
+    moderatore.numberOfDeadPlayer += 1;
+
+    let ghostRole = message.guild.roles.cache.find((r) => r.name === "Ghost");
+    await playerRole.player.roles.add(ghostRole).catch(console.error);
+  },
 };
-
-async function slay(message, moderatore, playerRole) {
-  playerRole.alive = false;
-  moderatore.numberOfDeadPlayer += 1;
-
-  let ghostRole = message.guild.roles.cache.find((r) => r.name === "Ghost");
-  await playerRole.player.roles.add(ghostRole).catch(console.error);
-}

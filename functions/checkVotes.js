@@ -1,9 +1,9 @@
+const embed = require("../functions/sendEmbed.js");
+const gameOver = require("../functions/gameOver.js");
+const slay = require("./slay.js");
+
 module.exports = {
   execute(message, moderatore) {
-    const embed = require("../functions/sendEmbed.js");
-    const gameOver = require("../functions/gameOver.js");
-    const slay = require("./slay.js");
-
     let channel = message.guild.channels.cache.find(
       (c) => c.name === "generale"
     );
@@ -11,35 +11,17 @@ module.exports = {
     if (moderatore.ballottaggio.length > 0) {
       //if in ballottaggio
 
-      if (
-        moderatore.burnedPlayer !== null &&
-        moderatore.playerList.get(moderatore.burnedPlayer).id === 6
-      ) {
-        //check giullare
+      //controllo il giullare
+      if (giullare(moderatore)) return;
 
-        embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
-        moderatore.burnedPlayer = null;
-        moderatore.ballottaggio = [];
-        return;
-      }
+      let results = getMostVoted(moderatore);
 
-      let index = -1;
-      let burning = -1;
-      let even = -1;
+      let highest = results[0];
+      let even = results[2];
+      let playerBurnRole = results[3];
 
-      for (let i = 0; i < moderatore.ballottaggio.length; i += 1) {
-        if (
-          moderatore.playerList.get(moderatore.ballottaggio[i]).votes.length >=
-          burning
-        ) {
-          even = burning;
-          burning = moderatore.playerList.get(moderatore.ballottaggio[i]).votes
-            .length;
-          index = i;
-        }
-      }
-
-      if (burning === even) {
+      //if it's even votes
+      if (highest === even) {
         embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
         moderatore.burnedPlayer = null;
         moderatore.ballottaggio = [];
@@ -47,18 +29,12 @@ module.exports = {
       } else {
         embed.sendEmbed(
           [149, 193, 255],
-          `Il rogo di stasera brucia ${moderatore.ballottaggio[
-            index
-          ].toString()}`,
+          `Il rogo di stasera brucia ${playerBurnRole.player.toString()}`,
           channel
         );
-        moderatore.burnedPlayer = moderatore.ballottaggio[index];
-        slay.execute(message, moderatore, moderatore.burnedPlayer);
-        moderatore.playerList
-          .get(moderatore.burnedPlayer)
-          .tratto.push("bruciato");
 
-        moderatore.ballottaggio = [];
+        //burn the player with the most votes
+        burnPlayer(moderatore, playerBurnRole);
 
         //check game over
         gameOver.execute(message, channel, moderatore);
@@ -66,65 +42,38 @@ module.exports = {
       }
     } else {
       //se non siamo nel ballottaggio
-      let playerBurn = null;
-      let burning = -1;
-      let even = -1;
 
-      for (let player of moderatore.playerList.entries()) {
-        //cerca i due voti piu alti
-        if (player[1].votes.length > burning) {
-          even = burning;
-          burning = player[1].votes.length;
-          playerBurn = player[0];
-        } else if (player[1].votes.length > even) {
-          even = player[1].votes.length;
-        }
-      }
+      let results = getMostVoted(moderatore);
 
-      if (
-        burning >=
-        moderatore.playerList.size - moderatore.numberOfDeadPlayer - 1
-      ) {
+      let highest = results[0];
+      let secondHighest = results[1];
+      let playerBurnRole = results[3];
+
+      if (highest >= moderatore.playerNum - moderatore.numberOfDeadPlayer - 1) {
         //se e stata votata una sola persona
-        if (
-          moderatore.burnedPlayer != null &&
-          moderatore.playerList.get(moderatore.burnedPlayer).id === 6
-        ) {
-          embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
-          moderatore.burnedPlayer = null;
-          return;
-        }
-
-        embed.sendEmbed(
-          [149, 193, 255],
-          `Il rogo di stasera brucia ${playerBurn.toString()}`,
-          channel
-        );
-        moderatore.burnedPlayer = playerBurn;
-        slay.execute(message, moderatore, moderatore.burnedPlayer);
-        moderatore.playerList
-          .get(moderatore.burnedPlayer)
-          .tratto.push("bruciato");
+        burnPlayer(moderatore, playerBurnRole);
 
         //check if game over
         gameOver.execute(message, channel, moderatore);
         return;
       }
 
+      //popoliamo il ballottaggio
       let nominati = "";
-      for (let entrie of moderatore.playerList.entries()) {
+      for (let playerRole of moderatore.playerList.values()) {
         if (
-          entrie[1].votes.length === burning ||
-          entrie[1].votes.length === even
+          playerRole.votes.length === highest ||
+          playerRole.votes.length === secondHighest
         ) {
-          moderatore.ballottaggio.push(entrie[0]);
-          nominati += `${entrie[0].toString()}\n`;
+          moderatore.ballottaggio.push(playerRole);
+          nominati += `${playerRole.player.toString()}\n`;
         }
       }
 
+      //se tutti hanno votato tutti
       if (
         moderatore.ballottaggio.length ===
-        moderatore.playerList.size - moderatore.numberOfDeadPlayer
+        moderatore.playerNum - moderatore.numberOfDeadPlayer
       ) {
         embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
         moderatore.burnedPlayer = null;
@@ -139,3 +88,55 @@ module.exports = {
     }
   },
 };
+
+function getMostVoted(moderatore, ballottaggio) {
+  let playerBurnRole = null;
+  let highest = -1;
+  let even = -1;
+  let secondHighest = -1;
+
+  let playerList = moderatore.playerList.values();
+
+  if (ballottaggio) {
+    playerList = moderatore.ballottaggio;
+  }
+
+  for (let playerRole of playerList) {
+    //cerca i due voti piu alti
+    if (playerRole.votes.length >= highest) {
+      even = highest;
+      highest = playerRole.votes.length;
+      playerBurnRole = playerRole;
+    } else if (playerRole.votes.length > secondHighest) {
+      secondHighest = playerRole.votes.length;
+    }
+  }
+
+  return [highest, secondHighest, even, playerBurnRole];
+}
+
+function giullare(moderatore) {
+  if (
+    //controllo se il giullare è stato bruciato la notte scorsa
+    moderatore.burnedPlayer != null &&
+    moderatore.burnedPlayer.id === 6
+  ) {
+    embed.sendEmbed([149, 193, 255], "Votazione annullata", channel);
+    moderatore.burnedPlayer = null;
+    return true;
+  }
+
+  return false;
+}
+
+function burnPlayer(moderatore, playerBurnRole) {
+  if (giullare(moderatore)) return;
+  embed.sendEmbed(
+    [149, 193, 255],
+    `Il rogo di stasera brucia ${playerBurnRole.player.toString()}`,
+    channel
+  );
+  moderatore.burnedPlayer = playerBurnRole;
+  slay.slay(message, moderatore, playerBurnRole);
+  moderatore.burnedPlayer.pushTrait("bruciato");
+}
