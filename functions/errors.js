@@ -2,7 +2,7 @@ module.exports = {
   errors: function (errIdList, moderatore, message) {
     const embed = require("../functions/sendEmbed.js");
 
-    for (var i = 0; i < errIdList.length; i++) {
+    for (let i = 0; i < errIdList.length; i++) {
       switch (errIdList[i]) {
         case 0:
           if (

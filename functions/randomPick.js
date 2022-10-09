@@ -14,7 +14,7 @@ module.exports = {
     //creo il messaggio da mandare al moderatore
     let listRoleMessage = "";
 
-    for (var i = 0; i < moderatore.getPlayerList().size; i += 1) {
+    for (let i = 0; i < moderatore.getPlayerList().size; i += 1) {
       //randomizzo il giocatore estratto e lo tolgo dalla lista
       let ranPlayer = Math.floor(Math.random() * memberList.length);
       let extractedPlayer = memberList.splice(ranPlayer, 1)[0];
