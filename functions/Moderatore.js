@@ -2,25 +2,25 @@ const PlayerRole = require("./PlayerRole.js");
 const embed = require("../functions/sendEmbed.js");
 const assignParameters = require("./assignParameters.js");
 const random = require("./randomPick.js");
-const f = require("../figures.js");
+const roles = require("../figures.json");
 
 const nightRoleOrder = {
   firstNight: [
-    f.veggente,
-    f.mago,
-    f.monaco,
-    f.prete,
-    f.angelo,
-    f.capoBranco,
+    roles.veggente,
+    roles.mago,
+    roles.monaco,
+    roles.prete,
+    roles.angelo,
+    roles.capoBranco,
     0,
   ],
   otherNight: [
-    f.veggente,
-    f.medium,
-    f.mago,
-    f.strega,
-    f.capoBranco,
-    f.guaritore,
+    roles.veggente,
+    roles.medium,
+    roles.mago,
+    roles.strega,
+    roles.capoBranco,
+    roles.guaritore,
     0,
   ],
 };
@@ -157,10 +157,10 @@ module.exports = class Moderatore {
     //faccio venire il prossimo ruolo che deve giocare
     currentRoleID = this.nightOrder.shift();
 
-    if (currentRoleID === f.guaritore) {
+    if (currentRoleID === roles.guaritore) {
       //after the wolves the pazzo effect is gone
       for (let wolves of this.playerList.entries()) {
-        if (wolves[1].id === f.capoBranco || wolves[1].id === f.lupoDelBranco) {
+        if (wolves[1].id === roles.capoBranco || wolves[1].id === roles.lupoDelBranco) {
           //rimuovo il tratto pazzo
           this.getRole(wolves[0]).removeTrait("pazzo");
         }

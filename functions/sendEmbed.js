@@ -1,6 +1,6 @@
 exports.sendEmbed = function (color, description, destinatario) {
-  const Discord = require("discord.js");
-  embed = new Discord.MessageEmbed();
+  const { EmbedBuilder } = require('discord.js');
+  let embed = new EmbedBuilder();
   embed.setDescription(description);
   embed.setColor(color);
   destinatario.send({ embeds: [embed] });

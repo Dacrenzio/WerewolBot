@@ -1,5 +1,5 @@
 const embed = require("../functions/sendEmbed.js");
-const f = require("../figures.js");
+const { roles } = require("../figures.json");
 const err = require("../functions/errors");
 const recursive = require("./next.js");
 const day = require("./day.js");
@@ -52,7 +52,7 @@ module.exports = {
     }
 
     //il monaco e il prete non aspettano i 45 secondi
-    if (returnings[0] === f.monaco || returnings[0] === f.prete) {
+    if (returnings[0] === roles.monaco || returnings[0] === roles.prete) {
       embed.sendEmbed(
         [149, 193, 255],
         `${componi(returnings[0])[0]} ti è stato mandato un messaggio privato`,

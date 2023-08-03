@@ -1,5 +1,5 @@
 const embed = require("../functions/sendEmbed.js");
-const f = require("../figures.js");
+const { roles } = require("../figures.json");
 const err = require("../functions/errors");
 const love = require("../functions/amato.js");
 
@@ -39,7 +39,7 @@ module.exports = {
 
     //check if he's roleID: 2 or 8 and alive
     if (
-      !(callerRole.id === f.capoBranco || callerRole.id === f.lupoDelBranco) &&
+      !(callerRole.id === roles.capoBranco || callerRole.id === roles.lupoDelBranco) &&
       callerRole.alive
     ) {
       message.delete();
@@ -72,7 +72,7 @@ module.exports = {
       }
 
       //contact the traditore
-      if (targetRole.id === f.traditore) {
+      if (targetRole.id === roles.traditore) {
         traditore(moderatore, targetRole);
         continue;
       }
@@ -117,7 +117,7 @@ module.exports = {
 
     //metto ai lupi il tratto 'usato' per la notte
     for (let wolfRole of moderatore.playerList.values()) {
-      if (wolfRole.id === f.capoBranco || wolfRole.id === f.lupoDelBranco) {
+      if (wolfRole.id === roles.capoBranco || wolfRole.id === roles.lupoDelBranco) {
         wolfRole.tratto.push("usato");
       }
     }
@@ -129,7 +129,7 @@ function giovaneErr(moderatore, message, mentionedArray) {
   //check if the burned is the young wolf
   if (
     moderatore.burnedPlayer !== null &&
-    moderatore.getRole(moderatore.burnedPlayer).id === f.giovaneLupo
+    moderatore.getRole(moderatore.burnedPlayer).id === roles.giovaneLupo
   ) {
     youngWolfBurned = true;
   }
@@ -204,9 +204,9 @@ function traditore(moderatore, playerRole, message) {
   let lupi = "";
   for (let player of moderatore.playerList.entries()) {
     if (
-      player[1].id === f.capoBranco ||
-      player[1].id === f.giovaneLupo ||
-      player[1].id === f.lupoDelBranco
+      player[1].id === roles.capoBranco ||
+      player[1].id === roles.giovaneLupo ||
+      player[1].id === roles.lupoDelBranco
     )
       lupi += `${player[0].toString()} è un lupo.\n`;
   }

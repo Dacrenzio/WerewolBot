@@ -1,4 +1,4 @@
-const f = require("../figures.js");
+const roles = require("../figures.json");
 const embed = require("./sendEmbed.js");
 
 const aura = require("./role actions/aura.js");
@@ -52,10 +52,10 @@ module.exports = class PlayerRole {
   isHisTurn(currentRoleID, nightNum) {
     return (
       this.id === currentRoleID ||
-      (currentRoleID === f.capoBranco && this.id === f.giovaneLupo) ||
-      (currentRoleID === f.capoBranco && this.id === f.lupoDelBranco) ||
-      (currentRoleID === f.capoBranco &&
-        this.id === f.traditore &&
+      (currentRoleID === roles.capoBranco && this.id === roles.giovaneLupo) ||
+      (currentRoleID === roles.capoBranco && this.id === roles.lupoDelBranco) ||
+      (currentRoleID === roles.capoBranco &&
+        this.id === roles.traditore &&
         nightNum === 1)
     );
   }
@@ -63,7 +63,7 @@ module.exports = class PlayerRole {
   async startTurn(currentRoleID, moderatore, secretRole) {
     let lupi = "";
     switch (currentRoleID) {
-      case f.guaritore:
+      case roles.guaritore:
         let morenti = "";
         moderatore.playerDying.forEach(
           (dyingRole) =>
@@ -79,21 +79,21 @@ module.exports = class PlayerRole {
         }, 4000);
         break;
 
-      case f.mago:
-      case f.medium:
-      case f.strega:
-      case f.veggente:
-      case f.angelo:
+      case roles.mago:
+      case roles.medium:
+      case roles.strega:
+      case roles.veggente:
+      case roles.angelo:
         await player.roles.add(secretRole);
         break;
 
       case 2: //lupi
         if (moderatore.nightNum === 1) {
-          if (this.id === f.capoBranco) {
+          if (this.id === roles.capoBranco) {
             lupi += `${player.toString()} è il Capo Branco\n`;
-          } else if (this.id === f.lupoDelBranco) {
+          } else if (this.id === roles.lupoDelBranco) {
             lupi += `${player.toString()} è un Lupo del Branco\n`;
-          } else if (this.id === f.giovaneLupo) {
+          } else if (this.id === roles.giovaneLupo) {
             lupi += `${player.toString()} è il Giovane Lupo\n`;
           } else {
             lupi += `${player.toString()} è il Traditore\n`;
@@ -104,13 +104,13 @@ module.exports = class PlayerRole {
         await player.roles.add(secretRole);
         break;
 
-      case f.monaco:
+      case roles.monaco:
         mon.monaco(moderatore);
         break;
 
-      case f.prete:
+      case roles.prete:
         moderatore.playerList.forEach((key, value) => {
-          if (value.id === f.peccatore) {
+          if (value.id === roles.peccatore) {
             embed.sendEmbed(
               [149, 193, 255],
               `${key.toString()} è il Peccatore`,
@@ -130,24 +130,24 @@ module.exports = class PlayerRole {
       return false;
     } else {
       switch (this.id) {
-        case f.veggente:
-        case f.medium:
+        case roles.veggente:
+        case roles.medium:
           aura.execute(message, moderatore);
           break;
 
-        case f.mago:
+        case roles.mago:
           mistic.execute(message, moderatore);
           break;
 
-        case f.strega:
+        case roles.strega:
           protect.execute(message, moderatore);
           break;
 
-        case f.guaritore:
+        case roles.guaritore:
           heal.execute(message, moderatore);
           break;
 
-        case f.angelo:
+        case roles.angelo:
           amato.execute(message, moderatore);
           break;
 

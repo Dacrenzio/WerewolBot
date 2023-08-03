@@ -1,7 +1,7 @@
 const embed = require("../functions/sendEmbed.js");
 const unMute = require("./unmuteall.js");
 const gameOver = require("../functions/gameOver.js");
-const f = require("../figures.js");
+const { roles } = require("../figures.json");
 const err = require("../functions/errors");
 const osteria = require("../functions/osteria.js");
 const slay = require("../functions/slay.js");
@@ -36,7 +36,7 @@ module.exports = {
     for (let playerRole of moderatore.playerList.values()) {
       if (
         playerRole.tratto.includes("protetto") &&
-        playerRole.id !== f.eremita
+        playerRole.id !== roles.eremita
       ) {
         playerRole.removeTrait("protetto");
         break;
